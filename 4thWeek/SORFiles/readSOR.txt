@@ -1,1 +1,2 @@
-4thWeek contains all the files related to Summary of Receivables(SOR) module
+4thWeek contains all the files related to Summary of Receivables(SOR) module.
+Exception that was included to SORFiles is the Summary of Bookings
