@@ -1,0 +1,28 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    text-align: left;
+    padding: 8px;
+
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+td:hover{
+  background-color: #cbe6ce;
+  text-decoration: none;
+  color: #000000;
+}
+.none{
+  text-align: center;
+
+}
+td.none:hover{
+  background-color: white !important;
+}
