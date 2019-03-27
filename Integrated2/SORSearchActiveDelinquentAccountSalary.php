@@ -1,9 +1,10 @@
-<?php  
-    include 'delinquentFunction.php';
-    include 'navigation.php';
-    include 'notification_fetch.php'; 
-?>
+<?php
 
+  include 'OFFunction.php';
+  include 'notification_fetch.php'; 
+  include 'navigation.php';
+
+?>
 <?php
 session_start();
 //Checking User Logged or Not
@@ -20,10 +21,12 @@ if(isset($_SESSION['user'])) {
 }
 
 ?>
-
 <!DOCTYPE html>
 <html>
+
 <head>
+    <link rel="stylesheet" href="css/w3.css">
+    <link rel="stylesheet" type="text/css" href="css/table.css">
     <link rel="stylesheet" type="text/css" href="css/custom.css">
     <link rel="stylesheet" type="text/css" href="css/notification.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min2.css">
@@ -32,12 +35,13 @@ if(isset($_SESSION['user'])) {
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <title>List of Delinquents</title>
+
+    <title>Active Delinquent Account</title>
 
 </head>
 
 <body>
-    <div class=" no-padding">
+    <div class="no-padding">
         <nav id="myNavbar" class="navbar nav-color" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -64,38 +68,30 @@ if(isset($_SESSION['user'])) {
         </nav>
         <div class="container">
 
-            <h2 class="p-5 text-center">List of Delinquents</h2>
+            <h2 class="p-5 text-center">Active Delinquent Account</h2>
+
             <hr>
-            <form action="SearchDelinquents.php" method="post">
-                <div class="pad-2" id="custom-search-input">
-                    <div class="input-group col-md-12">
-                        <input type="text" name="searchDelinquents" class="  search-query form-control" placeholder="Search" id="myInput">
-                        <span class="input-group-btn">
-                            <input class="btn btn-success" type="submit" name="submit-delinquents" value="Search">
-                        </span>
-                    </div>
-                </div>
-            </form>
-
-
-            <br><br>
+            <h3>Salary Account</h3>
+            <hr>
 
             <table class="table">
                 <thead class="text-white">
                     <tr>
                         <th class="my-bg text-white">Account Name</th>
-                        <th class="my-bg text-white" >Co Borrower</th>
-                        <th class="my-bg text-white">Balance</th>
-                        <th class="my-bg text-white" >Date</th>
+                        <th class="my-bg text-white" >Remaining Balance</th>
+                        <th class="my-bg text-white">Remarks</th>
                     </tr>
                 </thead>
-                <?php 
-                    echo getDelinquent();
 
-                ?>
+                <?php
+                 echo searchActiveDelinquentSalary();
+                    ?>
             </table>
+            <p><a href="SORActiveDelinquentAccount.php" class="btn btn-primary">Back</a></p>
+
         </div>
     </div>
+
     <script type="text/javascript" src="js/Table.js"></script>
     <script type="text/javascript" src="js/modal.js"></script>
     <script type="text/javascript" src="js/custom.js"></script>

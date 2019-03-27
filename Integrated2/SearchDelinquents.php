@@ -19,10 +19,12 @@ if(isset($_SESSION['user'])) {
     }
 }
 
+
 ?>
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" type="text/css" href="css/custom.css">
     <link rel="stylesheet" type="text/css" href="css/notification.css">
@@ -32,7 +34,8 @@ if(isset($_SESSION['user'])) {
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <title>List of Delinquents</title>
+
+    <title>List of Registered Clients</title>
 
 </head>
 
@@ -64,22 +67,9 @@ if(isset($_SESSION['user'])) {
         </nav>
         <div class="container">
 
-            <h2 class="p-5 text-center">List of Delinquents</h2>
             <hr>
-            <form action="SearchDelinquents.php" method="post">
-                <div class="pad-2" id="custom-search-input">
-                    <div class="input-group col-md-12">
-                        <input type="text" name="searchDelinquents" class="  search-query form-control" placeholder="Search" id="myInput">
-                        <span class="input-group-btn">
-                            <input class="btn btn-success" type="submit" name="submit-delinquents" value="Search">
-                        </span>
-                    </div>
-                </div>
-            </form>
-
-
-            <br><br>
-
+            <h3>Search Delinquents</h3>
+            <hr>
             <table class="table">
                 <thead class="text-white">
                     <tr>
@@ -88,14 +78,18 @@ if(isset($_SESSION['user'])) {
                         <th class="my-bg text-white">Balance</th>
                         <th class="my-bg text-white" >Date</th>
                     </tr>
-                </thead>
-                <?php 
-                    echo getDelinquent();
 
-                ?>
+                </thead>
+
+                <?php
+                    echo searchDelinquent();
+                    ?>
             </table>
+            <a href="ListOfDelinquents.php" class="pull-right btn btn-primary">Back</a>
+
         </div>
     </div>
+
     <script type="text/javascript" src="js/Table.js"></script>
     <script type="text/javascript" src="js/modal.js"></script>
     <script type="text/javascript" src="js/custom.js"></script>

@@ -1,7 +1,8 @@
-<?php  
-    include 'delinquentFunction.php';
-    include 'navigation.php';
-    include 'notification_fetch.php'; 
+<?php
+
+  include 'OFFunction.php';
+  include 'notification_fetch.php'; 
+  include 'navigation.php';
 ?>
 
 <?php
@@ -19,25 +20,33 @@ if(isset($_SESSION['user'])) {
     }
 }
 
-?>
 
+if($_SESSION['user']['em_position']=='Operations Manager'){
+    header('location:OFSearchRegisteredSalaryClient.php');
+}
+?>
 <!DOCTYPE html>
 <html>
+
 <head>
+    <link rel="stylesheet" href="css/w3.css">
+    <link rel="stylesheet" type="text/css" href="css/table.css">
+    <link rel="stylesheet" type="text/css" href="css/modal.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/custom.css">
     <link rel="stylesheet" type="text/css" href="css/notification.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min2.css">
     <link rel="stylesheet" type="text/css" href="css/navigation.css">
     <link rel="stylesheet" type="text/css" href="css/dashboard.css">
-    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <title>List of Delinquents</title>
+    <script src="js/jquery.min.js"></script>
+
+    <title>List of Registered Clients</title>
 
 </head>
 
 <body>
-    <div class=" no-padding">
+    <div class="no-padding">
         <nav id="myNavbar" class="navbar nav-color" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -64,38 +73,37 @@ if(isset($_SESSION['user'])) {
         </nav>
         <div class="container">
 
-            <h2 class="p-5 text-center">List of Delinquents</h2>
+            <h2 class="p-5 text-center">List of Registered Clients</h2>
+
             <hr>
-            <form action="SearchDelinquents.php" method="post">
-                <div class="pad-2" id="custom-search-input">
-                    <div class="input-group col-md-12">
-                        <input type="text" name="searchDelinquents" class="  search-query form-control" placeholder="Search" id="myInput">
-                        <span class="input-group-btn">
-                            <input class="btn btn-success" type="submit" name="submit-delinquents" value="Search">
-                        </span>
-                    </div>
-                </div>
-            </form>
-
-
-            <br><br>
+            <h3>Salary Account</h3>
+            <hr>
 
             <table class="table">
                 <thead class="text-white">
                     <tr>
-                        <th class="my-bg text-white">Account Name</th>
-                        <th class="my-bg text-white" >Co Borrower</th>
-                        <th class="my-bg text-white">Balance</th>
-                        <th class="my-bg text-white" >Date</th>
+                        <th class="my-bg">First Name</th>
+                        <th class="my-bg">Last Name</th>
+                        <th class="my-bg">Contact Number</th>
+                            <th class="my-bg">Credit Type</th>
+                            <th class="my-bg">Bank Address</th>
+                            <th class="my-bg">Bank / Institution</th>
+                            <th class="my-bg">Loan Balance</th>
+                            <th class="my-bg">Date Booked</th>
+                            <th class="my-bg">Maturity Date</th>
                     </tr>
                 </thead>
-                <?php 
-                    echo getDelinquent();
 
-                ?>
+                <?php
+                 echo countRegisteredSalary();
+                 echo searchRegisteredSalary();
+                    ?>
             </table>
+            <p><a href="OFListOfRegisteredClient.php" class="btn btn-primary">Back</a></p>
+
         </div>
     </div>
+
     <script type="text/javascript" src="js/Table.js"></script>
     <script type="text/javascript" src="js/modal.js"></script>
     <script type="text/javascript" src="js/custom.js"></script>

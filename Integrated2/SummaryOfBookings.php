@@ -1,5 +1,24 @@
 <?php
-  include 'notification_fetch.php'; 
+  include 'notification_fetch.php';
+  include 'navigation.php';
+?>
+
+<?php
+session_start();
+//Checking User Logged or Not
+if(empty($_SESSION['user'])){
+    header('location:Login.php');
+}
+
+
+//timeout after 5 sec
+if(isset($_SESSION['user'])) {
+    if((time() - $_SESSION['last_time']) > 1800) {
+      header("location:logout.php");  
+    }
+}
+
+
 ?>
 
 <?php
@@ -81,10 +100,13 @@ function filterTableBusinessAccount($query)
                     <div class="navbar-header">
                         <a class="navbar-brand" href="dashboard.php">SIGMA</a>
                     </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li><a href="dashboard.php">Dashboard</a></li>
-                            <li><a href="notification.php">
+                        <?php
+                            echo navigate_it()
+                        ?>
+                        <ul class="nav navbar-nav navbar-right">
+                             <li><a href="notification.php">
                                       <?php
                                       if(count_data() > '0'){
                                         echo count_data();
@@ -92,18 +114,6 @@ function filterTableBusinessAccount($query)
                                      ?>
                                     Notification
                                 </a></li>
-                            <li class="dropdown">
-                                <a href="#" data-toggle="dropdown" class="dropdown-toggle">Summary of Receivable <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="SORActiveAccount.php">Active Account</a></li>
-                                    <li><a href="SORActiveDelinquentAccount.php">Active Delinquent</a></li>
-                                    <li><a href="SORActiveLegalAccount.php">Active Legal Account</a></li>
-                                    <li><a href="SORDelinquentAccount.php">Delinquent Account</a></li>
-                                    <li><a href="SummaryOfBookings.php">Summary of Bookings</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
                           <li><a href="logout.php">Logout</a></li>
                         </ul>
                     </div>

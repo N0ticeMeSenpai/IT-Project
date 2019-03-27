@@ -4,12 +4,16 @@
  {  
       $output = '';  
       $conn = mysqli_connect("localhost", "root", "", "sigma");  
-      $sql = "SELECT * FROM loan inner join client ON client.client_id = loan.client_id";
+      $sql = "SELECT * from client 
+      inner join loan on client.client_id = loan.client_id 
+      inner join payment on loan.client_id = payment.loan_id 
+      group by loan.client_id";
+
       $result = mysqli_query($conn, $sql);  
       
       while($row = mysqli_fetch_array($result))  
       {
-	      if ($row["maturity_date"] < date("Y-m-d")&&$row["loan_balance"]!=0){       
+	      if ($row["maturity_date"] < date("Y-m-d") && $row["remaining_balance"] != 0){       
 		      $output .= 
 		                 '
 		                      <li class="list-group-item"><strong>'.$row["first_name"].' '.$row["last_name"].'</strong>
@@ -30,12 +34,15 @@
       $output = '';
       $count = 0;
       $conn = mysqli_connect("localhost", "root", "", "sigma");  
-      $sql = "SELECT * from client inner join loan on client.client_id = loan.client_id inner join payment on loan.payment_id = payment.payment_id;";  
+      $sql = "SELECT * from client 
+      inner join loan on client.client_id = loan.client_id 
+      inner join payment on loan.loan_id = payment.loan_id 
+      group by client.client_id";  
       $result = mysqli_query($conn, $sql);  
       
       while($row = mysqli_fetch_array($result))  
       {
-	      if ($row["maturity_date"] < date("Y-m-d") && $row["loan_balance"] != 0){       
+	      if ($row["maturity_date"] < date("Y-m-d")&&$row["remaining_balance"]!=0){       
 		      $count++;
          }
          $output .= '<span class="number">'.$count.'</span>';
@@ -113,7 +120,7 @@
  {  
       $output = '';  
       $conn = mysqli_connect("localhost", "root", "", "sigma");  
-      $sql = "SELECT * from client inner join loan on client.client_id = loan.client_id inner join payment on loan.payment_id = payment.payment_id;";
+      $sql = "SELECT * from client inner join loan on client.client_id = loan.client_id inner join payment on loan.client_id = payment.client_id;";
       $result = mysqli_query($conn, $sql);  
       
       while($row = mysqli_fetch_array($result))  

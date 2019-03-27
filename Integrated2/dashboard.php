@@ -1,4 +1,4 @@
-<?php
+l<?php
   include 'notification_fetch.php'; 
   include 'navigation.php';
 ?>
@@ -64,6 +64,17 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
         </div>
     </nav>
 	<div class="container pad-1">
+	 <div class="row">
+		<div class="col pull-right pb-5">
+		  	<ul class="ds-btn" style="list-style: none;">
+			  	<li>
+		             <a class="btn btn-lg btn-success" href="ClientAdd.php">
+			          <span>+ ADD CLIENT</span>
+			      	</a> 
+		        </li>
+		  	</ul>
+		</div>
+	 </div>
 	  <div class="row">
 	    <div class="col-lg-6">
 	      <div class="circle-tile ">
