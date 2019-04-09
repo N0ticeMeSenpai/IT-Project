@@ -4,10 +4,11 @@
 
     $query = "SELECT * from client 
     inner join loan on client.client_id = loan.client_id 
-    inner join payment on loan.client_id = payment.client_id 
+    inner join payment on loan.loan_id = payment.loan_id 
     inner join payment_info on payment.payment_id = payment_info.payment_id
-    WHERE client.loan_type = 'Business' 
-    AND registered_status = 'Approved'";
+    WHERE loan_type = 'Business' 
+    AND (registered_status = 'Denied' 
+    OR registered_status = 'Pending')";
 
     $result = mysqli_query($conn, $query);
     $number_of_results = mysqli_num_rows($result);
@@ -22,10 +23,11 @@
 
 	$query = "SELECT * from client 
     inner join loan on client.client_id = loan.client_id 
-    inner join payment on loan.client_id = payment.client_id 
+    inner join payment on loan.loan_id = payment.loan_id 
     inner join payment_info on payment.payment_id = payment_info.payment_id
-    WHERE client.loan_type = 'Business' 
-    AND registered_status = 'Approved' LIMIT " . $this_page_first_result . "," .  $results_per_page;
+    WHERE loan_type = 'Business' 
+    AND (registered_status = 'Denied' 
+    OR registered_status = 'Pending') LIMIT " . $this_page_first_result . "," .  $results_per_page;
     $result = mysqli_query($conn, $query);
 
 ?>

@@ -163,7 +163,22 @@ if(isset($_SESSION['user'])) {
                     <h2 class="p-3">Monthly Report</h2>
                     <input class="i-2" type="month" name="testDate" id="myMonth">
                     <div class="py-3 ">
-                        <input class="b-2" name="generate_ActiveAccount" type="submit" value="Generate Report">
+                        <input class="b-2" name="generate_ActiveAccount" type="submit" value="Active Account">
+                    </div>
+                    <div class="py-3 ">
+                        <input class="b-2" name="generate_DelinquentAccount" type="submit" value="Delinquent Account">
+                    </div>
+                    <div class="py-3 ">
+                        <input class="b-2" name="generate_ActiveDelinquent" type="submit" value="Active Delinquent Account">
+                    </div>
+                    <div class="py-3 ">
+                        <input class="b-2" name="generate_LegalAccount" type="submit" value="Legal Account">
+                    </div>
+                    <div class="py-3 ">
+                        <input class="b-2" name="generate_Bookings" type="submit" value="Summary of bookings">
+                    </div>
+                    <div class="py-3 ">
+                        <input class="b-2" name="generate_all" type="submit" value="Generate All Report">
                     </div>
                 </form>
                 

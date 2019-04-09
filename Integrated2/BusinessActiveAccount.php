@@ -4,7 +4,7 @@
 
     $query = "SELECT * from client 
     inner join loan on client.client_id = loan.client_id 
-    inner join payment on loan.client_id = payment.client_id 
+    inner join payment on loan.loan_id = payment.loan_id 
     inner join payment_info on payment.payment_id = payment_info.payment_id
     WHERE client.loan_type = 'Business'";
 
@@ -21,7 +21,7 @@
 
 	$query = "SELECT * from client 
     inner join loan on client.client_id = loan.client_id 
-    inner join payment on loan.client_id = payment.client_id 
+    inner join payment on loan.loan_id = payment.loan_id
     inner join payment_info on payment.payment_id = payment_info.payment_id
     WHERE client.loan_type = 'Business' LIMIT " . $this_page_first_result . "," .  $results_per_page;
     $result = mysqli_query($conn, $query);

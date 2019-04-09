@@ -3,8 +3,6 @@
     $results_per_page = 3;
 
     $query = "SELECT * FROM client 
-    INNER JOIN occupation
-    ON client.client_id = occupation.client_id
     WHERE loan_type = 'Salary' 
     AND (registered_status = 'Denied' 
     OR registered_status = 'Pending')";
@@ -21,8 +19,6 @@
 	$this_page_first_result = ($page-1)*$results_per_page;
 
 	$query = "SELECT * FROM client 
-    INNER JOIN occupation
-    ON client.client_id = occupation.client_id
     WHERE loan_type = 'Salary' 
     AND (registered_status = 'Denied' 
     OR registered_status = 'Pending') LIMIT " . $this_page_first_result . "," .  $results_per_page;

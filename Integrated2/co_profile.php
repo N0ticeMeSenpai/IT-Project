@@ -24,25 +24,23 @@ if(isset($_SESSION['user'])) {
 
 <?php
 // Check existence of id parameter before processing further
-if(isset($_GET["client_id"]) && !empty(trim($_GET["client_id"]))){
+if(isset($_GET["co_borrower_id"]) && !empty(trim($_GET["co_borrower_id"]))){
     //Connect the database
     $conn=mysqli_connect('localhost','root','','sigma');
 
     // Prepare a select statement
-    $sql = 'SELECT first_name, last_name, position, group_concat(concat(co_first_name," ",co_last_name) separator ", ")  
-    AS co_name, employment, group_concat(name_of_firm separator ", ") 
-    as name_of_firm, group_concat(business_address separator ", ") 
-    as business_address, present_address, contact_no, name_of_spouse 
-    FROM client INNER JOIN co_borrower 
-    on co_borrower.client_id = client.client_id
-    WHERE client.client_id = ?;';
+    $sql = 'SELECT concat(co_first_name," ",co_last_name) as co_name, employment, group_concat(co_name_of_firm separator ", ") 
+    as co_name_of_firm, group_concat(co_business_address separator ", ") 
+    as co_business_address, co_address, co_contact_no, related_client 
+    FROM client INNER JOIN co_borrower on co_borrower.client_id = client.client_id 
+    WHERE co_borrower.co_borrower_id = ?;';
 
     if($stmt = mysqli_prepare($conn, $sql)){
         // Bind variables to the prepared statement as parameters
         mysqli_stmt_bind_param($stmt, "i", $param_id);
 
         // Set parameters
-        $param_id = trim($_GET["client_id"]);
+        $param_id = trim($_GET["co_borrower_id"]);
 
         // Attempt to execute the prepared statement
         if(mysqli_stmt_execute($stmt)){
@@ -54,18 +52,11 @@ if(isset($_GET["client_id"]) && !empty(trim($_GET["client_id"]))){
                 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
                 // Retrieve individual field value
-                $first_name = $row["first_name"];
-                $last_name = $row["last_name"];
-                $position = $row["position"];
                 $co_name = $row["co_name"];
-
-                $employment = $row["employment"];
-                $name_of_firm = $row["name_of_firm"];
-                $business_address = $row["business_address"];
-
-                $present_address = $row["present_address"];
-                $contact_no = $row["contact_no"];
-                $name_of_spouse = $row["name_of_spouse"];
+                $name_of_firm = $row["co_name_of_firm"];
+                $business_address = $row["co_business_address"];
+                $present_address = $row["co_address"];
+                $contact_no = $row["co_contact_no"];
 
             } else{
                 // URL doesn't contain valid id parameter. Redirect to error page
@@ -145,7 +136,7 @@ if(isset($_GET["client_id"]) && !empty(trim($_GET["client_id"]))){
               <img src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="...">
             </div>
             <div class="profile__header">
-              <div class="fz-25"><?php echo $row["first_name"]. ' ' .$row["last_name"]; ?></div><div class="fz-15"><?php echo $row["employment"]; ?></div>
+              <div class="fz-25"><?php echo $row["co_name"]; ?></div><div class="fz-15"><?php echo $row["related_client"]; ?></div>
             </div>
           </div>
         </div>
@@ -160,65 +151,22 @@ if(isset($_GET["client_id"]) && !empty(trim($_GET["client_id"]))){
               <tbody>
                 <tr>
                   <th><strong>Position</strong></th>
-                  <td><?php echo $row["position"]; ?></td>
+                  <td><?php echo $row["co_business_address"]; ?></td>
                 </tr>
                 <tr>
                   <th><strong>Home Address</strong></th>
-                  <td><?php echo $row["present_address"]; ?></td>
+                  <td><?php echo $row["co_address"]; ?></td>
                 </tr>
                 <tr>
                   <th><strong>Contact no.</strong></th>
-                  <td><?php echo $row["contact_no"]; ?></td>
-                </tr>
-                <tr>
-                  <th><strong>Name of Spouse</strong></th>
-                  <td><?php echo $row["name_of_spouse"]; ?></td>
-                </tr>
-                <tr>
-                  <th><strong>Co Borrower</strong></th>
-                  <td><?php echo $row["co_name"]; ?></td>
+                  <td><?php echo $row["co_contact_no"]; ?></td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
-      <div class="col-xs-12 col-sm-3">
-        <hr class="profile__contact-hr">
-        
-        <!-- Contact info -->
-        <div class="profile__contact-info">
-          <div class="profile__contact-info-item">
-            <div class="profile__contact-info-icon">
-            </div>
-            <div class="profile__contact-info-body">
-              <h5 class="profile__contact-info-heading">Work number</h5>
-              <?php echo $row["contact_no"]; ?>
-            </div>
-          </div>
-          <div class="profile__contact-info-item">
-            <div class="profile__contact-info-icon">
-              <i class="fa fa-envelope-square"></i>
-            </div>
-            <div class="profile__contact-info-body">
-              <h5 class="profile__contact-info-heading">Name of Firm</h5>
-               <?php echo $row["name_of_firm"]; ?>
-            </div>
-          </div>
-          <div class="profile__contact-info-item">
-            <div class="profile__contact-info-icon">
-              <i class="fa fa-map-marker"></i>
-            </div>
-            <div class="profile__contact-info-body">
-              <h5 class="profile__contact-info-heading">Business Address</h5>
-			<?php echo $row["business_address"]; ?>
-            </div>
-          </div>
-        </div>
-
-      </div>
     </div>
 </div>
-
 </body>
 </html>

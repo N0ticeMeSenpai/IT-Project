@@ -1,4 +1,4 @@
-l<?php
+<?php
   include 'notification_fetch.php'; 
   include 'navigation.php';
 ?>
@@ -115,7 +115,7 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
 				</div>
 					<div class="mq-panel-body">
 			           <?php
-		          			echo dashboard_maturity() 
+		          			echo dashboard_maturity();
 		          		?>	
 		          	</div>
 		    </div>
@@ -131,7 +131,7 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
 					</div>				
 					<div class="mq-panel-body">
 			           <?php
-		          			echo dashboard_duedate() 
+		          			echo dashboard_duedate();
 		          		?>	
 		          	</div>
 

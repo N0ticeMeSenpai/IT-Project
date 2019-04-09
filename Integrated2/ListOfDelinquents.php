@@ -1,7 +1,7 @@
 <?php  
     include 'delinquentFunction.php';
     include 'navigation.php';
-    include 'notification_fetch.php'; 
+    include 'notification_fetch.php';
 ?>
 
 <?php
@@ -85,6 +85,7 @@ if(isset($_SESSION['user'])) {
                     <tr>
                         <th class="my-bg text-white">Account Name</th>
                         <th class="my-bg text-white" >Co Borrower</th>
+                        <th class="my-bg text-white" >Co Borrower 2</th>
                         <th class="my-bg text-white">Balance</th>
                         <th class="my-bg text-white" >Date</th>
                     </tr>
