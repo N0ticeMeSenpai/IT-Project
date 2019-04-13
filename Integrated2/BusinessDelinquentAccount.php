@@ -6,7 +6,7 @@
     inner join loan on client.client_id = loan.client_id 
     inner join payment on loan.loan_id = payment.loan_id 
     inner join payment_info on payment.payment_id = payment_info.payment_id
-    WHERE client.loan_type = 'Business'";
+    WHERE client.loan_type = 'Business'AND client.status = 'Inactive'";
 
     $result = mysqli_query($conn, $query);
     $number_of_results = mysqli_num_rows($result);
@@ -23,7 +23,7 @@
     inner join loan on client.client_id = loan.client_id 
     inner join payment on loan.loan_id = payment.loan_id
     inner join payment_info on payment.payment_id = payment_info.payment_id
-    WHERE client.loan_type = 'Business' LIMIT " . $this_page_first_result . "," .  $results_per_page;
+    WHERE client.loan_type = 'Business' AND client.status = 'Inactive' LIMIT " . $this_page_first_result . "," .  $results_per_page;
     $result = mysqli_query($conn, $query);
 
 ?>

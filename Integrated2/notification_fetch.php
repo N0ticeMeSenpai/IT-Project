@@ -160,5 +160,34 @@ inner join payment on loan.loan_id = payment.loan_id WHERE due_date=(SELECT curd
       return $output;  
  }
 
+  function search_data(){  
+
+  if(isset($_POST['submit_Search'])){
+
+      $output = '';  
+      $conn = mysqli_connect("localhost", "root", "", "sigma"); 
+      $search = mysqli_real_escape_string($conn, $_POST['searchClient']);
+      
+      $sql = "SELECT * from loan
+              inner join client on client.client_id = loan.client_id 
+              inner join payment on payment.loan_id = loan.loan_id
+              WHERE concat(first_name,last_name) LIKE '%$search%'";
+
+      $result = mysqli_query($conn, $sql);
+
+        while($row = mysqli_fetch_array($result))  
+        {
+
+            $output .= 
+                       '<li class="list-group-item"><strong>'.$row["first_name"].' '.$row["last_name"].'</strong>
+                          <br>Maturity date:  '.$row["maturity_date"].'
+                          <br>Date Today:  '.date("Y-m-d").'
+                          <br>Remaining Balance:'.$row["loan_balance"].' ';
+        }
+
+      } 
+      return $output;  
+ }
+
 
  ?>

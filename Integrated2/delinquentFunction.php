@@ -19,9 +19,9 @@ function getDelinquent(){
 
         $query = "SELECT co_borrower.co_borrower_id,client.client_id ,concat(first_name,' ',last_name) as `account_name`,
         group_concat(concat(`co_first_name`, ' ', `co_last_name`) separator '$myrow') as group_name, remaining_balance, maturity_date from loan
-          inner join client on client.client_id = loan.client_id
-          inner join payment on payment.loan_id = loan.loan_id
-          inner join co_borrower on client.client_id = co_borrower.client_id
+        inner join client on client.client_id = loan.client_id
+        inner join payment on payment.loan_id = loan.loan_id
+        inner join co_borrower on client.client_id = co_borrower.client_id
         WHERE maturity_date < (select curdate()) AND remaining_balance!=0 group by client.client_id ORDER BY maturity_date DESC";
 
          $result = mysqli_query($conn, $query);

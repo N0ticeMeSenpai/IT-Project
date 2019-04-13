@@ -183,7 +183,7 @@ return $output;
 
 }
 
-//-------------------------Active Account----------------
+//---------------------------------------------------------Active Account--------------------------------------------------
 function Salary_ActiveAccount(){
 
     $output='';
@@ -278,7 +278,7 @@ if(isset($_POST['submit_ActiveAccountSalary'])){
   $search = mysqli_real_escape_string($conn, $_POST['searchActiveAccountSalary']);
     $sql = "SELECT * from client 
     inner join loan on client.client_id = loan.client_id 
-    inner join payment on loan.client_id = payment.client_id 
+    inner join payment on loan.loan_id = payment.loan_id 
     inner join payment_info on payment.payment_id = payment_info.payment_id
     where client.loan_type = 'Salary' AND (first_name = '$search' OR last_name='$search')";
 
@@ -415,7 +415,7 @@ return $output;
 
 }
 
-//------------------------------ Active Legal Account
+//---------------------------------------------- Active Legal Account--------------------------------------------------
 
 function Salary_ActiveLegalAccount(){
 
@@ -545,6 +545,10 @@ function Salary_DelinquentAccount(){
                   <td><a href="Profile.php?client_id='.$row["client_id"].'">'.$row["first_name"].' '.$row["last_name"].'</a></td>
                   <td>'.$row["remaining_balance"].'</td>
                   <td>'.$row["remarks"].'</td>
+                  <td>
+
+                  <a href="SORDelinquentAccount.php?client_id='. $row['client_id'] .'">Update to Active Paying</a>
+                  <td>
              </tr>';
       }  
       return $output;

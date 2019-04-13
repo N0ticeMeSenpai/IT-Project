@@ -88,7 +88,9 @@ if(isset($_GET["co_borrower_id"]) && !empty(trim($_GET["co_borrower_id"]))){
 	<link rel="stylesheet" type="text/css" href="css/notification.css">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min2.css">
 	<link rel="stylesheet" type="text/css" href="css/navigation.css">
+  <link rel="stylesheet" type="text/css" href="css/navigation2.css">
 	<link rel="stylesheet" type="text/css" href="css/dashboard.css">
+  <link rel="stylesheet" type="text/css" href="css/footer.css">
 	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="css/profile.css">
 	<script src="js/jquery.min.js"></script>
@@ -115,9 +117,12 @@ if(isset($_GET["co_borrower_id"]) && !empty(trim($_GET["co_borrower_id"]))){
                             echo count_data();
                           }
                          ?>
-                        Notification
+                        <img src="img/notifications-button.png" width="15px">
                     </a></li>
-              <li><a href="logout.php">Logout</a></li>
+                <?php
+                  echo navigate_right();
+
+                ?>
             </ul>
         </div>
     </div>
@@ -167,6 +172,26 @@ if(isset($_GET["co_borrower_id"]) && !empty(trim($_GET["co_borrower_id"]))){
         </div>
       </div>
     </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6 ">
+            <div class="copyright-text">
+              <p>CopyRight © 2019 Sigma All Rights Reserved</p>
+            </div>
+          </div> <!-- End Col -->
+          <div class="col-sm-6">              
+            <ul class="social-link pull-right">
+              <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>           
+              <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
+              <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
+              <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
+              <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
+            </ul>             
+          </div> <!-- End Col -->
+        </div>
+      </div>
+  </div>
 </div>
 </body>
 </html>

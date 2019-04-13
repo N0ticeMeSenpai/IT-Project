@@ -16,12 +16,6 @@ if(isset($_SESSION['user'])) {
       header("location:logout.php");  
     }
 }
-
-
-//Restrict User or Moderator to Access Admin.php page
-if($_SESSION['user']['em_position']=='Office Staff'){
-    header('location:dashboard.php');
-}
 ?>
 <!DOCTYPE html>
 <html>
@@ -31,16 +25,14 @@ if($_SESSION['user']['em_position']=='Office Staff'){
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min2.css">
 	<link rel="stylesheet" type="text/css" href="css/navigation.css">
 	<link rel="stylesheet" type="text/css" href="css/navigation2.css">
-	<link rel="stylesheet" type="text/css" href="css/dashboard.css">
+	<link rel="stylesheet" type="text/css" href="css/mysearch.css">
 	<link rel="stylesheet" type="text/css" href="css/footer.css">
-	<script type="js/navigation2.js"></script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<title></title>
 </head>
 <body>
-<div class="no-padding">
-    <nav id="myNavbar" class="navbar nav-color" role="navigation">
+	<nav id="myNavbar" class="navbar nav-color" role="navigation">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="dashboard.php">SIGMA</a>
@@ -69,72 +61,17 @@ if($_SESSION['user']['em_position']=='Office Staff'){
             </div>
         </div>
     </nav>
-	<div class="container pad-1">
-	  <div class="row">
-	    <div class="col-lg-6">
-	      <div class="circle-tile ">
-	        <div class="circle-tile-content mygreen">
-	          <div class="circle-tile-description text-faded">Number of Delinquent</div>
-	          <div class="circle-tile-number text-faded ">
-	          	<?php
-	          	echo count_delinquent() 
-	          	?>
-	          </div>
-	          <a class="circle-tile-footer" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+	<div class="container">
+	    <form class ="line" action="SearchClient.php" method="post">
+	    	<div>
+	        	<input type="text" class="searching" name="searchClient" placeholder="Search...">
+	        	<input class="hide" type="submit" name="submit_Search"><img src="img/search.png" width="30px">
+	        	<hr class="my-hr my-margin" size="30" width="90%">
 	        </div>
-	      </div>
-	    </div>
-	    <div class="col-lg-6">
-	      <div class="circle-tile ">
-	        <div class="circle-tile-content mygreen">
-	          <div class="circle-tile-description text-faded">Number of active Client</div>
-	          <div class="circle-tile-number text-faded ">
-	          	<?php
-	          	echo count_ActiveClient() 
-	          	?>	
-	          </div>
-	          <a class="circle-tile-footer" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
-	        </div>
-	      </div>
-	    </div>
-	  </div>
-	  <div class="row">
-	  	<div class="col-md-6 pt-3">
-		    <div class="mq-panel-wrapper">
-				<div class="mq-panel-header">
-				    <h3>Delinquents</h3>
-				</div>
-				<div class="backside">
-					 NO CLIENT 
-						
-				</div>
-					<div class="mq-panel-body">
-			           <?php
-		          			echo dashboard_maturity() 
-		          		?>	
-		          	</div>
-		    </div>
-	    </div>
-	   	<div class="col-md-6 pt-3">
-		    <div class="mq-panel-wrapper">
-				<div class="mq-panel-header">
-				    <h3>Today's Client Due</h3>
-				</div>
-					<div class="backside">
-						 NO CLIENT 
-						
-					</div>				
-					<div class="mq-panel-body">
-			           <?php
-		          			echo dashboard_duedate() 
-		          		?>	
-		          	</div>
-
-		    </div>
-	    </div>
-	  </div>
+	    </form>
 	</div>
-	<div class="footer-bottom">
+	<footer>
+			<div class="footer-bottom">
 	    <div class="container">
 	    	<div class="row">
 	    		<div class="col-sm-6 ">
@@ -154,6 +91,9 @@ if($_SESSION['user']['em_position']=='Office Staff'){
 	    	</div>
 	    </div>
 	</div>
-</div>
+		
+
+
+	</footer>
 </body>
 </html>

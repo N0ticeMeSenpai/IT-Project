@@ -1,4 +1,9 @@
 <?php
+  include 'notification_fetch.php';
+  include 'navigation.php';
+?>
+
+<?php
 session_start();
 //Checking User Logged or Not
 if(empty($_SESSION['user'])){
@@ -19,12 +24,47 @@ if(isset($_SESSION['user'])) {
 <html>
 <head>
 	<title></title>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap2.min.css">
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="css/custom.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <link rel="stylesheet" type="text/css" href="css/notification.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min2.css">
+    <link rel="stylesheet" type="text/css" href="css/navigation.css">
+    <link rel="stylesheet" type="text/css" href="css/navigation2.css">
+    <link rel="stylesheet" type="text/css" href="css/dashboard.css">
+    <script type="js/navigation2.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
-	<div class="container-fluid no-padding">
+	<div class="no-padding">
+        <nav id="myNavbar" class="navbar nav-color" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="dashboard.php">SIGMA</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <?php
+                        echo navigate_it();
+                    ?>
+                    <ul class="nav navbar-nav navbar-right">
+                         <li>
+                            <a href="notification.php">
+                              <?php
+                              if(count_data() > '0'){
+                                echo count_data();
+                              }
+                             ?>
+                             <img src="img/notifications-button.png" width="15px">
+                            </a>
+                         </li>
+                      <?php
+                      echo navigate_right();
+
+                      ?>
+                    </ul>
+                </div>
+            </div>
+        </nav>
 		<div class="container">
 			<div class="login-page">
 			  <div class="form">

@@ -29,13 +29,13 @@ if(isset($_GET["client_id"]) && !empty(trim($_GET["client_id"]))){
     $conn=mysqli_connect('localhost','root','','sigma');
 
     // Prepare a select statement
-    $sql = 'SELECT first_name, last_name, position, group_concat(concat(co_first_name," ",co_last_name) separator ", ")  
+    $sql = 'SELECT client.client_id, first_name, last_name, position, group_concat(concat(co_first_name," ",co_last_name) separator ", ")  
     AS co_name, employment, group_concat(name_of_firm separator ", ") 
     as name_of_firm, group_concat(business_address separator ", ") 
     as business_address, present_address, contact_no, name_of_spouse 
     FROM client INNER JOIN co_borrower 
     on co_borrower.client_id = client.client_id
-    WHERE client.client_id = ?;';
+    WHERE client.client_id = ? group by client.client_id;';
 
     if($stmt = mysqli_prepare($conn, $sql)){
         // Bind variables to the prepared statement as parameters
@@ -93,17 +93,19 @@ if(isset($_GET["client_id"]) && !empty(trim($_GET["client_id"]))){
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="css/custom.css">
-	<link rel="stylesheet" type="text/css" href="css/notification.css">
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min2.css">
-	<link rel="stylesheet" type="text/css" href="css/navigation.css">
-	<link rel="stylesheet" type="text/css" href="css/dashboard.css">
-	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="css/profile.css">
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	
-	<title></title>
+  <link rel="stylesheet" type="text/css" href="css/custom.css">
+  <link rel="stylesheet" type="text/css" href="css/notification.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min2.css">
+  <link rel="stylesheet" type="text/css" href="css/navigation.css">
+  <link rel="stylesheet" type="text/css" href="css/navigation2.css">
+  <link rel="stylesheet" type="text/css" href="css/dashboard.css">
+  <link rel="stylesheet" type="text/css" href="css/footer.css">
+  <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="css/profile.css">
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  
+  <title></title>
 </head>
 <body>
 
@@ -124,15 +126,18 @@ if(isset($_GET["client_id"]) && !empty(trim($_GET["client_id"]))){
                             echo count_data();
                           }
                          ?>
-                        Notification
+                        <img src="img/notifications-button.png" width="15px">
                     </a></li>
-              <li><a href="logout.php">Logout</a></li>
+                <?php
+                  echo navigate_right();
+
+                  ?>
             </ul>
         </div>
     </div>
 </nav> 
 <div class="pad-1 container">
-	<div class="row">
+  <div class="row">
       <div class="col-xs-12 col-sm-9">
         
         <!-- User profile -->
@@ -174,10 +179,29 @@ if(isset($_GET["client_id"]) && !empty(trim($_GET["client_id"]))){
                   <th><strong>Name of Spouse</strong></th>
                   <td><?php echo $row["name_of_spouse"]; ?></td>
                 </tr>
-                <tr>
-                  <th><strong>Co Borrower</strong></th>
-                  <td><?php echo $row["co_name"]; ?></td>
-                </tr>
+                
+                  <?php 
+
+                        $conn=mysqli_connect('localhost','root','','sigma');
+
+                          $count = 1;
+                          $client = $row["client_id"];
+
+
+
+                          $forCoBorrower = "SELECT co_borrower_id,concat(co_first_name,' ',co_last_name) as name from co_borrower WHERE client_id ='$client'";
+                          $coBorrower = mysqli_query($conn, $forCoBorrower);
+                          while($output = mysqli_fetch_array($coBorrower)){
+
+
+                            ?>
+                          <tr>
+                          <th><strong>Co Borrower<?php echo " ".$count++?></strong></th>
+                           <td>
+                            <a href="co_profile.php?co_borrower_id=<?php echo $output["co_borrower_id"]?> "> <?php echo $output['name']?></a>
+                    <?php } ?></td></tr>
+
+                
               </tbody>
             </table>
           </div>
@@ -211,7 +235,7 @@ if(isset($_GET["client_id"]) && !empty(trim($_GET["client_id"]))){
             </div>
             <div class="profile__contact-info-body">
               <h5 class="profile__contact-info-heading">Business Address</h5>
-			<?php echo $row["business_address"]; ?>
+      <?php echo $row["business_address"]; ?>
             </div>
           </div>
         </div>
@@ -219,6 +243,25 @@ if(isset($_GET["client_id"]) && !empty(trim($_GET["client_id"]))){
       </div>
     </div>
 </div>
-
+<div class="footer-bottom">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 ">
+          <div class="copyright-text">
+            <p>CopyRight © 2019 Sigma All Rights Reserved</p>
+          </div>
+        </div> <!-- End Col -->
+        <div class="col-sm-6">              
+          <ul class="social-link pull-right">
+            <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>           
+            <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
+            <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
+            <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
+            <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
+          </ul>             
+        </div> <!-- End Col -->
+      </div>
+    </div>
+</div>
 </body>
 </html>

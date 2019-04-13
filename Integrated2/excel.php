@@ -225,7 +225,7 @@ if(isset($_POST["generate_ActiveDelinquent"]))
   
   $sql = "SELECT * from client 
     inner join loan on client.client_id = loan.client_id 
-    inner join payment on loan.client_id = payment.client_id 
+    inner join payment on loan.loan_id = payment.loan_id 
     inner join payment_info on payment.payment_id = payment_info.payment_id";
 
   $result = mysqli_query($conn, $sql);  
@@ -278,7 +278,7 @@ if(isset($_POST["generate_ActiveDelinquent"]))
   
   $sql = "SELECT * from client 
     inner join loan on client.client_id = loan.client_id 
-    inner join payment on loan.client_id = payment.client_id 
+    inner join payment on loan.loan_id = payment.loan_id 
     inner join payment_info on payment.payment_id = payment_info.payment_id";
 
   $result = mysqli_query($conn, $sql);  
@@ -314,7 +314,7 @@ if(isset($_POST["generate_ActiveDelinquent"]))
 
   $sql = "SELECT * from client 
     inner join loan on client.client_id = loan.client_id 
-    inner join payment on loan.client_id = payment.client_id 
+    inner join payment on loan.loan_id = payment.loan_id 
     inner join payment_info on payment.payment_id = payment_info.payment_id";
 
   $result = mysqli_query($conn, $sql);  
@@ -350,7 +350,7 @@ if(isset($_POST["generate_ActiveDelinquent"]))
 
         $sql = "SELECT * from client 
     inner join loan on client.client_id = loan.client_id 
-    inner join payment on loan.client_id = payment.client_id 
+    inner join payment on loan.loan_id = payment.loan_id 
     inner join payment_info on payment.payment_id = payment_info.payment_id";
 
   $result = mysqli_query($conn, $sql);  
@@ -386,7 +386,7 @@ if(isset($_POST["generate_ActiveDelinquent"]))
 
   $sql = "SELECT * from client 
     inner join loan on client.client_id = loan.client_id 
-    inner join payment on loan.client_id = payment.client_id 
+    inner join payment on loan.loan_id = payment.loan_id 
     inner join payment_info on payment.payment_id = payment_info.payment_id";
 
   $result = mysqli_query($conn, $sql);  

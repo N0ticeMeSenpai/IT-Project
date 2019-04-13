@@ -68,12 +68,12 @@ if(isset($_SESSION['user'])) {
         </div>
     </nav>
     <div class="notificate">
-      <h1 class="pad-1">NOTIFICATIONS</h1> 
+      <h1 class="pad-1">SEARCH CLIENT</h1> 
     </div>
       <div class="container">
         <ul class= "list-group list-group-flush">
            <?php  
-              echo notification_data();  
+              echo search_data();  
            ?>  
         </ul>
       </div>
