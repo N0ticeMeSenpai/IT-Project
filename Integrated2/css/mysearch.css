@@ -31,12 +31,11 @@
   outline: 0;
 }
 .searching{
-  width: 92%;
-  border:none;
-  padding-left: 10px;
-  font-size: 50px;
-  margin-top: 15rem;
-  padding-left: 60px;
+    width: 89%;
+    border: none;
+    font-size: 50px;
+    margin-top: 15rem;
+    margin-left: 5.5rem;
 }
 
 .hide {
@@ -54,4 +53,9 @@ margin-top: 5px !important;
 
 height: 3px;
 background-color: black;
+}
+
+
+input.searching:focus {
+    outline: none;
 }

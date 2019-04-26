@@ -3,6 +3,7 @@
   include 'OFFunction.php';
   include 'notification_fetch.php'; 
   include 'navigation.php';
+  include 'DelinquentUpdate.php';
 
 ?>
 <?php
@@ -36,8 +37,7 @@ if(isset($_SESSION['user'])) {
     <link rel="stylesheet" type="text/css" href="css/navigation2.css">
     <link rel="stylesheet" type="text/css" href="css/dashboard.css">
     <link rel="stylesheet" type="text/css" href="css/footer.css">
-    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <script src="js/jquery.min.js"></script>
+    <script src="js/ajax.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
     <title>Active Account</title>
@@ -80,11 +80,6 @@ if(isset($_SESSION['user'])) {
             <hr>
             <h3>Salary Account</h3>
             <hr>
-
-            <form action="SORSearchActiveAccountSalary.php" method="post">
-                <input type="text" name="searchActiveAccountSalary" placeholder="Search Client Name">
-                <button type="submit" name="submit_ActiveAccountSalary">Search</button>
-            </form>
             <br><br>
 
             <table class="table">
@@ -121,10 +116,6 @@ if(isset($_SESSION['user'])) {
                     <hr>
                 </div>
             </div>
-            <form action="SORSearchActiveAccountBusiness.php" method="post">
-                <input type="text" name="searchActiveAccountBusiness" placeholder="Search Client Name">
-                <button type="submit" name="submit_ActiveAccountBusiness">Search</button>
-            </form>
             <br><br>
 
             <table class="table">
@@ -156,26 +147,17 @@ if(isset($_SESSION['user'])) {
                 </div>
             </div>
         </div>
+    <footer>
         <div class="footer-bottom">
             <div class="container">
-              <div class="row">
-                <div class="col-sm-6 ">
-                  <div class="copyright-text">
-                    <p>CopyRight © 2019 Sigma All Rights Reserved</p>
-                  </div>
+                <div class="text-center ">
+                    <div class="copyright-text">
+                        <p>CopyRight © 2019 Sigma All Rights Reserved</p>
+                    </div>
                 </div> <!-- End Col -->
-                <div class="col-sm-6">              
-                  <ul class="social-link pull-right">
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>           
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                  </ul>             
-                </div> <!-- End Col -->
-              </div>
             </div>
         </div>
+    </footer>
     </div>
     <button onclick="document.getElementById('id01').style.display='block'" class="reports"><img src="img/report.png" width="30px"></button>
 
@@ -210,7 +192,6 @@ if(isset($_SESSION['user'])) {
             </div>
         </div>
     </div>
-
     <script type="text/javascript" src="js/Table.js"></script>
     <script type="text/javascript" src="js/modal.js"></script>
     <script type="text/javascript" src="js/custom.js"></script>

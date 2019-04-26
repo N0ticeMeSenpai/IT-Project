@@ -1,25 +1,30 @@
 <?php
-
  function notification_data()
  {  
       $output = '';  
-      $conn = mysqli_connect("localhost", "root", "", "sigma");  
+      include 'Include/connection.php';  
       $sql = "SELECT * from client 
       inner join loan on client.client_id = loan.client_id 
       inner join payment on loan.client_id = payment.loan_id 
-    WHERE maturity_date < (SELECT curdate()) 
-      AND remaining_balance!='0'";
+    WHERE (maturity_date > (SELECT curdate())) AND registered_status = 'Approved'
+      group by loan.loan_id
+      ORDER BY maturity_date DESC";
 
       $result = mysqli_query($conn, $sql);
 
         while($row = mysqli_fetch_array($result))  
         {
+          $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id=".$row['loan_id']."";
+          $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
+          $remaining = $rowRemain['rb'];
 
-  		      $output .= 
-  		                 '<li class="list-group-item"><strong>'.$row["first_name"].' '.$row["last_name"].'</strong>
-  		                    <br>Maturity date:  '.$row["maturity_date"].'
-  		                    <br>Date Today:  '.date("Y-m-d").'
-  		                 	  <br>Remaining Balance:'.$row["loan_balance"].' ';
+          if ($remaining!='0') {
+            $output .= 
+           '<li class="list-group-item"><strong>'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</strong>
+              <br>Maturity date:  '.$row["maturity_date"].'
+              <br>Date Today:  '.date("Y-m-d").'
+              <br>Remaining Balance:'.$row["remaining_balance"].' ';
+          }
         } 
       return $output;  
  }
@@ -28,20 +33,26 @@
  {  
       $output = '';
       $count = 0;
-      $conn = mysqli_connect("localhost", "root", "", "sigma");  
+      include 'Include/connection.php';  
       $sql = "SELECT * from client 
       inner join loan on client.client_id = loan.client_id 
       inner join payment on loan.loan_id = payment.loan_id 
-      WHERE maturity_date < (SELECT curdate()) 
-      AND remaining_balance!='0' 
-      group by client.client_id";  
+      WHERE (maturity_date < (SELECT curdate()) 
+      AND remaining_balance!='0')
+      AND registered_status = 'Approved'
+      group by loan.loan_id";  
       $result = mysqli_query($conn, $sql);  
       
       while($row = mysqli_fetch_array($result))  
       {
-		      $count++;
+          $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id=".$row['loan_id']."";
+          $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
+          $remaining = $rowRemain['rb'];
 
-         $output .= '<span class="number">'.$count.'</span>';
+          if ($remaining!='0') {
+            $count++;
+            $output .= '<span class="number">'.$count.'</span>';
+        }
       }  
       return $output;  
  }
@@ -49,11 +60,13 @@
   function count_delinquent()  
  {  
       $count = 0;
-      $conn = mysqli_connect("localhost", "root", "", "sigma");  
+      include 'Include/connection.php';  
       $sql = "SELECT * FROM loan
+      inner join client on client.client_id = loan.client_id
       inner join payment on loan.loan_id = payment.loan_id
-      WHERE maturity_date < (SELECT curdate()) 
-      AND remaining_balance!='0'";  
+      WHERE (maturity_date < (SELECT curdate()) 
+      AND remaining_balance!='0')AND registered_status = 'Approved'
+      group by loan.loan_id";  
       $result = mysqli_query($conn, $sql);  
       
       while($row = mysqli_fetch_array($result))  
@@ -69,17 +82,26 @@
  {  
 
       $count = 0;
-      $conn = mysqli_connect("localhost", "root", "", "sigma");  
-      $sql = "SELECT * FROM loan 
+      include 'Include/connection.php';  
+      $sql = "SELECT * FROM loan
+      inner join client on client.client_id = loan.client_id
       inner join payment on loan.loan_id = payment.loan_id
-      WHERE maturity_date > (SELECT curdate())
-      AND remaining_balance!='0'";  
+      WHERE (maturity_date > (SELECT curdate()))
+      AND registered_status = 'Approved'
+      group by loan.loan_id";  
       $result = mysqli_query($conn, $sql);  
       
       while($row = mysqli_fetch_array($result))  
       {
 
-		      $count++;
+          $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id=".$row['loan_id']."";
+          $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
+          $remaining = $rowRemain['rb'];
+
+          if ($remaining!='0') {
+            $count++;
+          }
+		      
 
       }  
       return $count;  
@@ -89,24 +111,36 @@
   function dashboard_maturity()  
  {  
       $output = '';  
-      $conn = mysqli_connect("localhost", "root", "", "sigma");  
+      include 'Include/connection.php';  
       $sql = "SELECT * from client 
       inner join loan on client.client_id = loan.client_id 
       inner join payment on loan.loan_id = payment.loan_id 
-    WHERE maturity_date < (SELECT curdate()) 
-      AND remaining_balance!='0'"; 
+      WHERE (maturity_date < (SELECT curdate()) 
+      AND remaining_balance!='0')
+      AND registered_status = 'Approved'
+      group by loan.loan_id"; 
       $result = mysqli_query($conn, $sql);  
       
 
             while($row = mysqli_fetch_array($result))  
-              {
-                      $output .= 
+              {   
+
+
+          $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) 
+          as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id 
+          JOIN loan ON payment.loan_id=loan.loan_id 
+          WHERE status='updated' && payment.loan_id=".$row['loan_id']."";
+          $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
+          $remaining = $rowRemain['rb'];
+
+          if ($remaining!='0') {
+                  $output .= 
                          '
                            <ul class="mq-comment">
                             <li class="left clearfix"><span class="mq-comment-img pull-left">
                                 <div class="mq-comment-body clearfix">
                                     <div class="header">
-                                        <strong class="primary-font">'.$row["first_name"].' '.$row["last_name"].'</strong>
+                                        <strong class="primary-font">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</strong>
                                         <small class="pull-right text-muted">
                                         </small>
                                     </div>
@@ -117,6 +151,7 @@
                             </li>
                         </ul>  
                          ';
+                  }
 
              }
 
@@ -126,9 +161,11 @@
    function dashboard_duedate()  
  {  
       $output = '';  
-      $conn = mysqli_connect("localhost", "root", "", "sigma");  
+      include 'Include/connection.php';  
       $sql = "SELECT * from client inner join loan on client.client_id = loan.client_id 
-inner join payment on loan.loan_id = payment.loan_id WHERE due_date=(SELECT curdate());";
+              inner join payment on loan.loan_id = payment.loan_id WHERE due_date=(SELECT curdate())
+              AND registered_status = 'Approved'
+              group by loan.loan_id";
       $result = mysqli_query($conn, $sql);  
       
 
@@ -141,7 +178,7 @@ inner join payment on loan.loan_id = payment.loan_id WHERE due_date=(SELECT curd
                             <li class="left clearfix"><span class="mq-comment-img pull-left">
                                 <div class="mq-comment-body clearfix">
                                     <div class="header">
-                                        <strong class="primary-font">'.$row["first_name"].' '.$row["last_name"].'</strong>
+                                        <strong class="primary-font">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</strong>
                                         <small class="pull-right text-muted">
                                         </small>
                                     </div>
@@ -159,35 +196,5 @@ inner join payment on loan.loan_id = payment.loan_id WHERE due_date=(SELECT curd
              }  
       return $output;  
  }
-
-  function search_data(){  
-
-  if(isset($_POST['submit_Search'])){
-
-      $output = '';  
-      $conn = mysqli_connect("localhost", "root", "", "sigma"); 
-      $search = mysqli_real_escape_string($conn, $_POST['searchClient']);
-      
-      $sql = "SELECT * from loan
-              inner join client on client.client_id = loan.client_id 
-              inner join payment on payment.loan_id = loan.loan_id
-              WHERE concat(first_name,last_name) LIKE '%$search%'";
-
-      $result = mysqli_query($conn, $sql);
-
-        while($row = mysqli_fetch_array($result))  
-        {
-
-            $output .= 
-                       '<li class="list-group-item"><strong>'.$row["first_name"].' '.$row["last_name"].'</strong>
-                          <br>Maturity date:  '.$row["maturity_date"].'
-                          <br>Date Today:  '.date("Y-m-d").'
-                          <br>Remaining Balance:'.$row["loan_balance"].' ';
-        }
-
-      } 
-      return $output;  
- }
-
 
  ?>

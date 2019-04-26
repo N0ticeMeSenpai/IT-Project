@@ -77,27 +77,17 @@ if(isset($_SESSION['user'])) {
            ?>  
         </ul>
       </div>
-      <div class="footer-bottom">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-6 ">
-              <div class="copyright-text">
-                <p>CopyRight © 2019 Sigma All Rights Reserved</p>
-              </div>
-            </div> <!-- End Col -->
-            <div class="col-sm-6">              
-              <ul class="social-link pull-right">
-                <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>           
-                <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-              </ul>             
-            </div> <!-- End Col -->
-          </div>
+      <footer>
+        <div class="footer-bottom">
+            <div class="container">
+              <div class="text-center ">
+                <div class="copyright-text">
+                  <p>CopyRight © 2019 Sigma All Rights Reserved</p>
+                </div>
+              </div> <!-- End Col -->
+            </div>
         </div>
-    </div>
+      </footer>
   </div>
-<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

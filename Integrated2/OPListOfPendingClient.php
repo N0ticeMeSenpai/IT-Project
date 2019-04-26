@@ -4,7 +4,9 @@
   include 'notification_fetch.php'; 
   include 'navigation.php';
 
+
 ?>
+
 <?php
 session_start();
 //Checking User Logged or Not
@@ -21,26 +23,21 @@ if(isset($_SESSION['user'])) {
 }
 
 ?>
+
 <!DOCTYPE html>
 <html>
 
-<head>
-    <link rel="stylesheet" href="css/w3.css">
-    <link rel="stylesheet" type="text/css" href="css/table.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="css/custom.css">
-    <link rel="stylesheet" type="text/css" href="css/modal.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/notification.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min2.css">
     <link rel="stylesheet" type="text/css" href="css/navigation.css">
     <link rel="stylesheet" type="text/css" href="css/navigation2.css">
     <link rel="stylesheet" type="text/css" href="css/dashboard.css">
     <link rel="stylesheet" type="text/css" href="css/footer.css">
-    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-
-    <title>Active Account</title>
+    <title>List Of Pending</title>
 
 </head>
 
@@ -78,15 +75,9 @@ if(isset($_SESSION['user'])) {
                 <h2 class="p-5 text-center">List of Pending Clients</h2>
 
                 <hr>
-                <h3>Salary Account</h3>
+                <h3>Pending Account</h3>
                 <hr>
-
-                <form action="OPSearchSalaryClient.php" method="post">
-                    <input type="text" name="search" placeholder="Search Client Name">
-                    <button type="submit" name="submit-search">Search</button>
-                </form>
                 <br>
-
                 <form action="OPListSalaryClient.php" method="post">
                     <select name="client_status">
                         <option value="pending">Pending</option>
@@ -109,56 +100,7 @@ if(isset($_SESSION['user'])) {
                     </thead>
                     <tbody>
                         <?php
-                            echo Salary_Pending();
-
-                        ?>
-                    </tbody>
-                </table class="table">
-                <div class="row">
-                    <div class="col">
-                        <div class="pagination-wrap pull-right">
-                            <ul class="pagination pagination-v3">
-                            <?php
-                                echo page_pendingSalary();
-
-                            ?>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <h3>Business Account</h3>
-                <hr>
-
-                <form action="OPSearchBusinessClient.php" method="post">
-                    <input type="text" name="search" placeholder="Search Client Name">
-                    <button type="submit" name="submit-search">Search</button>
-                </form>
-                <br>
-
-                <form action="OPListBusinessClient.php" method="post">
-                    <select name="client_status">
-                        <option value="pending">Pending</option>
-                        <option value="denied">Denied</option>
-                    </select>
-                    <button type="submit" name="submit-list">Client List</button>
-                </form>
-                <br><br>
-
-                <table class="table">
-                    <thead class="text-white">
-                        <tr>
-                            <th class="my-bg">Account Name</th>
-                            <th class="my-bg">Contact Number</th>
-                            <th class="my-bg">Requested Amount</th>
-                            <th class="my-bg">Status</th>
-                            <th class="my-bg">Date Joined</th>
-                            <th class="my-bg">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                            echo Business_Pending();
+                            echo PendingList();
 
                         ?>
                     </tbody>
@@ -168,41 +110,56 @@ if(isset($_SESSION['user'])) {
                         <div class="pagination-wrap pull-right">
                             <ul class="pagination pagination-v3">
                             <?php
-                                echo page_pendingBusiness();
+                                echo page_pending();
 
                             ?>
                             </ul>
                         </div>
                     </div>
                 </div>
-
-                </table>
             </div>
-        <div class="footer-bottom">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-6 ">
-                  <div class="copyright-text">
-                    <p>CopyRight © 2019 Sigma All Rights Reserved</p>
+          <footer>
+              <div class="footer-bottom">
+                  <div class="container">
+                      <div class="text-center ">
+                          <div class="copyright-text">
+                              <p>CopyRight © 2019 Sigma All Rights Reserved</p>
+                          </div>
+                      </div> <!-- End Col -->
                   </div>
-                </div> <!-- End Col -->
-                <div class="col-sm-6">              
-                  <ul class="social-link pull-right">
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>           
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                  </ul>             
-                </div> <!-- End Col -->
+              </div>
+          </footer>
+        </div>
+            <!-- Modal -->
+        <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update Client Status</h4>
+              </div>
+              <div class="modal-body">
+
+                  <select id="registered" class="form-control">
+                    <option selected disabled>Pending</option>
+                    <option>Approved</option>
+                    <option>Denied</option>
+                  </select>
+
+                    <input type="hidden" id="ClientId" class="form-control">
+
+
+              </div>
+              <div class="modal-footer">
+                <a href="OPListOfPendingClient.php" id="save" class="btn btn-primary pull-right">Update</a>
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
               </div>
             </div>
-        </div>
-        </div>
 
-        <script type="text/javascript" src="js/Table.js"></script>
-        <script type="text/javascript" src="js/modal.js"></script>
-        <script type="text/javascript" src="js/custom.js"></script>
+          </div>
+        </div>
     </body>
 
 </html>

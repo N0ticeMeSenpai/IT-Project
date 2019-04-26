@@ -27,6 +27,7 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
 <!DOCTYPE html>
 <html>
 <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/custom.css">
 	<link rel="stylesheet" type="text/css" href="css/notification.css">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min2.css">
@@ -34,7 +35,6 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
 	<link rel="stylesheet" type="text/css" href="css/navigation2.css">
 	<link rel="stylesheet" type="text/css" href="css/dashboard.css">
 	<link rel="stylesheet" type="text/css" href="css/footer.css">
-	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<title></title>
@@ -79,7 +79,7 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
 	          	echo count_delinquent() 
 	          	?>
 	          </div>
-	          <a class="circle-tile-footer" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+	          <a class="circle-tile-footer" href="ListOfDelinquent.php">More Info<i class="fa fa-chevron-circle-right"></i></a>
 	        </div>
 	      </div>
 	    </div>
@@ -92,7 +92,7 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
 	          	echo count_ActiveClient() 
 	          	?>	
 	          </div>
-	          <a class="circle-tile-footer" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+	          <a class="circle-tile-footer" href="SORActiveAccount.php">More Info<i class="fa fa-chevron-circle-right"></i></a>
 	        </div>
 	      </div>
 	    </div>
@@ -133,26 +133,17 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
 	    </div>
 	  </div>
 	</div>
-	<div class="footer-bottom">
-	    <div class="container">
-	    	<div class="row">
-	    		<div class="col-sm-6 ">
+	<footer>
+		<div class="footer-bottom">
+		    <div class="container">
+	    		<div class="text-center ">
 	    			<div class="copyright-text">
 	    				<p>CopyRight © 2019 Sigma All Rights Reserved</p>
 	    			</div>
 	    		</div> <!-- End Col -->
-	    		<div class="col-sm-6">							
-	    			<ul class="social-link pull-right">
-	    				<li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>						
-	    				<li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-	    				<li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-	    				<li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-	    				<li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-	    			</ul>							
-	    		</div> <!-- End Col -->
-	    	</div>
-	    </div>
-	</div>
+		    </div>
+		</div>
+	</footer>
 </div>
 </body>
 </html>

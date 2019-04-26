@@ -78,15 +78,16 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
 				<h2><i class="fa fa-angle-right"></i> CLIENT PERSONAL INFORMATION </h2>
 				<!-- WALANG present_address,  -->
 			    <form action="ClientAddAction.php" method="POST">
-			    
 				    <div class="row">
-			    		<div class="col-lg-6">
+			    		<div class="col-lg-4">
 			    			<input type="text" placeholder="Firstname" name="first_name" id="first_name" pattern="{1,}" required>
 			    		</div>
-						
-			    		<div class="col-lg-6">
-			    			<input type="text" placeholder="Lastname" name="last_name" id="last_name" pattern="{1,}" required>
+			    		<div class="col-lg-4">
+			    			<input type="text" placeholder="Middlename" name="middle_name" id="middle_name" pattern="{1,}" required>
 			    		</div>	
+			    		<div class="col-lg-4">
+			    			<input type="text" placeholder="Lastname" name="last_name" id="last_name" pattern="{1,}" required>
+			    		</div>							
 			    	</div>
 			    	<div class="row">
 			    		<div class="col-lg-4">
@@ -101,20 +102,9 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
 			    		</div>
 			    	</div>
 			    	<div class="row">
-			    		<div class="col-lg-6">
+			    		<div class="col-lg-12">
 			    			<input  placeholder="Requested amount" name="requested_amount" id="requested_amount" type="number" min="1000" step="1000" max="999999999" required>
-			    		</div>			    	 
-			    		<div class="col-lg-3">
-			    			<input type="date" name="registered_date" id="registered_date" required>
 			    		</div>
-						
-                        <div class="col-lg-3">
-                            <select name="loan_type">
-                            	<option selected disabled>---- Loan Type? ----</option>
-                                <option>Business</option>
-                                <option>Salary</option>
-                            </select>
-                        </div>
 			    	</div>
 					
 			    	<h2><i class="fa fa-angle-right"></i> CLIENT WORK INFORMATION </h2>
@@ -144,10 +134,13 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
 				    	<h2 class="mb">CO BORROWER PERSONAL 1 INFORMATION</h2>
 						
 				    	<div class="row">
-				    		<div class="col-lg-6">
+				    		<div class="col-lg-4">
 				    			<input type="text" placeholder="Firstname" name="co_first_name_one" id="co_first_name_one" pattern="{1,}" required>
 				    		</div>
-				    		<div class="col-lg-6">
+				    		<div class="col-lg-4">
+				    			<input type="text" placeholder="Middlename" name="co_middle_name_one" id="co_middle_name_one" pattern="{1,}" required>
+				    		</div>
+				    		<div class="col-lg-4">
 				    			<input type="text" placeholder="Lastname" name="co_last_name_one" id="co_last_name_one" pattern="{1,}" required>
 				    		</div>	
 				    	</div>
@@ -164,7 +157,7 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
 							</div>
 				    	</div>
 						
-				    	<h2><i class="fa fa-angle-right"></i> CO BORROWER 2 WORK INFORMATION </h2>
+				    	<h2><i class="fa fa-angle-right"></i> CO BORROWER 1 WORK INFORMATION </h2>
 						
 				    	<div class="row">
 				    		<div class="col-lg-6">
@@ -192,10 +185,13 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
 				    	<h2 class="mb">CO BORROWER PERSONAL 2 INFORMATION</h2>
 						
 				    	<div class="row">
-				    		<div class="col-lg-6">
+				    		<div class="col-lg-4">
 				    			<input type="text" placeholder="Firstname" name="co_first_name_two" id="co_first_name_two" pattern="{1,}" required>
 				    		</div>
-				    		<div class="col-lg-6">
+				    		<div class="col-lg-4">
+				    			<input type="text" placeholder="Middlename" name="co_middle_name_two" id="co_middle_name_two" pattern="{1,}" required>
+				    		</div>
+				    		<div class="col-lg-4">
 				    			<input type="text" placeholder="Lastname" name="co_last_name_two" id="co_last_name_two" pattern="{1,}" required>
 				    		</div>	
 				    	</div>
@@ -208,7 +204,7 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
 								<input type="text" placeholder="Relation" name="related_client_two" id="related_client_two" pattern="{1,}" required>
 						   </div>
 							<div class="col-lg-3">
-							    <input placeholder="Contact number" type="text" name="co_contact_no" id="co_contact_no" required>
+							    <input placeholder="Contact number" type="text" name="co_contact_no_two" id="co_contact_no_two" required>
 							</div>
 				    	</div>
 						
@@ -244,27 +240,18 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
 			  </div>
 			</div>
 		</div>
-		<div class="footer-bottom">
-		    <div class="container">
-		    	<div class="row">
-		    		<div class="col-sm-6 ">
-		    			<div class="copyright-text">
-		    				<p>CopyRight © 2019 Sigma All Rights Reserved</p>
-		    			</div>
-		    		</div> <!-- End Col -->
-		    		<div class="col-sm-6">							
-		    			<ul class="social-link pull-right">
-		    				<li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>						
-		    				<li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-		    				<li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-		    				<li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-		    				<li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-		    			</ul>							
-		    		</div> <!-- End Col -->
-		    	</div>
-		    </div>
-		</div>
 	</div>
 </body>
+<footer>
+	<div class="footer-bottom">
+	    <div class="container">
+    		<div class="text-center ">
+    			<div class="copyright-text">
+    				<p>CopyRight © 2019 Sigma All Rights Reserved</p>
+    			</div>
+    		</div> <!-- End Col -->
+	    </div>
+	</div>
+</footer>
 </html>
 

@@ -9,6 +9,9 @@
 .u-text2{
 	border:none;
 	border-bottom: 1px solid #CCC;
+  background-color: #ddd0;
+  outline: none;
+  width: 100%;
 
 }
 .u-text3{
@@ -22,7 +25,9 @@
   color: white!important;
 }
 
-
+.centered{
+  text-align: center;
+}
 
 .pad{
 	padding:10px;
@@ -132,6 +137,10 @@ a{
 }
 
 
+.p-u{
+  padding-bottom: 5rem;
+}
+
 .b-2{
     font-family: "Roboto", sans-serif;
     text-transform: uppercase;
@@ -168,6 +177,10 @@ a{
   width: 25%;
 }
 
+.pad-85{
+  padding-bottom: 85px;
+}
+
 .backside{
   text-align:center;
   line-height: 4;
@@ -177,3 +190,5 @@ a{
   padding-left: 18rem;
 
 }
+
+

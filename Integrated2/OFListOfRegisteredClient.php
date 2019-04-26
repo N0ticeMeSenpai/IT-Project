@@ -82,11 +82,6 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
             <hr>
             <h3>Salary Account</h3>
             <hr>
-
-            <form action="OFSearchRegisteredSalaryClient.php" method="post">
-                <input type="text" name="searchRegisteredSalary" placeholder="Search Client Name">
-                <button type="submit" name="submit_RegisteredSalary">Search</button>
-            </form>
             <br><br>
 
             <table class="table">
@@ -95,9 +90,8 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
                         <th class="my-bg">Account Name</th>
                         <th class="my-bg">Contact Number</th>
                         <th class="my-bg">Credit Type</th>
-                        <th class="my-bg">Bank Address</th>
-                        <th class="my-bg">Bank / Institution</th>
                         <th class="my-bg">Loan Balance</th>
+                        <th class="my-bg">Remaining Balance</th>
                         <th class="my-bg">Date Booked</th>
                         <th class="my-bg">Maturity Date</th>
                     </tr>
@@ -108,15 +102,22 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
 
                     ?>
             </table>
+                <div class="row">
+                    <div class="col">
+                        <div class="pagination-wrap pull-right">
+                            <ul class="pagination pagination-v3">
+                            <?php
+                                echo page_SalaryClientRegistered();
+
+                            ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
             <hr>
             <h3>Business Account</h3>
             <hr>
-
-            <form action="OFSearchRegisteredBusinessClient.php" method="post">
-                <input type="text" name="searchRegisteredBusiness" placeholder="Search Client Name">
-                <button type="submit" name="submit_RegisteredBusiness">Search</button>
-            </form>
             <br><br>
 
             <table class="table">
@@ -125,9 +126,8 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
                         <th class="my-bg">Account Name</th>
                         <th class="my-bg">Contact Number</th>
                         <th class="my-bg">Credit Type</th>
-                        <th class="my-bg">Bank Address</th>
-                        <th class="my-bg">Bank / Institution</th>
                         <th class="my-bg">Loan Balance</th>
+                        <th class="my-bg">Remaining Balance</th>
                         <th class="my-bg">Date Booked</th>
                         <th class="my-bg">Maturity Date</th>
                     </tr>
@@ -139,27 +139,30 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
                     ?>
 
             </table>
-        </div>
-          <div class="footer-bottom">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-6 ">
-                  <div class="copyright-text">
-                    <p>CopyRight © 2019 Sigma All Rights Reserved</p>
-                  </div>
-                </div> <!-- End Col -->
-                <div class="col-sm-6">              
-                  <ul class="social-link pull-right">
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>           
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                  </ul>             
-                </div> <!-- End Col -->
-              </div>
+           <div class="row">
+                <div class="col">
+                    <div class="pagination-wrap pull-right">
+                        <ul class="pagination pagination-v3">
+                        <?php
+                            echo page_BusinessClientRegistered();
+
+                        ?>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
+        <footer>
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="text-center ">
+                        <div class="copyright-text">
+                            <p>CopyRight © 2019 Sigma All Rights Reserved</p>
+                        </div>
+                    </div> <!-- End Col -->
+                </div>
+            </div>
+        </footer>
     </div>
 
     <script type="text/javascript" src="js/Table.js"></script>

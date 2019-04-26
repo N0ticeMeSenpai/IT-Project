@@ -34,7 +34,7 @@ if(isset($_POST['login'])){
                     break;
             }
         }else{
-            $error='Your Username or Password are not Found';
+            $error='Your Username or Password is not Found';
         }
 }
 ?>
@@ -55,13 +55,13 @@ if(isset($_POST['login'])){
                     <div class="form">
                        
                         <img class="my-img pb-3" src="img/sigma.png">
+                        <div style="color: red;"><?php if(isset($error)){ echo $error; }?></div>
                         <form class="login-form" method="POST">
                             <input type="text" placeholder="username" name="username" required/>
                             <input type="password" placeholder="password" name="password" required/>
                             
                             <button name="login" >login</button>
                         </form>
-                        <?php if(isset($error)){ echo $error; }?>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@
   include 'OFFunction.php';
   include 'notification_fetch.php'; 
   include 'navigation.php';
+  include 'DelinquentUpdate.php';
 
 ?>
 <?php
@@ -36,9 +37,9 @@ if(isset($_SESSION['user'])) {
     <link rel="stylesheet" type="text/css" href="css/navigation2.css">
     <link rel="stylesheet" type="text/css" href="css/dashboard.css">
     <link rel="stylesheet" type="text/css" href="css/footer.css">
-    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <script src="js/jquery.min.js"></script>
+    <script src="js/ajax.js"></script>
     <script src="js/bootstrap.min.js"></script>
+
 
     <title>Active Legal Account</title>
 
@@ -80,11 +81,6 @@ if(isset($_SESSION['user'])) {
             <hr>
             <h3>Salary Account</h3>
             <hr>
-
-            <form action="SORSearchActiveLegalAccountSalary.php" method="post">
-                <input type="text" name="searchActiveLegalAccountSalary" placeholder="Search Client Name">
-                <button type="submit" name="submit_ActiveLegalAccountSalary">Search</button>
-            </form>
             <br><br>
 
             <table class="table">
@@ -121,11 +117,6 @@ if(isset($_SESSION['user'])) {
                     <hr>
                 </div>
             </div>
-
-            <form action="SORSearchActiveLegalAccountBusiness.php" method="post">
-                <input type="text" name="searchActiveLegalAccountBusiness" placeholder="Search Client Name">
-                <button type="submit" name="submit_ActiveLegalAccountBusiness">Search</button>
-            </form>
             <br><br>
 
             <table class="table">
@@ -157,26 +148,17 @@ if(isset($_SESSION['user'])) {
                 </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-6 ">
+        <footer>
+          <div class="footer-bottom">
+              <div class="container">
+                <div class="text-center ">
                   <div class="copyright-text">
                     <p>CopyRight © 2019 Sigma All Rights Reserved</p>
                   </div>
                 </div> <!-- End Col -->
-                <div class="col-sm-6">              
-                  <ul class="social-link pull-right">
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>           
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                  </ul>             
-                </div> <!-- End Col -->
               </div>
-            </div>
-        </div>
+          </div>
+        </footer>
     </div>
     <button onclick="document.getElementById('id01').style.display='block'" class="reports"><img src="img/report.png" width="30px"></button>
     
@@ -211,10 +193,71 @@ if(isset($_SESSION['user'])) {
                 </div>
             </div>
         </div>
+                <!-- Modal Update-->
+        <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update Delinquent Status</h4>
+              </div>
+              <div class="modal-body">
+                  <select id="status" class="form-control">
+                    <option selected disabled>---- status ----</option>
+                    <option>Active</option>
+                    <option>Inactive</option>
+                    <option>Legal</option>
+                  </select>
+                  <input type="hidden" id="ClientId" class="form-control">
+              </div>
+              <div class="modal-footer">
+                <a href="SORActiveLegalAccount.php" id="save" class="btn btn-primary pull-right">Update</a>
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
 
     <script type="text/javascript" src="js/Table.js"></script>
     <script type="text/javascript" src="js/modal.js"></script>
     <script type="text/javascript" src="js/custom.js"></script>
+    <script>
+      $(document).ready(function(){
+
+        //  append values in input fields
+          $(document).on('click','a[data-role=update]',function(){
+                var id  = $(this).data('id');
+                var status  = $('#'+id).children('td[data-target=status]').text();
+
+                $('#status').val(status);
+                $('#ClientId').val(id);
+                $('#myModal').modal('toggle');
+          });
+
+          // now create event to get data from fields and update in database 
+
+           $('#save').click(function(){
+              var id  = $('#ClientId').val(); 
+              var status =  $('#status').val();
+
+              $.ajax({
+                  url      : 'DelinquentUpdate.php',
+                  method   : 'post',  
+                  data     : {id: id, status:status},
+
+                  success  : function(response){
+                                // now update user record in table 
+                                 $('#'+id).children('td[data-target=status]').text(status);
+                                 $('#myModal').modal('toggle'); 
+
+                             }
+              });
+           });
+      });
+    </script>
 </body>
 
 </html>

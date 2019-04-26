@@ -754,6 +754,7 @@ label {
 }
 */
 .form-control {
+    color: #ffffff;
     background-color: #090909 !important;
     background-image: none;
     border: none;
@@ -1035,7 +1036,7 @@ Image credits: unsplash.com
 /*******************************/
 footer,.footer {
     background: #1e1e1e;
-    min-height: 350px;
+    min-height: 295px;
     font-family: 'Open Sans', sans-serif;
 }
 .footerleft { margin-top:50px; padding:0 36px; }

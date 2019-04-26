@@ -19,18 +19,13 @@ function navigate_it()
                                     <li><a href="SORActiveLegalAccount.php">Active Legal Account</a></li>
                                     <li><a href="SORDelinquentAccount.php">Deliquent Account</a></li>
                                     <li><a href="SummaryOfBookings.php">Summary of Bookings</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="OPListOfPendingClient.php">List Of Pending</a></li>
-                                    <li><a href="ListOfDelinquents.php">List Of Delinquents</a></li>
                                 </ul>
                             </li>
                             <li class="col-lg-4">
                                 <ul>
-                                    <li class="dropdown-header">Plus</li>
-                                    <li><a href="#">Navbar Inverse</a></li>
-                                    <li><a href="#">Pull Right Elements</a></li>
-                                    <li><a href="#">Coloured Headers</a></li>                            
-                                    <li><a href="#">Primary Buttons & Default</a></li>                          
+                                    <li class="dropdown-header">Others</li>
+                                    <li><a href="OPListOfPendingClient.php">List Of Pending</a></li>
+                                    <li><a href="ListOfDelinquents.php">List Of Delinquents</a></li>             
                                 </ul>
                             </li>
                         </ul>               
@@ -53,18 +48,13 @@ function navigate_it()
                                     <li><a href="SORActiveLegalAccount.php">Active Legal Account</a></li>
                                     <li><a href="SORDelinquentAccount.php">Deliquent Account</a></li>
                                     <li><a href="SummaryOfBookings.php">Summary of Bookings</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="OFListOfRegisteredClient.php">Client Registered</a></li>
-                                    <li><a href="ListOfDelinquents.php">List Of Delinquents</a></li>
                                 </ul>
                             </li>
                             <li class="col-lg-6">
                                 <ul>
-                                    <li class="dropdown-header">Plus</li>
-                                    <li><a href="#">Navbar Inverse</a></li>
-                                    <li><a href="#">Pull Right Elements</a></li>
-                                    <li><a href="#">Coloured Headers</a></li>                            
-                                    <li><a href="#">Primary Buttons & Default</a></li>                          
+                                    <li class="dropdown-header">Others</li>
+                                    <li><a href="OFListOfRegisteredClient.php">Client Registered</a></li>
+                                    <li><a href="ListOfDelinquents.php">List Of Delinquents</a></li>                         
                                 </ul>
                             </li>
                         </ul>               
@@ -87,11 +77,11 @@ function navigate_it()
 
     if($_SESSION['user']['em_position']=='Operations Manager'){
 
-    $output.='   <li><a href="Search.php"><img src="img/search2.png" width="15px"></a></li>
+    $output.='   <li><a href="searchAll.php"><img src="img/search2.png" width="15px"></a></li>
                     <li class="dropdown">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"><img src="img/add.png" width="15px"><b class="caret"></b></a>
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"><img src="img/setting.png" width="15px"><b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="ChangePassword.php">Change Password</a></li>
+                                <li><a href="Usermanagement.php">Manage User</a></li>
                                 <li><a href="logout.php">Logout</a></li>
                             </ul>
                         </li>';
@@ -99,12 +89,11 @@ function navigate_it()
     
     }elseif ($_SESSION['user']['em_position']=='Office Staff') {
 
-        $output.='  <li><a href="Search.php"><img src="img/search2.png" width="15px"></a></li>
+        $output.='  <li><a href="searchAll.php"><img src="img/search2.png" width="15px"></a></li>
                     <li class="dropdown">
-                        <a href="#" data-toggle="dropdown" class="dropdown-toggle"><img src="img/add.png" width="15px"><b class="caret"></b></a>
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle"><img src="img/setting.png" width="15px"><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="ClientAdd.php">Add a Client</a></li>
-                            <li><a href="ChangePassword.php">Change Password</a></li>
                             <li><a href="logout.php">Logout</a></li>
                         </ul>
                     </li>';

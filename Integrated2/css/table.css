@@ -15,7 +15,6 @@ tr:nth-child(even) {
 }
 
 td:hover{
-  background-color: #cbe6ce;
   text-decoration: none;
   color: #000000;
 }
@@ -25,4 +24,10 @@ td:hover{
 }
 td.none:hover{
   background-color: white !important;
+}
+
+.hidden-td{
+
+    display: none;
+
 }

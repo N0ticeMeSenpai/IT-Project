@@ -78,13 +78,12 @@ if(isset($_SESSION['user'])) {
             <h2 class="p-5 text-center">List of Pending Clients</h2>
 
             <hr>
-            <a href="OPListOfPendingClient.php" class="btn btn-primary" style="float:right;">Back</a>
             <h3>Salary Account</h3>
             <hr>
 
             <br><br>
 
-            <table>
+            <table class="table">
                 <thead class="text-white">
                     <tr>
                         <th class="my-bg">First Name</th>
@@ -137,27 +136,17 @@ if(isset($_SESSION['user'])) {
             </table>
 
         </div>
-        <div class="footer-bottom">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-6 ">
-                  <div class="copyright-text">
-                    <p>CopyRight © 2019 Sigma All Rights Reserved</p>
-                  </div>
-                </div> <!-- End Col -->
-                <div class="col-sm-6">              
-                  <ul class="social-link pull-right">
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>           
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                    <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                  </ul>             
-                </div> <!-- End Col -->
-              </div>
+        <footer>
+            <div class="footer-bottom">
+                <div class="container">
+                  <div class="text-center ">
+                    <div class="copyright-text">
+                      <p>CopyRight © 2019 Sigma All Rights Reserved</p>
+                    </div>
+                  </div> <!-- End Col -->
+                </div>
             </div>
-        </div>
-    </div>
+        </footer>
 
     <script type="text/javascript" src="js/Table.js"></script>
     <script type="text/javascript" src="js/modal.js"></script>

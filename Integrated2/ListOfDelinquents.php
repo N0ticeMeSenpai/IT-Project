@@ -30,7 +30,7 @@ if(isset($_SESSION['user'])) {
     <link rel="stylesheet" type="text/css" href="css/navigation.css">
     <link rel="stylesheet" type="text/css" href="css/navigation2.css">
     <link rel="stylesheet" type="text/css" href="css/dashboard.css">
-  <link rel="stylesheet" type="text/css" href="css/footer.css">
+    <link rel="stylesheet" type="text/css" href="css/footer.css">
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -98,7 +98,7 @@ if(isset($_SESSION['user'])) {
                 <?php 
                     $conn=mysqli_connect('localhost','root','','sigma');
 
-                    $query = "SELECT client.client_id as id from loan
+                    $query = "SELECT loan.loan_id as id from loan
                               inner join client on client.client_id = loan.client_id
                               inner join payment on payment.loan_id = loan.loan_id
                               inner join co_borrower on client.client_id = co_borrower.client_id
@@ -108,11 +108,12 @@ if(isset($_SESSION['user'])) {
 
                     while ($id = mysqli_fetch_assoc($result)) {
 
-                              $query1 = "SELECT client.client_id as client,concat(first_name,' ',last_name) as `account_name`,
-                           remaining_balance, maturity_date from loan
-                          inner join client on client.client_id = loan.client_id
-                          inner join payment on payment.loan_id = loan.loan_id
-                              WHERE client.client_id = ".$id['id']."  group by client.client_id";
+                              $query1 = "SELECT loan.loan_id as loan, client.client_id 
+                              as client,concat(first_name,' ',last_name) as `account_name`,
+                              remaining_balance, maturity_date from loan
+                              inner join client on client.client_id = loan.client_id
+                              inner join payment on payment.loan_id = loan.loan_id
+                              WHERE client.client_id = ".$id['id']." group by loan.loan_id";
 
                        $result1 = mysqli_query($conn, $query1);
                         
@@ -121,6 +122,7 @@ if(isset($_SESSION['user'])) {
                               ?>
                                     <tr>  
                                         <td><a href="Profile.php?client_id=<?php echo $row["client"] ?>"><?php echo $row["account_name"] ?></a></td>
+                                       
                                        <?php 
                                         $forCoBorrower = "SELECT co_borrower_id,concat(co_first_name,co_last_name) as name from co_borrower WHERE client_id ='".$row['client']."'";
                                         $coBorrower = mysqli_query($conn, $forCoBorrower);
@@ -130,7 +132,15 @@ if(isset($_SESSION['user'])) {
                                           <td><a href="co_profile.php?co_borrower_id=<?php echo $output["co_borrower_id"]?> "> <?php echo $output['name']?></a> </td>
 
                                        <?php } ?>
-                                        <td><?php echo $row["remaining_balance"]?></td> 
+                                       <?php
+
+                                       $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id=".$row['loan']."";
+
+                                        $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
+                                        $remaining = $rowRemain['rb'];
+
+                                       ?>
+                                        <td><?php echo $remaining?></td> 
                                         <td><?php echo $row["maturity_date"]?></td>
                                    </tr>
 
@@ -141,26 +151,17 @@ if(isset($_SESSION['user'])) {
                     
             </table>
         </div>
-        <div class="footer-bottom">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-6 ">
-                <div class="copyright-text">
-                  <p>CopyRight © 2019 Sigma All Rights Reserved</p>
-                </div>
-              </div> <!-- End Col -->
-              <div class="col-sm-6">              
-                <ul class="social-link pull-right">
-                  <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>           
-                  <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                  <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                  <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                  <li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-                </ul>             
-              </div> <!-- End Col -->
-            </div>
+      <footer>
+          <div class="footer-bottom">
+              <div class="container">
+                  <div class="text-center ">
+                      <div class="copyright-text">
+                          <p>CopyRight © 2019 Sigma All Rights Reserved</p>
+                      </div>
+                  </div> <!-- End Col -->
+              </div>
           </div>
-      </div>
+      </footer>
     </div>
     <script type="text/javascript" src="js/Table.js"></script>
     <script type="text/javascript" src="js/modal.js"></script>

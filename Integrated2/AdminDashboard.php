@@ -80,7 +80,7 @@ if($_SESSION['user']['em_position']=='Office Staff'){
 	          	echo count_delinquent() 
 	          	?>
 	          </div>
-	          <a class="circle-tile-footer" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+	          <a class="circle-tile-footer" href="ListOfDelinquents.php">More Info<i class="fa fa-chevron-circle-right"></i></a>
 	        </div>
 	      </div>
 	    </div>
@@ -93,7 +93,7 @@ if($_SESSION['user']['em_position']=='Office Staff'){
 	          	echo count_ActiveClient() 
 	          	?>	
 	          </div>
-	          <a class="circle-tile-footer" href="#">More Info<i class="fa fa-chevron-circle-right"></i></a>
+	          <a class="circle-tile-footer" href="SORActiveAccount.php">More Info<i class="fa fa-chevron-circle-right"></i></a>
 	        </div>
 	      </div>
 	    </div>
@@ -134,26 +134,17 @@ if($_SESSION['user']['em_position']=='Office Staff'){
 	    </div>
 	  </div>
 	</div>
-	<div class="footer-bottom">
-	    <div class="container">
-	    	<div class="row">
-	    		<div class="col-sm-6 ">
+	<footer>
+		<div class="footer-bottom">
+		    <div class="container">
+	    		<div class="text-center ">
 	    			<div class="copyright-text">
 	    				<p>CopyRight © 2019 Sigma All Rights Reserved</p>
 	    			</div>
 	    		</div> <!-- End Col -->
-	    		<div class="col-sm-6">							
-	    			<ul class="social-link pull-right">
-	    				<li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>						
-	    				<li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-	    				<li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-	    				<li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-	    				<li><a href=""><span class="glyphicon glyphicon-heart-empty"></span></a></li>
-	    			</ul>							
-	    		</div> <!-- End Col -->
-	    	</div>
-	    </div>
-	</div>
+		    </div>
+		</div>
+	</footer>
 </div>
 </body>
 </html>
