@@ -1,6 +1,26 @@
 <?php
+      include 'notification_fetch.php'; 
+      include 'navigation.php';
 	include 'EditPaymentAction.php';
     $loan_idforR = mysqli_real_escape_string($db,$_POST['loan_idforR']);
+
+?>
+<?php
+session_start();
+//Checking User Logged or Not
+if(empty($_SESSION['user'])){
+    header('location:Login.php');
+}
+
+
+//timeout after 5 sec
+if(isset($_SESSION['user'])) {
+    if((time() - $_SESSION['last_time']) > 1800) {
+      header("location:logout.php");  
+    }
+}
+
+header('Cache-Control: no cache');
 
 ?>
 
@@ -8,20 +28,60 @@
 <html lang="en">
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <!-- OJT PROJECT CSS-->
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <!-- Custom styles for this template -->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/style-responsive.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min2.css">
     <link rel="stylesheet" type="text/css" href="css/custom.css">
     <link rel="stylesheet" type="text/css" href="css/table.css">
     <link rel="stylesheet" type="text/css" href="css/modal.css">
+    <link rel="stylesheet" type="text/css" href="css/notification.css">
+    <link rel="stylesheet" type="text/css" href="css/navigation.css">
+    <link rel="stylesheet" type="text/css" href="css/footer.css">
     <link rel="stylesheet" type="text/css" href="css/navigation2.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/test.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 
     <title>Edit Payment</title>
+
+</head>
+<body>
+    <nav id="myNavbar" class="navbar nav-color" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="dashboard.php">SIGMA</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <?php
+                echo navigate_it()
+              ?>
+                <ul class="nav navbar-nav navbar-right">
+                   <li><a href="notification.php">
+                              <?php
+                              if(count_data() > '0'){
+                                echo count_data();
+                              }
+                             ?>
+                            <img src="img/notifications-button.png" width="15px">
+                        </a></li>
+                  <?php
+                    echo navigate_right();
+
+                  ?>
+                </ul>
+            </div>
+        </div>
+    </nav>
 <div class="container">
 
             <h2 class="p-5 text-center">History of Transactions</h2>
@@ -30,8 +90,7 @@
             <table>
                     <thead class="text-white">
                         <tr>
-                        <th class="my-bg">Remaining Balance</th>
-                        <th class="my-bg" width="10%"><?php echo $loan_idforR ?></th>
+                        <th class="my-bg" width="10%">Date Paid</th>
                         <th class="my-bg">Amount Paid</th>
                         <th class="my-bg">Payment Type</th>
                         <th class="my-bg">Account Number</th>
@@ -39,6 +98,7 @@
                         <th class="my-bg">Ref Number</th>
                         <th class="my-bg">Interest</th>
                         <th class="my-bg">Fines</th>
+                        <th class="my-bg">Other Income</th>
                         <th class="my-bg" width="30%">Remarks</th>
                         <th class="my-bg">Status</th>
                         <th class="my-bg">Action</th>
@@ -47,10 +107,9 @@
   
   <!-- populate table from mysql database -->
                 <?php
-                $paymentInfo = mysqli_query($db, "SELECT payment_info_id,payment.remaining_balance, payment_info.payment_id, payment.due_date, payment.loan_id, payment_info.date_paid, payment_info.amount_paid, payment_info.payment_type, payment_info.account_number, payment_info.check_no, payment_info.ref_no, payment_info.interest, payment_info.fines, payment_info.remarks, payment_info.status FROM payment INNER JOIN payment_info ON payment_info.payment_id=payment.payment_id WHERE loan_id=".$loan_idforR."");
+                $paymentInfo = mysqli_query($db, "SELECT other_income,payment_info_id,payment.remaining_balance, payment_info.payment_id, payment.due_date, payment.loan_id, payment_info.date_paid, payment_info.amount_paid, payment_info.payment_type, payment_info.account_number, payment_info.check_no, payment_info.ref_no, payment_info.interest, payment_info.fines, payment_info.remarks, payment_info.status FROM payment INNER JOIN payment_info ON payment_info.payment_id=payment.payment_id WHERE loan_id=".$loan_idforR."");
                 while($row = mysqli_fetch_array($paymentInfo)) { ?>
                 <tr>
-                    <td><?php echo $row['remaining_balance'];?></td>
                     <td><?php echo $row['date_paid'];?></td>
                     <td><?php echo $row['amount_paid'];?></td>
                     <td><?php echo $row['payment_type'];?></td>
@@ -59,6 +118,7 @@
                     <td><?php echo $row['ref_no'];?></td>
                     <td><?php echo $row['interest'];?></td>
                     <td><?php echo $row['fines'];?></td>
+                     <td><?php echo $row['other_income'];?></td>
                     <td><?php echo $row['remarks'];?></td>
                     <td><?php echo $row['status'];?></td>
                     <td>
@@ -72,21 +132,18 @@
                 <?php } ;?>
             </table>
         </div>
-        
-    <!-- OJT PROJECT CSS-->
-    <!-- Bootstrap core CSS -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
-    <!--external css-->
-    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
 
-    <!-- Custom styles for this template -->
-    <link href="assets/css/style.css" rel="stylesheet">
-    <link href="assets/css/style-responsive.css" rel="stylesheet">
-</head>
-
-<body>
-                   
-
+        <footer>
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="text-center ">
+                        <div class="copyright-text">
+                            <p>CopyRight © 2019 Sigma All Rights Reserved</p>
+                        </div>
+                    </div> <!-- End Col -->
+                </div>
+            </div>
+        </footer>
     <!-- js placed at the end of the document so the pages load faster -->
     <script src="assets/js/jquery.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>

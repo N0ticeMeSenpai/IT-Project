@@ -138,7 +138,6 @@ function Business_ActiveAccount(){
                               $row1 = mysqli_fetch_assoc(mysqli_query($conn,$query1));
 
                     $output .=  '<td>'.$row1["remarks"].'</td>
-                            <td><a href="#" data-role="update" data-id='. $row['client_id'] .'>Update</a></td>
                             <td class= "hidden-td" data-target="status">'.$row["delinquent_status"].'</td>
                         </tr>';
                   }

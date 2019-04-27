@@ -21,6 +21,9 @@ if(isset($_SESSION['user'])) {
 
 ?>
 <?php
+
+    header('Cache-Control: no cache');
+
     $con = mysqli_connect('127.0.0.1','root','');
     
     if(!$con){
@@ -38,14 +41,13 @@ if(isset($_SESSION['user'])) {
     $resultCheck = mysqli_num_rows($result1);
     $ctr = 0;
 
-
       
 ?>        
     <!DOCTYPE html>
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min2.css">
   <link rel="stylesheet" type="text/css" href="css/custom.css">
@@ -54,6 +56,7 @@ if(isset($_SESSION['user'])) {
   <link rel="stylesheet" type="text/css" href="css/notification.css">
   <link rel="stylesheet" type="text/css" href="css/navigation.css">
   <link rel="stylesheet" type="text/css" href="css/navigation2.css">
+  <link rel="stylesheet" type="text/css" href="css/footer.css">
   <script type="text/javascript" src="js/test.js"></script>
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
@@ -61,7 +64,7 @@ if(isset($_SESSION['user'])) {
   <title></title>
 </head>
 <body>
-  <div class="container-fluid no-padding">
+  <div class="no-padding">
     <nav id="myNavbar" class="navbar nav-color" role="navigation">
         <div class="container">
             <div class="navbar-header">
@@ -155,7 +158,7 @@ if(isset($_SESSION['user'])) {
                             if($resultCheckBalance > 0){
                                 While ($rowUpdateBalance = mysqli_fetch_assoc($resultUpdateBalance)){
 
-                                    $sqlUpdate = "UPDATE payment SET remaining_balance=(SELECT (loan_balance+SUM(fines)+SUM(interest)-(SUM(amount_paid))) as remaining_balance FROM (SELECT * FROM payment) AS `payment` JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE due_date <= '".$rowUpdateBalance['due_date']."' && payment.loan_id='".$row1['loan_id']."' && status='updated') WHERE loan_id='".$row1['loan_id']."' && due_date='".$rowUpdateBalance['due_date']."'";
+                                    $sqlUpdate = "UPDATE payment SET remaining_balance=(SELECT (loan_balance+SUM(fines)+SUM(interest)+SUM(other_income)-(SUM(amount_paid))) as remaining_balance FROM (SELECT * FROM payment) AS `payment` JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE due_date <= '".$rowUpdateBalance['due_date']."' && payment.loan_id='".$row1['loan_id']."' && status='updated') WHERE loan_id='".$row1['loan_id']."' && due_date='".$rowUpdateBalance['due_date']."'";
 
                                      if (!mysqli_query($con,$sqlUpdate)) {
                                     echo "Error: " . mysqli_error($con);
@@ -192,7 +195,7 @@ if(isset($_SESSION['user'])) {
 
         </select>
         <h2 class="p-3">Date paid</h2>
-        <input class="i-2" type="input" name="date" placeholder="Date"><br>
+        <input class="i-2" type="date" name="date" placeholder="Date"><br>
         <h2 class="p-3">Amount paid</h2>
         <input class="i-2" type="input" name="payment" placeholder="Payment"><br>
           <h2 class="p-3">Type of Payment</h2>
@@ -226,9 +229,10 @@ if(isset($_SESSION['user'])) {
             <p>                           
             <div class="row">
                 <div class="col-lg-3">
-                    <p> Name: <a href="Profile.php?client_id=<?php echo $row2["client_id"]?> "> 
+                    <p><strong> Name:</strong> <a href="Profile.php?client_id=<?php echo $row2["client_id"]?> "> 
                       <?php echo $row2['first_name'] ,' ',$row2['middle_name'], ' ', $row2['last_name']; ?></a></p>
                 </div>
+                <?php if($_SESSION['user']['em_position']=='Operations Manager'){ ?>
                 <div class="col-lg-4">
                     <form method="post" action="restructure.php">
                        <input type="hidden" name="loan_idforR" value='<?php echo $row1['loan_id']; ?>' />
@@ -251,10 +255,14 @@ if(isset($_SESSION['user'])) {
                     </form>
                 
                 </div>
+              <?php }?>
             </div>
-            
-            <p>Date Booked: <?php echo $row1['date_booked']; ?> <span>Bi-Monthly Payment: <?php echo $row1['bi_monthly']; ?></span>
-            <span class="float-right">Maturity Date: <?php echo $row1['maturity_date']; ?></span></p>
+
+            <div class="row">
+              <div class="col-lg-4"><strong>Date Booked: </strong><?php echo $row1['date_booked']; ?></div>
+              <div class="col-lg-4"><span><strong>Bi-Monthly Payment:</strong> <?php echo $row1['bi_monthly']; ?></span></div>
+              <div class="col-lg-4"><span class="pull-right"><strong>Maturity Date:</strong>  <?php echo $row1['maturity_date']; ?></span></div>
+            </div>
            <thead class="text-white">
             <tr>
               <th class="my-bg">Date</th>
@@ -264,7 +272,8 @@ if(isset($_SESSION['user'])) {
               <th class="my-bg">Interest</th>
               <th class="my-bg">Fines</th>
               <th class="my-bg">Balance</th>
-              <th class="my-bg"></th>
+              <th class="my-bg">Other Income</th>
+              <th class="my-bg">Action</th>
 
             </tr>
           </thead>
@@ -273,7 +282,7 @@ if(isset($_SESSION['user'])) {
                 $resultCheck1 = mysqli_num_rows($result3);
                 if($resultCheck1 > 0){
                     While ($row3 = mysqli_fetch_assoc($result3)){
-                        $sqlForPayInfo = "SELECT GROUP_CONCAT(payment_type) as payment_type,GROUP_CONCAT(check_no) as check_no,GROUP_CONCAT(ref_no) as ref_no,SUM(amount_paid) as amount_paid,SUM(interest) as interest,SUM(fines) as fines,GROUP_CONCAT(remarks) as remarks FROM payment_info JOIN payment ON payment.payment_id = payment_info.payment_id WHERE (status ='updated' || status is NULL) && due_date='".$row3['due_date']."'; ";
+                        $sqlForPayInfo = "SELECT payment.payment_id as pid,GROUP_CONCAT(payment_type) as payment_type,GROUP_CONCAT(check_no) as check_no,GROUP_CONCAT(ref_no) as ref_no,SUM(amount_paid) as amount_paid,SUM(interest) as interest,SUM(fines) as fines,GROUP_CONCAT(remarks) as remarks,SUM(other_income) as other_income FROM payment_info JOIN payment ON payment.payment_id = payment_info.payment_id WHERE (status ='updated' || status is NULL) && due_date='".$row3['due_date']."' && loan_id='".$row1['loan_id']."'; ";
                         $rowForPayInfo = mysqli_fetch_assoc(mysqli_query($con,$sqlForPayInfo));
                         
                         
@@ -352,13 +361,16 @@ if(isset($_SESSION['user'])) {
                          <select class="i-2" name="check">
 
                             <?php 
+                             $sqlForCheck = "SELECT check_no from payment_info WHERE payment_id='".$rowForPayInfo['pid']."' && status='Updated'";
+                             $result4 = mysqli_query($con,$sqlForCheck);
+                             while($row4 = mysqli_fetch_array($result4)):;
+                              if(!empty($row4['check_no'])){
 
-                             $result4 = mysqli_query($con,$sqlForPayInfo);
-                             while($row4 = mysqli_fetch_array($result4)):;?>
+                              ?>
 
-                            <option value="<?php echo $row4[1];?>"><?php echo $row4[1];?></option>
+                            <option value="<?php echo $row4[0];?>"><?php echo $row4[0];?></option>
 
-                            <?php endwhile;?>
+                            <?php } endwhile;?>
 
                         </select>
                         <div class="py-3 ">
@@ -368,7 +380,14 @@ if(isset($_SESSION['user'])) {
 
                 </div>
                 <div id="option4" class="size_chart">
-                  Small
+                  <form class="text-center" action="legalFeesWaive.php" method="post">
+                               <h1>Waive Legal Fees</h1>
+                              <input type='hidden' name='loan_id' value='<?php echo $row1['loan_id']; ?>'/>
+                              <input type='hidden' name='search' value='<?php echo $search; ?>'/>
+                            <div class="py-3 ">
+                              <input class="b-2" type="submit" value="Submit">
+                            </div>
+                          </form>
                 </div>
 
 
@@ -385,17 +404,26 @@ if(isset($_SESSION['user'])) {
               <td><?php echo $rowForPayInfo['interest']; ?></td>
               <td><?php echo $rowForPayInfo['fines']; ?></td>
               <td><?php echo $row3['remaining_balance'];?></td>
+              <td><?php echo $rowForPayInfo['other_income'];?></td>
+
              
             <?php
                     }
                     echo ' <td>
                 <button data-modal="modal'.$ctr.'" class="button" style="font-size:24px; border-radius: 10px;">
-                <i  class="fa fa-money"></i>  
-                </button>
-                <button data-modal="modalAll'.$ctr.'" class="button" style="font-size:24px; border-radius: 10px;">
-                Open 
-                </button>
-              </td>    
+                  <img src="img/pay.png" width="30px" style="padding:5px;">  
+                </button>';?>
+
+              <?php
+                if($_SESSION['user']['em_position']=='Operations Manager'){
+                    echo '<button data-modal="modalAll'.$ctr.'" class="button" style="font-size:24px; border-radius: 10px;">
+                      <img src="img/edit2.png" width="30px" style="padding:5px;">
+                    </button>';
+                      }
+                ?>
+          <?php
+
+              '</td>    
             </tr>
             
             </tbody>
@@ -436,6 +464,17 @@ if(isset($_SESSION['user'])) {
 
         </table>
     </div>
+    <footer>
+      <div class="footer-bottom">
+          <div class="container">
+            <div class="text-center ">
+              <div class="copyright-text">
+                <p>CopyRight © 2019 Sigma All Rights Reserved</p>
+              </div>
+            </div> <!-- End Col -->
+          </div>
+      </div>
+    </footer>    
   </div>
       
 <script>

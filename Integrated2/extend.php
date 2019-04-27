@@ -35,8 +35,8 @@
 					<div class="table-responsive">
 						<table class="table table-bordered" id="dynamic_field">
 							<tr>
-								<td><input type="text" name="due[]" placeholder="Enter Due Date" class="form-control name_list" required/></td>
-								<td><button type="button" name="add" id="add" class="btn btn-success">Add More</button></td>
+								<td><input type="date" name="due[]" placeholder="Enter Due Date" class="form-control name_list" required/></td>
+								<td><button type="button" name="add" id="add" class="btn btn-success">Add Due Date</button></td>
 							</tr>
 						</table>
 						<input type="button" name="submit" id="submit" class="btn btn-info" value="Submit" />
@@ -57,7 +57,7 @@ $(document).ready(function(){
 	var i=1;
 	$('#add').click(function(){
 		i++;
-		$('#dynamic_field').append('<tr id="row'+i+'"><td><input type="text" name="due[]" placeholder="Enter Due Date" class="form-control name_list" /></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove" required>X</button></td></tr>');
+		$('#dynamic_field').append('<tr id="row'+i+'"><td><input type="date" name="due[]" placeholder="Enter Due Date" class="form-control name_list" /></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove" required>X</button></td></tr>');
 	});
 	
 	$(document).on('click', '.btn_remove', function(){

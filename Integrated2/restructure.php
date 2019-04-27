@@ -40,9 +40,13 @@
 				    <td><input type="text" name="amount" class="form-control name_list" value='<?php echo $row['remaining_balance']; ?>'/></td>
                                 <td>Remaining Balance</td>
 							</tr>
+                            <tr>
+				                <td><input type="text" name="insurance" class="form-control name_list"/></td>
+                                <td>Insurance</td>
+							</tr>
 							<tr>
-								<td><input type="text" name="due[]" placeholder="Enter Due Date" class="form-control name_list" required/></td>
-								<td><button type="button" name="add" id="add" class="btn btn-success">Add More</button></td>
+								<td><input type="date" name="due[]" placeholder="Enter Due Date" class="form-control name_list" required/></td>
+								<td><button type="button" name="date" id="add" class="btn btn-success">Add Due date</button></td>
 							</tr>
 						</table>
 						<input type="button" name="submit" id="submit" class="btn btn-info" value="Submit" />
@@ -63,7 +67,7 @@ $(document).ready(function(){
 	var i=1;
 	$('#add').click(function(){
 		i++;
-		$('#dynamic_field').append('<tr id="row'+i+'"><td><input type="text" name="due[]" placeholder="Enter Due Date" class="form-control name_list" /></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove" required>X</button></td></tr>');
+		$('#dynamic_field').append('<tr id="row'+i+'"><td><input type="date" name="due[]" placeholder="Enter Due Date" class="form-control name_list" /></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove" required>X</button></td></tr>');
 	});
 	
 	$(document).on('click', '.btn_remove', function(){

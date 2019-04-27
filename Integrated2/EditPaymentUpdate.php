@@ -1,5 +1,7 @@
 <?php
 	include 'EditPaymentAction.php';
+    include 'notification_fetch.php'; 
+    include 'navigation.php';
 ?>
 <!-- EDIT START -->
 <?php 
@@ -7,7 +9,7 @@
 
         $id = $_POST['edit'];
         $update = true;
-        $record = mysqli_query($db, "SELECT payment_info_id,payment.remaining_balance, payment_info.payment_id, payment.due_date, payment.loan_id, payment_info.date_paid, payment_info.amount_paid, payment_info.payment_type, payment_info.account_number, payment_info.check_no, payment_info.ref_no, payment_info.interest, payment_info.fines, payment_info.remarks, payment_info.status FROM payment INNER JOIN payment_info ON payment_info.payment_id=payment.payment_id WHERE payment_info.payment_info_id='$id'");
+        $record = mysqli_query($db, "SELECT other_income,payment_info_id,payment.remaining_balance, payment_info.payment_id, payment.due_date, payment.loan_id, payment_info.date_paid, payment_info.amount_paid, payment_info.payment_type, payment_info.account_number, payment_info.check_no, payment_info.ref_no, payment_info.interest, payment_info.fines, payment_info.remarks, payment_info.status FROM payment INNER JOIN payment_info ON payment_info.payment_id=payment.payment_id WHERE payment_info.payment_info_id='$id'");
 
         if (!empty($record)) {
             $n = mysqli_fetch_array($record);
@@ -21,6 +23,7 @@
             $fines =$n['fines'];
             $marks = $n['remarks'];
             $stats = $n['status'];
+            $other_income = $n['other_income'];
         }
     
 ?>
@@ -29,24 +32,23 @@
 <HTML>
     
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="css/custom.css">
-    <link rel="stylesheet" type="text/css" href="css/table.css">
-    <link rel="stylesheet" type="text/css" href="css/modal.css">
-    <link rel="stylesheet" type="text/css" href="css/navigation2.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min2.css">
+  <link rel="stylesheet" type="text/css" href="css/custom.css">
+  <link rel="stylesheet" type="text/css" href="css/table.css">
+  <link rel="stylesheet" type="text/css" href="css/modal.css">
+  <link rel="stylesheet" type="text/css" href="css/notification.css">
+  <link rel="stylesheet" type="text/css" href="css/navigation.css">
+  <link rel="stylesheet" type="text/css" href="css/navigation2.css">
+  <script type="text/javascript" src="js/test.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
 
     <title>Edit Payment</title>
     </head>
 <body>
 
-    <!--main content start-->
+ <div class="container">
+        <!--main content start-->
     <section id="main-content">
         <section class="wrapper site-min-height">
 
@@ -56,8 +58,8 @@
                     <div class="form-panel">
                         <!-- START CREATE FORM -->
                         <form class="form-horizontal style-form" action="EditPaymentAction.php" method="POST">
-		                    
-		                    <input type="hidden" name="id" value="<?php echo $id ?>">
+                            
+                            <input type="hidden" name="id" value="<?php echo $id ?>">
                             <input type="hidden" name="loan_id" value="<?php echo $loan_idforR ?>">
 
 
@@ -68,74 +70,79 @@
                             </center>
 
                             <div class="form-group">
-                                <label class="col-sm-2 col-sm-2 control-label">Date Paid</label>
-                                <div class="col-sm-10">
+                                <label>Date Paid</label>
+                                <div>
                                     <input type="text" class="form-control" name="datePaid" value="<?= $datePaid ?>">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 col-sm-2 control-label">Amount Paid</label>
-                                <div class="col-sm-10">
+                                <label>Amount Paid</label>
+                                <div>
                                     <input type="text" class="form-control" name="amountPaid" value="<?= $amtPaid ?>">
                                 </div>
                             </div>
-
+                            <!-- edited -->
                             <div class="form-group">
-                                <label class="col-sm-2 col-sm-2 control-label">Payment Type</label>
-                                <div class="col-sm-10">
-                                    <select name="paymentType" class="form-control selectpicker" value="<?= $paymentType ?>">
-                                        <option>Cheque</option>
-                                        <option>Cash</option>
-                                        <option>Bank Deposit</option>
+                                <label>Payment Type</label>
+                                <div>
+                                    <select name="paymentType" class="form-control selectpicker" >
+                                        <option <?php if ($paymentType =='Cheque') echo "selected"?>>Cheque</option>
+                                        <option <?php if ($paymentType =='Cash') echo "selected"?>>Cash</option>
+                                        <option <?php if ($paymentType =='Bank Deposit') echo "selected"?>>Bank Deposit</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 col-sm-2 control-label">Account Number</label>
-                                <div class="col-sm-10">
+                                <label>Account Number</label>
+                                <div>
                                     <input type="text" class="form-control" name="accountNo" value="<?= $accNumber ?>">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 col-sm-2 control-label">Check No</label>
-                                <div class="col-sm-10">
+                                <label>Check No</label>
+                                <div>
                                     <input type="text" class="form-control" name="checkNo" value="<?= $checkNumber ?>">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 col-sm-2 control-label">Ref Number</label>
-                                <div class="col-sm-10">
+                                <label>Ref Number</label>
+                                <div>
                                     <input type="number" class="form-control" name="refNo" value="<?= $refNumber ?>">
                                 </div>
                             </div>
 
                            <div class="form-group">
-                                <label class="col-sm-2 col-sm-2 control-label">Interest</label>
-                                <div class="col-sm-10">
+                                <label>Interest</label>
+                                <div>
                                     <input type="text" class="form-control" name="interest" value="<?= $inter ?>">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 col-sm-2 control-label">Fines</label>
-                                <div class="col-sm-10">
+                                <label>Fines</label>
+                                <div>
                                     <input type="text" class="form-control" name="fines" value="<?= $fines ?>">
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <label>Other Income</label>
+                                <div>
+                                    <input type="text" class="form-control" name="other_income" value="<?= $other_income ?>">
+                                </div>
+                            </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 col-sm-2 control-label">Remarks</label>
-                                <div class="col-sm-10">
+                                <label>Remarks</label>
+                                <div>
                                     <input type="text" class="form-control" name="remarks" value="<?= $marks ?>">
                                 </div>
                             </div>
 
-                            <button class="btn btn-primary btn-lg btn-block" type="submit" name="update">Update</button>
+                            <button style="width: 20%;margin: auto;"class="btn btn-success btn-lg btn-block" type="submit" name="update">Update</button>
 
                         </form>
                         <!-- END CREATE FORM -->
@@ -148,6 +155,7 @@
 
         </section>
     </section>
+ </div>
                    
 
     <!-- js placed at the end of the document so the pages load faster -->

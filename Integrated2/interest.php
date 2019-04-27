@@ -13,6 +13,7 @@ $number = count($_POST["due"]);
 $due = mysqli_real_escape_string($con,$_POST['due']['0']);
 $loan_id = mysqli_real_escape_string($con,$_POST['loan_id']);
 $amount = mysqli_real_escape_string($con,$_POST['amount']);
+//$insurance = mysqli_real_escape_string($con,$_POST['insurance']);
 if($number > 0)
 {
 	for($i=0; $i<$number; $i++)
@@ -33,7 +34,9 @@ if($number > 0)
     //for rates
     $sqlForRates = "SELECT * from rates";
     $rowRates = mysqli_fetch_assoc(mysqli_query($con,$sqlForRates));
-    
+   // $sqlForLoan = "SELECT * from loan WHERE loan_id='$loan_id'";
+//    $rowLoan = mysqli_fetch_assoc(mysqli_query($con,$sqlForLoan));
+  //  $updateInsurance = $insurance + $rowLoan['insurance'];
     
    $queryForInterest = "INSERT INTO payment_info(payment_id,interest) VALUES((SELECT payment_id FROM (SELECT * FROM payment) AS `payment` WHERE loan_id='$loan_id' && due_date='$due'),CEILING($amount*(".$rowRates['interest']."/100)*($number/2)))";
     mysqli_query($con,$queryForInterest);

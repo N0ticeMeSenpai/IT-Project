@@ -59,13 +59,14 @@ if($number > 0)
         }
 
 	}
+    //edited
     $sqlUpdateBalance = "SELECT due_date FROM payment WHERE loan_id='$loan_id' && payment_id IN (SELECT payment_id FROM payment_info WHERE status='Updated');";
             $resultUpdateBalance = mysqli_query($con,$sqlUpdateBalance);
             $resultCheckBalance = mysqli_num_rows($resultUpdateBalance);
             if($resultCheckBalance > 0){
                 While ($rowUpdateBalance = mysqli_fetch_assoc($resultUpdateBalance)){
 
-                    $sqlUpdate = "UPDATE payment SET remaining_balance=(SELECT (loan_balance+SUM(fines)+SUM(interest)-(SUM(amount_paid))) as remaining_balance FROM (SELECT * FROM payment) AS `payment` JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE due_date <= '".$rowUpdateBalance['due_date']."' && payment.loan_id='$loan_id' && status='updated') WHERE loan_id='$loan_id' && due_date='".$rowUpdateBalance['due_date']."'";
+                    $sqlUpdate = "UPDATE payment SET remaining_balance=(SELECT (loan_balance+SUM(fines)+SUM(interest)+SUM(other_income)-(SUM(amount_paid))) as remaining_balance FROM (SELECT * FROM payment) AS `payment` JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE due_date <= '".$rowUpdateBalance['due_date']."' && payment.loan_id='$loan_id' && status='updated') WHERE loan_id='$loan_id' && due_date='".$rowUpdateBalance['due_date']."'";
 
                      if (!mysqli_query($con,$sqlUpdate)) {
                     echo "Error: " . mysqli_error($con);

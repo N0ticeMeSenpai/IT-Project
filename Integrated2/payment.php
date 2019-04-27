@@ -42,7 +42,7 @@ $con = mysqli_connect('127.0.0.1','root','');
 
 
   //for Advance Payment
-    $sqlForAdvance = "SELECT SUM(amount_paid) as `AP`,fines,SUM(interest) as interest from payment_info join payment ON payment_info.payment_id = payment.payment_id WHERE loan_id='$loan_id' && due_date='$choice' && status='updated'";
+    $sqlForAdvance = "SELECT IF((SUM(amount_paid)%14125-SUM(fines)-SUM(interest))>0,(SUM(amount_paid)%$bi_monthly-SUM(fines)),0) as `AP`,fines,SUM(interest) as interest from payment_info join payment ON payment_info.payment_id = payment.payment_id WHERE loan_id='$loan_id' && status='updated'";
 
     $row2 = mysqli_fetch_assoc(mysqli_query($con,$sqlForAdvance));
     $AP = $row2['AP'];
@@ -88,7 +88,7 @@ $con = mysqli_connect('127.0.0.1','root','');
         
     }else**/ if($payment+$AP < ($bi_monthly+$row2['fines']+$row2['interest']) && ($payment+$AP < $rowRemain['rb'])){
     
-    $sqlLackingInsert = "INSERT INTO `payment_info`(`payment_id`, `date_paid`, `amount_paid`, `payment_type`, `remarks`, `fines`,`account_number`,`check_no`,`ref_no`) VALUES ((SELECT payment_id FROM (SELECT * FROM payment) AS `payment` WHERE loan_id='$loan_id' && due_date='$choice'),'$date',$payment,'$payment_type', '$remarks',CEILING($lack),'$account','$check','$ref');";
+    $sqlLackingInsert = "INSERT INTO `payment_info`(`payment_id`, `date_paid`, `amount_paid`, `payment_type`, `remarks`, `fines`,`account_number`,`check_no`,`ref_no`) VALUES ((SELECT payment_id FROM (SELECT * FROM payment) AS `payment` WHERE loan_id='$loan_id' && due_date='$choice'),'$date',$payment,'$payment_type', 'Payment was Lacking(Penalty)',CEILING($lack),'$account','$check','$ref');";
         if(!mysqli_query($con, $sqlLackingInsert)){
             echo "Error: " . mysqli_error($con);
         }
@@ -113,7 +113,7 @@ $con = mysqli_connect('127.0.0.1','root','');
     if($resultCheck > 0){
         While ($row = mysqli_fetch_assoc($result)){
 
-            $sql2 = "UPDATE payment SET remaining_balance=(SELECT (loan_balance+SUM(fines)+SUM(interest)-(SUM(amount_paid))) as remaining_balance FROM (SELECT * FROM payment) AS `payment` JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE due_date <= '".$row['due_date']."' && payment.loan_id='$loan_id' && status='updated') WHERE loan_id='$loan_id' && due_date='".$row['due_date']."'";
+            $sql2 = "UPDATE payment SET remaining_balance=(SELECT (loan_balance+SUM(fines)+SUM(interest)+SUM(other_income)-(SUM(amount_paid))) as remaining_balance FROM (SELECT * FROM payment) AS `payment` JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE due_date <= '".$row['due_date']."' && payment.loan_id='$loan_id' && status='updated') WHERE loan_id='$loan_id' && due_date='".$row['due_date']."'";
             
              if (!mysqli_query($con,$sql2)) {
             echo "Error: " . mysqli_error($con);
