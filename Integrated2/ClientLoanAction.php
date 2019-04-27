@@ -18,6 +18,8 @@ $mat_date = mysqli_real_escape_string($con, $_POST["due"][$number-1]);
 $loan_class = mysqli_real_escape_string($con,$_POST['loan_class']);
 $shf = mysqli_real_escape_string($con,$_POST['shf']);
 $insurance = mysqli_real_escape_string($con,$_POST['insurance']);
+$loan_type = mysqli_real_escape_string($con,$_POST['loan_type']);
+
 
 
     if($loan_class=="Add"){
@@ -25,13 +27,13 @@ $insurance = mysqli_real_escape_string($con,$_POST['insurance']);
     }else if($loan_class=="Deducted"){
             $loan_balance = $amount-($amount * ($interest/100) * ($number/2)) - ($amount * ($shf/100)) -($insurance);
     }
-    $queryForLoan = "INSERT INTO loan(loan_balance,date_booked,maturity_date,client_id,bi_monthly,interest_rate,loan_class,original_amount,insurance) VALUES(CEILING($loan_balance),CURDATE(),'".$mat_date."',$client_id,($loan_balance/$number),$interest,'".$loan_class."',$amount,$insurance)";
+    $queryForLoan = "INSERT INTO loan(loan_balance,date_booked,maturity_date,client_id,bi_monthly,interest_rate,loan_class,original_amount,insurance,loan_type,delinquent_status) VALUES(CEILING($loan_balance),CURDATE(),'".$mat_date."',$client_id,($loan_balance/$number),$interest,'".$loan_class."',$amount,$insurance,'".$loan_type."','Active')";
     if (!mysqli_query($con,$queryForLoan)) {
             echo "Error: " . mysqli_error($con);
 
             }
 
-    $sqlForID = "SELECT loan_id from loan WHERE client_id='".$client_id."' && loan_balance =CEILING(".$loan_balance.") && date_booked=CURDATE() && maturity_date='".$mat_date."'";
+    $sqlForID = "SELECT loan_id from loan WHERE client_id=".$client_id." && loan_balance =CEILING(".$loan_balance.") && date_booked=CURDATE() && maturity_date='".$mat_date."'";
     $rowRates = mysqli_fetch_assoc(mysqli_query($con,$sqlForID));
     $loan_id = $rowRates['loan_id'];
 
@@ -44,7 +46,7 @@ if($number > 0)
                         $number--;
 		}else{
             $sql = "INSERT INTO payment(due_date,loan_id,date_modified) VALUES('".mysqli_real_escape_string($con, $_POST["due"][$i])."',$loan_id,CURDATE())";
-
+            
 			if (!mysqli_query($con,$sql)) {
             echo "Error: " . mysqli_error($con);
 
@@ -54,7 +56,7 @@ if($number > 0)
 	}
 
     $result  = mysqli_query($con , "UPDATE client SET registered_status='Approved', date_modified = current_date() WHERE client_id='$client_id'");
-	echo "Successfully added";
+    echo "Successfully added";
 }
 else
 {

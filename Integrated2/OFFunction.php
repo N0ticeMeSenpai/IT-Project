@@ -105,19 +105,10 @@ function Salary_ActiveAccount(){
 function page_Salary(){
   $output='';
   include './IncludeSalary/SalaryActiveAccount.php';
-  while($row = mysqli_fetch_array($result))
-    {
-    $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id=".$row['loan_id']."";
-    $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
-    $remaining = $rowRemain['rb'];
-
-    if ($remaining!='0') {
-      for ($page=1;$page<=$number_of_pages;$page++) {
-        $output .= '<li><a href="SORActiveAccount.php?SalaryPage=' . $page . '">' . $page . '</a></li>';
-      }
+    for ($page=1;$page<=$number_of_pages;$page++) {
+      $output .= '<li><a href="SORActiveAccount.php?BusinessPage=' . $page . '">' . $page . '</a></li>';
     }
-  }
-      return $output;
+   return $output;
 }
 
 function Business_ActiveAccount(){
@@ -172,7 +163,6 @@ function Business_ActiveAccount(){
                               $row1 = mysqli_fetch_assoc(mysqli_query($conn,$query1));
 
                     $output .=  '<td>'.$row1["remarks"].'</td>
-                            <td class= "hidden-td" data-target="status">'.$row["delinquent_status"].'</td>
                         </tr>';
                   }
           }      
@@ -622,7 +612,7 @@ function page_DelinquentBusiness(){
 function PendingList(){
 
     $output='';
-    include './IncludeSalary/SalaryPending.php';
+    include 'Include/Pending.php';
      while($row = mysqli_fetch_array($result))
       {       
         $output .=  '
@@ -643,7 +633,7 @@ function PendingList(){
 
 function page_pending(){
   $output='';
-  include './IncludeSalary/SalaryPending.php';
+  include 'Include/Pending.php';
     for ($page=1;$page<=$number_of_pages;$page++) {
       $output .= '<li><a href="OPListOfPendingClient.php?SalaryPage=' . $page . '">' . $page . '</a></li>';
     }

@@ -8,10 +8,11 @@
     if(!mysqli_select_db($con,'sigma')){
         echo 'Not Selected';
     }
-   
+
     $id = mysqli_real_escape_string($con,$_GET['client_id']);
     $sqlForRates = "SELECT * from rates";
     $rowRates = mysqli_fetch_assoc(mysqli_query($con,$sqlForRates));
+
 
 ?>
 
@@ -51,12 +52,21 @@
 							</tr>
                             <tr>
                                 <td> 
-                                <select class="i-2" name="loan_class">
+                                <select class="i-2 form-control" name="loan_class">
                                     <option value="Add">Add-On</option>
                                     <option value="Deducted">Deducted</option>
                                 </select>
                                 </td>
                                 <td>Loan Choice</td>
+                            </tr>
+                            <tr>
+                                <td> 
+                                <select class="i-2 form-control" name="loan_type">
+                                    <option value="Salary">Salary</option>
+                                    <option value="Business">Business</option>
+                                </select>
+                                </td>
+                                <td>Loan Type</td>
                             </tr>
 							<tr>
 								<td><input type="date" name="due[]" placeholder="Enter Due Date" class="form-control name_list" required/></td>
@@ -69,10 +79,8 @@
 				</form>
 			</div>
 		</div> 
-		<form name='forActive' action='SORActiveAccount.php' method='POST'>
-		</form>
-		</body>    
-
+<form name='forSearch' action='SORActiveAccount.php' method='POST'>
+</form>
 
 
 <script>
@@ -97,7 +105,7 @@ $(document).ready(function(){
 			{
 				alert(data);
 				$('#add_due')[0].reset();
-                document.forActive.submit();
+                document.forSearch.submit();
 			}
 		});
 	});
