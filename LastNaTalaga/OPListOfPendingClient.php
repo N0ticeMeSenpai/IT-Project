@@ -80,13 +80,6 @@ if(isset($_SESSION['user'])) {
                 <h3>Pending Account</h3>
 
                 <br>
-                <form action="OPListSalaryClient.php" method="post">
-                    <select name="client_status">
-                        <option value="pending">Pending</option>
-                        <option value="denied">Denied</option>
-                    </select>
-                    <button type="submit" name="submit-list">Client List</button>
-                </form>
                 <br><br>
 
                 <table class="table">
