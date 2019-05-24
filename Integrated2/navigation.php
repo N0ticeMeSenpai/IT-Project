@@ -9,7 +9,7 @@ function navigate_it()
     $output.='<ul class="nav navbar-nav">
                     <li><a href="AdminDashboard.php">Dashboard</a></li>
                     <li class="dropdown mega-dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">More<span class="caret"></span></a>                
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigation<span class="caret"></span></a>                
                         <ul class="dropdown-menu mega-dropdown-menu">
                             <li class="col-lg-4">
                                 <ul>
@@ -38,7 +38,7 @@ function navigate_it()
         $output.=' <ul class="nav navbar-nav">
                     <li><a href="AdminDashboard.php">Dashboard</a></li>
                     <li class="dropdown mega-dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">More<span class="caret"></span></a>                
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigation<span class="caret"></span></a>                
                         <ul class="dropdown-menu mega-dropdown-menu">
                             <li class="col-lg-6">
                                 <ul>
@@ -78,19 +78,7 @@ function navigate_it()
 
     if($_SESSION['user']['em_position']=='Operations Manager'){
 
-    $output.='     <li class="dropdown">
-                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">
-                          <img src="img/search2.png" width="15px"></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                              <form class ="line" action="search.php" method="post">
-                                    <input id="myInput" type="text" placeholder="Search Client..." name="search"
-                                    style="width: 100%;height: 34px;border: none;padding: 4px;outline:none;">
-                                    <input class="hide" type="submit" value="Search">
-                              </form>  
-                            </li>
-                        </ul>
-                    </li>
+    $output.='   <li><a href="searchAll.php"><img src="img/search2.png" width="15px"></a></li>
                     <li class="dropdown">
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle"><img src="img/setting.png" width="15px"><b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -102,19 +90,7 @@ function navigate_it()
     
     }elseif ($_SESSION['user']['em_position']=='Office Staff') {
 
-        $output.='  <li class="dropdown">
-                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">
-                          <img src="img/search2.png" width="15px"></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                              <form class ="line" action="search.php" method="post">
-                                    <input id="myInput" type="text" placeholder="Search Client..." name="search"
-                                    style="width: 100%;height: 34px;border: none;padding: 4px;outline:none;">
-                                    <input class="hide" type="submit" value="Search">
-                              </form>  
-                            </li>
-                        </ul>
-                    </li>
+        $output.='  <li><a href="searchAll.php"><img src="img/search2.png" width="15px"></a></li>
                     <li class="dropdown">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle"><img src="img/setting.png" width="15px"><b class="caret"></b></a>
                         <ul class="dropdown-menu">

@@ -40,7 +40,7 @@ if(isset($_SESSION['user'])) {
     <script src="js/ajax.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
-    <title>Summary Of Bookings</title>
+    <title>Active Account</title>
 
 </head>
 
@@ -75,7 +75,7 @@ if(isset($_SESSION['user'])) {
         </nav>
         <div class="container">
 
-            <h2 class="p-5 text-center">Summary Of Bookings</h2>
+            <h2 class="p-5 text-center"> Active Account</h2>
 
 
             <h3>Salary Account</h3>

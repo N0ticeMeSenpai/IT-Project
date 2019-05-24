@@ -55,7 +55,6 @@ if(isset($_SESSION['user'])) {
                          <img src="img/notifications-button.png" width="15px">
                     	</a>
                 	 </li>
-
                   <?php
                   echo navigate_right();
 
@@ -65,7 +64,11 @@ if(isset($_SESSION['user'])) {
         </div>
     </nav>
   	<div class="container pad-85">
-  
+        <form class ="line" action="search.php" method="post">
+              <input class="searching" id="myInput" type="text" placeholder="Search.." name="search">
+              <input class="hide" type="submit" value="Search">
+              <hr class="my-hr my-margin" size="30" width="90%">
+        </form>    
   	</div>
 </body>
 <footer>
