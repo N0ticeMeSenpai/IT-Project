@@ -42,7 +42,7 @@ if(isset($_SESSION['user'])) {
     <script src="js/ajax.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
-    <title>Active Account</title>
+    <title>Summary Of Bookings</title>
 
 </head>
 

@@ -26,7 +26,7 @@ if($_SESSION['user']['em_position']=='Office Staff'){
 <!DOCTYPE html>
 <html>
 <head>
-	s<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/custom.css">
 	<link rel="stylesheet" type="text/css" href="css/notification.css">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min2.css">

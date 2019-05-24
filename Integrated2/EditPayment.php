@@ -87,7 +87,7 @@ header('Cache-Control: no cache');
             <h2 class="p-5 text-center">History of Transactions</h2>
             <br><br>
 
-            <table>
+            <table class="table">
                     <thead class="text-white">
                         <tr>
                         <th class="my-bg" width="10%">Date Paid</th>

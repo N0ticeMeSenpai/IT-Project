@@ -98,18 +98,6 @@ $second = 4;
     </nav>
     <div class="container">
       <h2 class="p-5 text-center">List Of Clients</h2>
-        <form action="search.php" method="post">
-            <div class="pad-2" id="custom-search-input">
-                <div class="input-group col-md-12">
-                    <input id="myInput" width="5%" class="  search-query form-control" type="text" placeholder="Search.." name="search">
-                    <span class="input-group-btn">
-                        <input type="submit"  class="btn btn-success" value="Search">
-                    </span>
-                </div>
-            </div> 
-        </form>
-        <br>
-        
         <?php
             if($resultCheck > 0){
                 While ($row2 = mysqli_fetch_assoc($result1)){
