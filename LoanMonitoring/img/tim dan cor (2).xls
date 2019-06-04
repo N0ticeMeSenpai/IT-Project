@@ -1,0 +1,41 @@
+<table class="table" border=1>
+                    <tr>
+                    <td colspan=7><strong><font size=2>NAME:</font></strong> 
+                      tim dan cor
+                      <td>
+                    </tr>
+                    <thead class="text-white">
+                    <tr>
+                    <th style="font-size: 15px " colspan=3>
+                    <strong>Date Booked: </strong>2019-05-29
+                    </th>
+                    <th style="font-size: 15px " colspan=2>
+                    <strong>Bi-Monthly Payment:</strong>52750
+                    </th>
+                    <th style="font-size: 15px " colspan=3>
+                    <strong>Maturity Date:</strong>2019-05-31
+                    </th>
+                    </tr>
+
+                    <tr>
+                      <th class="my-bg">Date</th>
+                      <th class="my-bg">Check # EW</th>
+                      <th class="my-bg">Ref/OR#</th>
+                      <th class="my-bg">Payment</th>
+                      <th class="my-bg">Interest</th>
+                      <th class="my-bg">Fines</th>
+                      <th class="my-bg">Balance</th>
+                      <th class="my-bg">Other Income</th>
+                    </tr>
+                  </thead><tbody id="myTable">
+                            <tr>
+                              <td>2019-05-31</td> 
+                              <td></td>
+                              <td></td>
+                              <td>52750.00</td>
+                              <td>0.00</td>
+                              <td>0.00</td>
+                              <td>0.00</td>
+                              <td>0.00</td>
+                            </tr>
+                            </tbody>  <tr/></table>
