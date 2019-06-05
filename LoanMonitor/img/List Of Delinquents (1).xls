@@ -1,0 +1,73 @@
+<table class="table" border=1>
+                   <tr>
+                        <th colspan = "5">List of Delinquent</th>
+                    </tr> 
+                    <tr>
+                        <th>Account Name</th>
+                        <th>Co Borrower</th>
+                        <th>Co Borrower 2</th>
+                        <th>Balance</th>
+                        <th>Date</th>
+                    </tr>
+                  <tr>  
+                  <td>u u</td>
+                    <td>ukiuu</td>
+                    <td>kkkk</td><td>56171.00</td> 
+                    <td>2019-04-30</td>
+             </tr>
+                  <tr>  
+                  <td>nikki ganotan</td>
+                    <td>keyyasusi ko</td>
+                    <td>lukeduke</td><td>39690.00</td> 
+                    <td>2019-05-23</td>
+             </tr>
+                  <tr>  
+                  <td>jeffrey rimando</td>
+                    <td>oreinzyellow</td>
+                    <td>jazzzumba</td><td>15085.00</td> 
+                    <td>2019-05-31</td>
+             </tr>
+                  <tr>  
+                  <td>jasper tanglib</td>
+                    <td>jajsdajtest</td>
+                    <td>testtest</td><td>144008.00</td> 
+                    <td>2019-05-29</td>
+             </tr>
+                  <tr>  
+                  <td>leo dion</td>
+                    <td>yolocool</td>
+                    <td>passgraduate</td><td>25111.00</td> 
+                    <td>2019-05-25</td>
+             </tr>
+                  <tr>  
+                  <td>nikki ganotan</td>
+                    <td>Luckyes</td>
+                    <td></td><td>45456.80</td> 
+                    <td>2019-02-01</td>
+             </tr>
+                  <tr>  
+                  <td>leo dion</td><td></td>
+                      <td></td><td>25320.00</td> 
+                    <td>2019-03-01</td>
+             </tr>
+                  <tr>  
+                  <td>yolo yolo</td><td></td>
+                      <td></td><td>123085.00</td> 
+                    <td>2019-05-17</td>
+             </tr>
+                  <tr>  
+                  <td>yolo yolo</td><td></td>
+                      <td></td><td>14401.00</td> 
+                    <td>2019-05-23</td>
+             </tr>
+                  <tr>  
+                  <td>yolo yolo</td><td></td>
+                      <td></td><td>13293.00</td> 
+                    <td>2019-05-17</td>
+             </tr>
+                  <tr>  
+                  <td>luke llanillo</td>
+                    <td>Beastmode123</td>
+                    <td>testdsadatest</td><td>16375.80</td> 
+                    <td>2019-04-18</td>
+             </tr></table>
