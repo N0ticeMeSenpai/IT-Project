@@ -61,6 +61,16 @@ if(isset($_SESSION['user'])) {
                         echo navigate_it()
                     ?>
                     <ul class="nav navbar-nav navbar-right">
+                      <li>
+                        <a href="notification.php">
+                            <?php
+                            if(count_data() > '0'){
+                              echo count_data();
+                            }
+                           ?>
+                           <img src="img/notifications-button.png" width="15px">
+                        </a>
+                      </li>
                     <?php
                       echo navigate_right();
 
@@ -106,6 +116,17 @@ if(isset($_SESSION['user'])) {
                     ?>
             </table>
         </div>
+        <footer>
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="text-center ">
+                        <div class="copyright-text">
+                            <p>CopyRight © 2019 Sigma All Rights Reserved</p>
+                        </div>
+                    </div> <!-- End Col -->
+                </div>
+            </div>
+        </footer>
     </div>
     <!-- Modal Update-->
     <div id="myModal" class="modal fade" role="dialog">

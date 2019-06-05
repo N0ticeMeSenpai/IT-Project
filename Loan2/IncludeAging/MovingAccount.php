@@ -6,8 +6,8 @@
     $query = "SELECT * from client 
     inner join loan on client.client_id = loan.client_id 
     inner join payment on loan.loan_id = payment.loan_id
-    WHERE (maturity_date < (select curdate()))
-    AND loan.delinquent_status = 'Active'
+    WHERE (maturity_date < (select curdate())
+    AND loan.delinquent_status = 'Active')
     AND registered_status='Approved' group by loan.loan_id";
 
     $result = mysqli_query($conn, $query);
@@ -25,8 +25,8 @@
 	$query = "SELECT * from client 
     inner join loan on client.client_id = loan.client_id 
     inner join payment on loan.loan_id = payment.loan_id
-    WHERE (maturity_date < (select curdate()))
-    AND loan.delinquent_status = 'Active'
+    WHERE (maturity_date < (select curdate())
+    AND loan.delinquent_status = 'Active')
     AND registered_status='Approved' group by loan.loan_id
     LIMIT " . $this_page_first_result . "," .  $results_per_page;
 

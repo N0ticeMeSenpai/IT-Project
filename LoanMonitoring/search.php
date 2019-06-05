@@ -247,30 +247,32 @@ $second = 4;
             <br>
             <p>                           
             <div class="row">
-                <div class="col-sm-3">
-                    <p><strong> Name:</strong> <a style="color:#215786;" href="Profile.php?loan_id=<?php echo $row1["loan_id"]?> "> 
+                <div class="col-md-6" style="font-size: 25px;">
+                    <p><strong> Name:</strong> <a href="Profile.php?loan_id=<?php echo $row1["loan_id"]?> "> 
                       <?php echo $row2['first_name'] ,' ',$row2['middle_name'], ' ', $row2['last_name']; ?></a></p>
                 </div>
-                <div class="col-sm-4">
+            </div>
+            <div class="row">
+                <div class="col-md-4">
                     <form method="post" action="restructure.php">
                        <input type="hidden" name="loan_idforR" value='<?php echo $row1['loan_id']; ?>' />
                        <input type='hidden' name='search' value='<?php echo $search; ?>'/>
-                       <input type="submit" value="Restructure" />
+                       <input class="i-3" type="submit" value="Restructure" />
                     </form>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-md-4">
                     <form method="post" action="extend.php">
                        <input type="hidden" name="loan_idforR" value='<?php echo $row1['loan_id']; ?>' />
                        <input type='hidden' name='search' value='<?php echo $search; ?>'/>
-                       <input class="float-right" type="submit" value="Extend term" />
+                       <input class="i-3 float-right" type="submit" value="Extend term" />
                     </form>
                 </div>
                 <?php if($_SESSION['user']['em_position']=='Operations Manager'){ ?>
-                <div>
+                <div class="col-md-4">
                     <form method="post" action="EditPayment.php">
                        <input type="hidden" name="loan_idforR" value='<?php echo $row1['loan_id']; ?>' />
                        <input type='hidden' name='search' value='<?php echo $search; ?>'/>
-                       <input class="float-right" type="submit" value="History of Transactions" />
+                       <input class="i-3 float-right" type="submit" value="History of Transactions" />
                     </form>
                 
                 </div>

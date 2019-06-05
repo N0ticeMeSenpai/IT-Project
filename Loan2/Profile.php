@@ -162,7 +162,7 @@ if(isset($_GET["loan_id"]) && !empty(trim($_GET["loan_id"]))){
             </div>
             <div class="profile__header">
                 <div class="fz-25"><?php echo $row["first_name"]. ' '.$row["middle_name"].' ' .$row["last_name"]; ?></div>
-              <div class="fz-15"><strong>Employment:</strong><?php echo $row["employment"]; ?></div>
+              <div class="fz-15"><?php echo $row["employment"]; ?></div>
                 <form name="secret" method="post" action="clientTransactions.php">
                       <a href="#" onclick="document.forms['secret'].submit();">View Transactions</a>
                       <input type="hidden" name="client_id" value='<?php echo $row["client_id"]; ?>' />
@@ -226,7 +226,7 @@ if(isset($_GET["loan_id"]) && !empty(trim($_GET["loan_id"]))){
 
 
                           $forCoBorrower = "SELECT loan.loan_id, co_borrower.co_borrower_id,
-                                          CONCAT(co_first_name,' ',co_middle_name,' ', co_last_name) AS name
+                                          CONCAT(co_first_name, ' ', co_last_name) AS name
                                           FROM co_borrower INNER JOIN co_loan on co_loan.co_borrower_id = co_borrower.co_borrower_id JOIN loan ON loan.loan_id = co_loan.loan_id
                                           WHERE loan.loan_id = $loan;";
 

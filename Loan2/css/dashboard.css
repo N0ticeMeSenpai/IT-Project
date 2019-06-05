@@ -65,7 +65,7 @@
 
 .mygreen{
     background-color: #2a6752;
-    box-shadow: 4px 4px 0px 1px;
+    box-shadow: 5px 5px 2px 1px;
 }
 
 .text-faded {
@@ -116,7 +116,7 @@
     float:left;
     border:1px solid #330033;
     border-radius:5px 5px 5px 5px;
-    box-shadow: 0px 0px 5px 1px #888886!important;
+    box-shadow: 0px 0px 40px 1px #888886!important;
     
 }
 

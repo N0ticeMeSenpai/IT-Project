@@ -86,7 +86,7 @@ function ListOfDelinquents(){
                   <tr>  
                   <td><a href="Profile.php?loan_id='.$row["loan"].'">'.$row["account_name"].'</a></td>';
  
-                  $forCoBorrower = "SELECT co_borrower.co_borrower_id,concat(co_first_name,co_last_name) as name from co_borrower 
+                  $forCoBorrower = "SELECT co_borrower.co_borrower_id,concat(co_first_name,' ', co_middle_name,' ',co_last_name) as name from co_borrower 
                   join co_loan on co_borrower.co_borrower_id = co_loan.co_borrower_id
                   where co_loan.loan_id ='".$row['loan']."'";
                   $coBorrower = mysqli_query($conn, $forCoBorrower);

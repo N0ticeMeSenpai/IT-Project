@@ -135,7 +135,7 @@ if(isset($_SESSION['user'])) {
                                         <td> 
                                             <form method="post" action="transactions.php">
                                                <input type="hidden" name="loan_id" value='<?php echo $row['loan_id']; ?>' />
-                                               <input type="submit" value="Transactions" />
+                                               <input type="submit" class="i-3" value="Transactions" />
                                             </form>
                                             </td>    
                                         </tr>

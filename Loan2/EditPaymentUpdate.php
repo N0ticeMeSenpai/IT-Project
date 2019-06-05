@@ -64,9 +64,9 @@
 
 
                             <center>
-                                <h1 class="mb"><i class="fa fa-angle-right"></i>
+                                <h4 class="mb"><i class="fa fa-angle-right"></i>
                                     Edit Payment
-                                </h1>
+                                </h4>
                             </center>
 
                             <div class="form-group">

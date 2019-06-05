@@ -43,7 +43,6 @@ header('Cache-Control: no cache');
     <link rel="stylesheet" type="text/css" href="css/custom.css">
     <link rel="stylesheet" type="text/css" href="css/table.css">
     <link rel="stylesheet" type="text/css" href="css/modal.css">
-    <link rel="stylesheet" type="text/css" href="css/dashboard.css">
     <link rel="stylesheet" type="text/css" href="css/notification.css">
     <link rel="stylesheet" type="text/css" href="css/navigation.css">
     <link rel="stylesheet" type="text/css" href="css/footer.css">
@@ -67,6 +66,14 @@ header('Cache-Control: no cache');
                 echo navigate_it()
               ?>
                 <ul class="nav navbar-nav navbar-right">
+                   <li><a href="notification.php">
+                              <?php
+                              if(count_data() > '0'){
+                                echo count_data();
+                              }
+                             ?>
+                            <img src="img/notifications-button.png" width="15px">
+                        </a></li>
                   <?php
                     echo navigate_right();
 
@@ -75,7 +82,7 @@ header('Cache-Control: no cache');
             </div>
         </div>
     </nav>
-<div class="container pad-1">
+<div class="container">
 
             <h2 class="p-5 text-center">History of Transactions</h2>
             <br><br>
@@ -125,6 +132,18 @@ header('Cache-Control: no cache');
                 <?php } ;?>
             </table>
         </div>
+
+        <footer>
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="text-center ">
+                        <div class="copyright-text">
+                            <p>CopyRight © 2019 Sigma All Rights Reserved</p>
+                        </div>
+                    </div> <!-- End Col -->
+                </div>
+            </div>
+        </footer>
     <!-- js placed at the end of the document so the pages load faster -->
     <script src="assets/js/jquery.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>

@@ -9,11 +9,11 @@ function navigate_it()
     $output.='<ul class="nav navbar-nav">
                     <li><a href="dashboard.php">Dashboard</a></li>
                     <li class="dropdown mega-dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account Recievable<span class="caret"></span></a>                
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account Receivable<span class="caret"></span></a>                
                         <ul class="dropdown-menu mega-dropdown-menu">
                             <li class="col-lg-6">
                                 <ul>
-                                    <li class="dropdown-header">Summary Of Recievable</li>
+                                    <li class="dropdown-header">Summary Of Receivable</li>
                                     <li><a href="SORActiveAccount.php">Active Account</a></li>
                                     <li><a href="SORActiveDelinquentAccount.php">Active Deliquent Account</a></li>
                                     <li><a href="SORActiveLegalAccount.php">Active Legal Account</a></li>
@@ -23,7 +23,7 @@ function navigate_it()
                             </li>
                             <li class="col-lg-4">
                                 <ul>
-                                    <li class="dropdown-header">Aging Of Recievable</li>
+                                    <li class="dropdown-header">Aging Of Receivable</li>
                                     <li><a href="ARMoving.php">Moving Account</a></li>
                                     <li><a href="ARNotMoving.php">Not Moving Account</a></li>
                                     <li><a href="ARLegal.php">Legal Account</a></li>                       
@@ -61,11 +61,11 @@ function navigate_it()
         $output.=' <ul class="nav navbar-nav">
                     <li><a href="dashboard.php">Dashboard</a></li>
                     <li class="dropdown mega-dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account Recievable<span class="caret"></span></a>                
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account Receivable<span class="caret"></span></a>                
                         <ul class="dropdown-menu mega-dropdown-menu">
                             <li class="col-lg-6">
                                 <ul>
-                                    <li class="dropdown-header">Summary Of Recievable</li>
+                                    <li class="dropdown-header">Summary Of Receivable</li>
                                     <li><a href="SORActiveAccount.php">Active Account</a></li>
                                     <li><a href="SORActiveDelinquentAccount.php">Active Deliquent Account</a></li>
                                     <li><a href="SORActiveLegalAccount.php">Active Legal Account</a></li>
@@ -75,7 +75,7 @@ function navigate_it()
                             </li>
                             <li class="col-lg-4">
                                 <ul>
-                                    <li class="dropdown-header">Aging Of Recievable</li>
+                                    <li class="dropdown-header">Aging Of Receivable</li>
                                     <li><a href="ARMoving.php">Moving Account</a></li>
                                     <li><a href="ARNotMoving.php">Not Moving Account</a></li>
                                     <li><a href="ARLegal.php">Legal Account</a></li>              

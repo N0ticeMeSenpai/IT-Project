@@ -90,7 +90,7 @@ if(isset($_SESSION['user'])) {
                         <th class="my-bg text-white" >60 Days</th>
                         <th class="my-bg text-white" >90 Days</th>
                         <th class="my-bg text-white" >120 days & over</th>
-                        <th class="my-bg text-white">Date Paid</th>
+                        <th class="my-bg text-white">Date</th>
                         <th class="my-bg text-white" >Remarks</th>
                     </tr>
                 </thead>

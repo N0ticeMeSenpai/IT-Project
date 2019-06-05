@@ -173,7 +173,7 @@ if(isset($_GET["co_borrower_id"]) && !empty(trim($_GET["co_borrower_id"]))){
                 <?php echo $row["co_first_name"]; ?>
                 <?php echo $row["co_middle_name"]; ?>
                 <?php echo $row["co_last_name"]; ?>
-              </div><div class="fz-15"><strong>Related Client:  </strong><?php echo $row["name"]; ?></div>
+              </div><div class="fz-15"><?php echo $row["name"]; ?></div>
             </div>
           </div>
         </div>

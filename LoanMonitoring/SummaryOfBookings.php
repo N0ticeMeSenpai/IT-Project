@@ -1,8 +1,10 @@
 <?php
 
-  include 'ARFunction.php';
+  include 'OFFunction.php';
   include 'notification_fetch.php'; 
   include 'navigation.php';
+  include 'DelinquentUpdate.php';
+
 ?>
 <?php
 session_start();
@@ -31,7 +33,6 @@ if(isset($_SESSION['user'])) {
     <link rel="stylesheet" type="text/css" href="css/custom.css">
     <link rel="stylesheet" type="text/css" href="css/modal.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/search.css">
     <link rel="stylesheet" type="text/css" href="css/notification.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min2.css">
     <link rel="stylesheet" type="text/css" href="css/navigation.css">
@@ -41,7 +42,7 @@ if(isset($_SESSION['user'])) {
     <script src="js/ajax.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
-    <title>Aging Recievable Moving Account</title>
+    <title>Summary Of Bookings</title>
 
 </head>
 
@@ -68,44 +69,26 @@ if(isset($_SESSION['user'])) {
         </nav>
         <div class="container pad-1">
 
-            <h2 class="p-5 text-center"> Aging Recievable Legal Account</h2>
-            <form action="SearchDelinquents.php" method="post">
-                <div class="pad-2" id="custom-search-input">
-                    <div class="input-group col-md-12">
-                        <input type="text" name="summaryDelinquents" class="search-query" placeholder="Search" id="myInput">
-                        <div class="input-group-btn">
-                            <button class="btn mybt mybtn2"  name="submit-summary"  type="submit" value="Search">
-                              <img src="img/search2.png" width="15px">
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+            <h2 class="p-5 text-center">Summary of Bookings</h2>
+
+
+            <h3><strong>Salary Account</strong></h3>
+
             <br><br>
+
             <table class="table">
                 <thead class="text-white">
                     <tr>
                         <th class="my-bg text-white">Account Name</th>
-                        <th class="my-bg text-white" >30 Days</th>
-                        <th class="my-bg text-white" >60 Days</th>
-                        <th class="my-bg text-white" >90 Days</th>
-                        <th class="my-bg text-white" >120 days & over</th>
-                        <th class="my-bg text-white">Date Paid</th>
-                        <th class="my-bg text-white" >Remarks</th>
+                        <th class="my-bg text-white" >Remaining Balance</th>
+                        <th class="my-bg text-white">Remarks</th>
                     </tr>
                 </thead>
 
                 <?php
-                    echo LegalAccount();
+                    echo Salary_ActiveAccount();
 
                     ?>
-            </table>
-            <table class="table">
-                <tbody>
-                    <?php
-                        echo TotalLegal();
-                    ?>
-                </tbody>
             </table>
             <div class="row">
                 <div class="col">
@@ -113,7 +96,44 @@ if(isset($_SESSION['user'])) {
                         <ul class="pagination pagination-v3">
 
                         <?php
-                            echo Legal_page();
+                            echo page_Salary();
+
+                        ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+        
+                        <h3>Business Account<h3>
+        
+                </div>
+            </div>
+            <br><br>
+
+            <table class="table">
+                <thead class="text-white">
+                    <tr>
+                        <th class="my-bg text-white">Account Name</th>
+                        <th class="my-bg text-white" >Remaining Balance</th>
+                        <th class="my-bg text-white">Remarks</th>
+                    </tr>
+                </thead>
+
+                <?php
+                    echo  Business_ActiveAccount();
+                    
+                    ?>
+
+            </table>
+              <div class="row">
+                <div class="col">
+                    <div class="pagination-wrap pull-right">
+                        <ul class="pagination pagination-v3">
+
+                        <?php
+                           echo page_Business();
 
                         ?>
                         </ul>

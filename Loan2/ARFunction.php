@@ -8,7 +8,7 @@ function movingAccount(){
     $count3=0;
     $count4=0;
     include './IncludeAging/MovingAccount.php';
-     while($row = mysqli_fetch_array($result))
+    while($row = mysqli_fetch_array($result))
       {   
           $id = $row['loan_id'];
           $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id='$id'";
@@ -17,100 +17,72 @@ function movingAccount(){
 
           if ($remaining>'0'){
 
-                          $query1="SELECT date_paid,remarks from payment_info JOIN payment ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE payment.loan_id = $id && date_paid IS NOT NULL && date_paid=(SELECT MAX(date_paid) from payment_info JOIN payment ON payment_info.payment_id=payment.payment_id WHERE loan_id=$id) && (maturity_date < (select curdate()) AND loan.loan_id=$id) AND loan.delinquent_status = 'Inactive' ORDER by payment_info.payment_id ASC;";
+                          $query1="SELECT date_paid,remarks from payment_info JOIN payment ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE payment.loan_id = $id && date_paid IS NOT NULL && date_paid=(SELECT MAX(date_paid) from payment_info JOIN payment ON payment_info.payment_id=payment.payment_id WHERE loan_id=$id) && (maturity_date < (select curdate()) AND loan.loan_id=$id) AND loan.delinquent_status = 'Active' ORDER by payment_info.payment_id ASC;";
                             $datePaidRemarks = mysqli_fetch_assoc(mysqli_query($conn,$query1));
                             $date_paid=$datePaidRemarks['date_paid'];
                             $remarks=$row['maturity_date'];
             
-                $query2="SELECT DATE_ADD('$remarks', INTERVAL 30 DAY) as maturity_date FROM sigma.payment_info";
+                $query2="SELECT DATE_ADD('$remarks', INTERVAL 30 DAY) as date_paid FROM sigma.payment_info";
                 $interval1 = mysqli_fetch_assoc(mysqli_query($conn,$query2));
-                $query3="SELECT DATE_ADD('$remarks', INTERVAL 60 DAY) as maturity_date FROM sigma.payment_info";
+                $query3="SELECT DATE_ADD('$remarks', INTERVAL 60 DAY) as date_paid FROM sigma.payment_info";
                 $interval2 = mysqli_fetch_assoc(mysqli_query($conn,$query3));
-                $query4="SELECT DATE_ADD('$remarks', INTERVAL 90 DAY) as maturity_date FROM sigma.payment_info";
+                $query4="SELECT DATE_ADD('$remarks', INTERVAL 90 DAY) as date_paid FROM sigma.payment_info";
                 $interval3 = mysqli_fetch_assoc(mysqli_query($conn,$query4));
-                $query5="SELECT DATE_ADD('$remarks', INTERVAL 120 DAY) as maturity_date FROM sigma.payment_info";
+                $query5="SELECT DATE_ADD('$remarks', INTERVAL 120 DAY) as date_paid FROM sigma.payment_info";
                 $interval4 = mysqli_fetch_assoc(mysqli_query($conn,$query5));
 
-              if ($interval1['maturity_date'] <= date("Y-m-d")) {
+          if ($interval1['date_paid'] < date("Y-m-d") && date("Y-m-d") < $interval2['date_paid']) {
 
-            $output .='   <tr>
+            $count1+=$remaining;
+            $output .='<tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
                           <td>'.$remaining.'</td>
                           <td></td>
                           <td></td>
-                          <td></td>';
-                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
+                          <td></td>
+                          <td>'.$date_paid.'</td>
+                          <td>'.$row["loan_remarks"].'</td>
+                      </tr>
+                      ';
 
-                    $output.='<td>'.$row['maturity_date'].'</td>';
-
-                  }else{
-
-                    $output.='<td>'.$date_paid.'</td>';
-                  }
-                  
-                    $output.='<td>'.$row["loan_remarks"].'</td>
-                      </tr>';
+                      
               
-              }elseif ($interval2['maturity_date'] <= date("Y-m-d")){
-              
-              $output .=' <tr>
+              }elseif (date("Y-m-d") < $interval3['date_paid'] && $interval2['date_paid'] < date("Y-m-d")){
+
+              $count2+=$remaining;
+              $output .='<tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
                           <td></td>
                           <td>'.$remaining.'</td>
                           <td></td>
-                          <td></td>';
-                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
+                          <td></td>
+                          <td>'.$date_paid.'</td>
+                          <td>'.$row["loan_remarks"].'</td>
+                        </tr>';
 
-                    $output.='<td>'.$row['maturity_date'].'</td>';
-
-                  }else{
-
-                    $output.='<td>'.$date_paid.'</td>';
-                  }
-                  
-                    $output.='<td>'.$row["loan_remarks"].'</td>
-                      </tr>';
-
-              }elseif($interval3['maturity_date'] <= date("Y-m-d")){
-              
+              }elseif(date("Y-m-d") < $interval4['date_paid'] && $interval3['date_paid'] < date("Y-m-d")){
+              $count3+=$remaining;
               $output .=' <tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
                           <td></td>
                           <td></td>
                           <td>'.$remaining.'</td>
-                          <td></td>';
+                          <td></td>
+                          <td>'.$date_paid.'</td>
+                          <td>'.$row["loan_remarks"].'</td>
+                      </tr>';             
 
-                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
-
-                    $output.='<td>'.$row['maturity_date'].'</td>';
-
-                  }else{
-
-                    $output.='<td>'.$date_paid.'</td>';
-                  }
-                  
-                    $output.='<td>'.$row["loan_remarks"].'</td>
-                      </tr>';           
-
-              }else{
-              
-              $output .=' <tr>
+              }elseif($interval4['date_paid'] < date("Y-m-d")){
+              $count4+=$remaining;
+              $output .='<tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
                           <td></td>
                           <td></td>
                           <td></td>
-                          <td>'.$remaining.'</td>';
-                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
-
-                    $output.='<td>'.$row['maturity_date'].'</td>';
-
-                  }else{
-
-                    $output.='<td>'.$date_paid.'</td>';
-                  }
-                  
-                    $output.='<td>'.$row["loan_remarks"].'</td>
-                      </tr>';            
+                          <td>'.$remaining.'</td>
+                          <td>'.$date_paid.'</td>
+                          <td>'.$row["loan_remarks"].'</td>
+                        </tr>';            
 
               }
 
@@ -151,28 +123,28 @@ function TotalMovingAccount(){
                             $date_paid=$datePaidRemarks['date_paid'];
                             $remarks=$row['maturity_date'];
 
-                $query2="SELECT DATE_ADD('$remarks', INTERVAL 30 DAY) as maturity_date FROM sigma.payment_info";
+                $query2="SELECT DATE_ADD('$remarks', INTERVAL 30 DAY) as date_paid FROM sigma.payment_info";
                 $interval1 = mysqli_fetch_assoc(mysqli_query($conn,$query2));
-                $query3="SELECT DATE_ADD('$remarks', INTERVAL 60 DAY) as maturity_date FROM sigma.payment_info";
+                $query3="SELECT DATE_ADD('$remarks', INTERVAL 60 DAY) as date_paid FROM sigma.payment_info";
                 $interval2 = mysqli_fetch_assoc(mysqli_query($conn,$query3));
-                $query4="SELECT DATE_ADD('$remarks', INTERVAL 90 DAY) as maturity_date FROM sigma.payment_info";
+                $query4="SELECT DATE_ADD('$remarks', INTERVAL 90 DAY) as date_paid FROM sigma.payment_info";
                 $interval3 = mysqli_fetch_assoc(mysqli_query($conn,$query4));
-                $query5="SELECT DATE_ADD('$remarks', INTERVAL 120 DAY) as maturity_date FROM sigma.payment_info";
+                $query5="SELECT DATE_ADD('$remarks', INTERVAL 120 DAY) as date_paid FROM sigma.payment_info";
                 $interval4 = mysqli_fetch_assoc(mysqli_query($conn,$query5));
 
-              if ($interval1['maturity_date'] <= date("Y-m-d")) {
+            if ($interval1['date_paid'] < date("Y-m-d") && date("Y-m-d") < $interval2['date_paid']) {
 
               $count1+=$remaining;
               
-              }elseif ($interval2['maturity_date'] <= date("Y-m-d")){
+              }elseif (date("Y-m-d") < $interval3['date_paid'] && $interval2['date_paid'] < date("Y-m-d")){
 
               $count2+=$remaining;
 
-              }elseif($interval3['maturity_date'] <= date("Y-m-d")){
+              }elseif(date("Y-m-d") < $interval4['date_paid'] && $interval3['date_paid'] < date("Y-m-d")){
               
               $count3+=$remaining;
 
-              }else{
+              }elseif($interval4['date_paid'] < date("Y-m-d")){
 
               $count4+=$remaining;
            
@@ -226,93 +198,61 @@ function NotMovingAccount(){
                             $date_paid=$datePaidRemarks['date_paid'];
                             $remarks=$row['maturity_date'];
             
-                $query2="SELECT DATE_ADD('$remarks', INTERVAL 30 DAY) as maturity_date FROM sigma.payment_info";
+                $query2="SELECT DATE_ADD('$remarks', INTERVAL 30 DAY) as date_paid FROM sigma.payment_info";
                 $interval1 = mysqli_fetch_assoc(mysqli_query($conn,$query2));
-                $query3="SELECT DATE_ADD('$remarks', INTERVAL 60 DAY) as maturity_date FROM sigma.payment_info";
+                $query3="SELECT DATE_ADD('$remarks', INTERVAL 60 DAY) as date_paid FROM sigma.payment_info";
                 $interval2 = mysqli_fetch_assoc(mysqli_query($conn,$query3));
-                $query4="SELECT DATE_ADD('$remarks', INTERVAL 90 DAY) as maturity_date FROM sigma.payment_info";
+                $query4="SELECT DATE_ADD('$remarks', INTERVAL 90 DAY) as date_paid FROM sigma.payment_info";
                 $interval3 = mysqli_fetch_assoc(mysqli_query($conn,$query4));
-                $query5="SELECT DATE_ADD('$remarks', INTERVAL 120 DAY) as maturity_date FROM sigma.payment_info";
+                $query5="SELECT DATE_ADD('$remarks', INTERVAL 120 DAY) as date_paid FROM sigma.payment_info";
                 $interval4 = mysqli_fetch_assoc(mysqli_query($conn,$query5));
 
-              if ($interval1['maturity_date'] <= date("Y-m-d")) {
+              if ($interval1['date_paid'] < date("Y-m-d") && date("Y-m-d") < $interval2['date_paid']) {
 
             $output .='   <tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
                           <td>'.$remaining.'</td>
                           <td></td>
                           <td></td>
-                          <td></td>';
-                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
-
-                    $output.='<td>'.$row['maturity_date'].'</td>';
-
-                  }else{
-
-                    $output.='<td>'.$date_paid.'</td>';
-                  }
-                  
-                    $output.='<td>'.$row["loan_remarks"].'</td>
+                          <td></td>
+                          <td>'.$date_paid.'</td>
+                          <td>'.$row["loan_remarks"].'</td>
                       </tr>';
               
-              }elseif ($interval2['maturity_date'] <= date("Y-m-d")){
+              }elseif (date("Y-m-d") < $interval3['date_paid'] && $interval2['date_paid'] < date("Y-m-d")){
               
               $output .=' <tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
                           <td></td>
                           <td>'.$remaining.'</td>
                           <td></td>
-                          <td></td>';
-                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
-
-                    $output.='<td>'.$row['maturity_date'].'</td>';
-
-                  }else{
-
-                    $output.='<td>'.$date_paid.'</td>';
-                  }
-                  
-                    $output.='<td>'.$row["loan_remarks"].'</td>
+                          <td></td>
+                          <td>'.$date_paid.'</td>
+                          <td>'.$row["loan_remarks"].'</td>
                       </tr>';
 
-              }elseif($interval3['maturity_date'] <= date("Y-m-d")){
+              }elseif(date("Y-m-d") < $interval4['date_paid'] && $interval3['date_paid'] < date("Y-m-d")){
               
               $output .=' <tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
                           <td></td>
                           <td></td>
                           <td>'.$remaining.'</td>
-                          <td></td>';
-                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
-
-                    $output.='<td>'.$row['maturity_date'].'</td>';
-
-                  }else{
-
-                    $output.='<td>'.$date_paid.'</td>';
-                  }
-                  
-                    $output.='<td>'.$row["loan_remarks"].'</td>
+                          <td></td>
+                          <td>'.$date_paid.'</td>
+                          <td>'.$row["loan_remarks"].'</td>
                       </tr>';             
 
-              }else{
+              }elseif($interval4['date_paid'] < date("Y-m-d")){
               
               $output .=' <tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
                           <td></td>
                           <td></td>
                           <td></td>
-                          <td>'.$remaining.'</td>';
-                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
-
-                    $output.='<td>'.$row['maturity_date'].'</td>';
-
-                  }else{
-
-                    $output.='<td>'.$date_paid.'</td>';
-                  }
-                  
-                    $output.='<td>'.$row["loan_remarks"].'</td>
+                          <td>'.$remaining.'</td>
+                          <td>'.$date_paid.'</td>
+                          <td>'.$row["loan_remarks"].'</td>
                       </tr>';            
 
               }
@@ -354,28 +294,28 @@ function TotalNotMovingAccount(){
                             $remarks=$row['maturity_date'];
 
             
-                $query2="SELECT DATE_ADD('$remarks', INTERVAL 30 DAY) as maturity_date FROM sigma.payment_info";
+                $query2="SELECT DATE_ADD('$remarks', INTERVAL 30 DAY) as date_paid FROM sigma.payment_info";
                 $interval1 = mysqli_fetch_assoc(mysqli_query($conn,$query2));
-                $query3="SELECT DATE_ADD('$remarks', INTERVAL 60 DAY) as maturity_date FROM sigma.payment_info";
+                $query3="SELECT DATE_ADD('$remarks', INTERVAL 60 DAY) as date_paid FROM sigma.payment_info";
                 $interval2 = mysqli_fetch_assoc(mysqli_query($conn,$query3));
-                $query4="SELECT DATE_ADD('$remarks', INTERVAL 90 DAY) as maturity_date FROM sigma.payment_info";
+                $query4="SELECT DATE_ADD('$remarks', INTERVAL 90 DAY) as date_paid FROM sigma.payment_info";
                 $interval3 = mysqli_fetch_assoc(mysqli_query($conn,$query4));
-                $query5="SELECT DATE_ADD('$remarks', INTERVAL 120 DAY) as maturity_date FROM sigma.payment_info";
+                $query5="SELECT DATE_ADD('$remarks', INTERVAL 120 DAY) as date_paid FROM sigma.payment_info";
                 $interval4 = mysqli_fetch_assoc(mysqli_query($conn,$query5));
 
-              if ($interval1['maturity_date'] <= date("Y-m-d")) {
+            if ($interval1['date_paid'] < date("Y-m-d") && date("Y-m-d") < $interval2['date_paid']) {
 
               $count1+=$remaining;
               
-              }elseif ($interval2['maturity_date'] <= date("Y-m-d")){
+              }elseif (date("Y-m-d") < $interval3['date_paid'] && $interval2['date_paid'] < date("Y-m-d")){
 
               $count2+=$remaining;
 
-              }elseif($interval3['maturity_date'] <= date("Y-m-d")){
+              }elseif(date("Y-m-d") < $interval4['date_paid'] && $interval3['date_paid'] < date("Y-m-d")){
               
               $count3+=$remaining;
 
-              }else{
+              }elseif($interval4['date_paid'] < date("Y-m-d")){
 
               $count4+=$remaining;
            
@@ -412,7 +352,7 @@ function LegalAccount(){
 
     $output='';
     include './IncludeAging/LegalAccount.php';
-      while($row = mysqli_fetch_array($result))
+ while($row = mysqli_fetch_array($result))
       {   
           $id = $row['loan_id'];
           $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id='$id'";
@@ -421,102 +361,68 @@ function LegalAccount(){
 
           if ($remaining>'0'){
 
-                          $query1="SELECT date_paid,remarks from payment_info JOIN payment ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE payment.loan_id = $id && date_paid IS NOT NULL && date_paid=(SELECT MAX(date_paid) from payment_info JOIN payment ON payment_info.payment_id=payment.payment_id WHERE loan_id=$id) && (maturity_date < (select curdate()) AND loan.loan_id=$id) AND loan.delinquent_status = 'Inactive' ORDER by payment_info.payment_id ASC;";
+                          $query1="SELECT date_paid,remarks from payment_info JOIN payment ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE payment.loan_id = $id && date_paid IS NOT NULL && date_paid=(SELECT MAX(date_paid) from payment_info JOIN payment ON payment_info.payment_id=payment.payment_id WHERE loan_id=$id) && (maturity_date < (select curdate()) AND loan.loan_id=$id) AND loan.delinquent_status = 'Legal' ORDER by payment_info.payment_id ASC;";
                             $datePaidRemarks = mysqli_fetch_assoc(mysqli_query($conn,$query1));
                             $date_paid=$datePaidRemarks['date_paid'];
                             $remarks=$row['maturity_date'];
+
             
-                $query2="SELECT DATE_ADD('$remarks', INTERVAL 30 DAY) as maturity_date FROM sigma.payment_info";
+                $query2="SELECT DATE_ADD('$remarks', INTERVAL 30 DAY) as date_paid FROM sigma.payment_info";
                 $interval1 = mysqli_fetch_assoc(mysqli_query($conn,$query2));
-                $query3="SELECT DATE_ADD('$remarks', INTERVAL 60 DAY) as maturity_date FROM sigma.payment_info";
+                $query3="SELECT DATE_ADD('$remarks', INTERVAL 60 DAY) as date_paid FROM sigma.payment_info";
                 $interval2 = mysqli_fetch_assoc(mysqli_query($conn,$query3));
-                $query4="SELECT DATE_ADD('$remarks', INTERVAL 90 DAY) as maturity_date FROM sigma.payment_info";
+                $query4="SELECT DATE_ADD('$remarks', INTERVAL 90 DAY) as date_paid FROM sigma.payment_info";
                 $interval3 = mysqli_fetch_assoc(mysqli_query($conn,$query4));
-                $query5="SELECT DATE_ADD('$remarks', INTERVAL 120 DAY) as maturity_date FROM sigma.payment_info";
+                $query5="SELECT DATE_ADD('$remarks', INTERVAL 120 DAY) as date_paid FROM sigma.payment_info";
                 $interval4 = mysqli_fetch_assoc(mysqli_query($conn,$query5));
 
-              if ($interval1['maturity_date'] <= date("Y-m-d")) {
+              if ($interval1['date_paid'] < date("Y-m-d") && date("Y-m-d") < $interval2['date_paid']) {
 
             $output .='   <tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
                           <td>'.$remaining.'</td>
                           <td></td>
                           <td></td>
-                          <td></td>';
-
-                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
-
-                    $output.='<td>'.$row['maturity_date'].'</td>';
-
-                  }else{
-
-                    $output.='<td>'.$date_paid.'</td>';
-                  }
-                  
-                    $output.='<td>'.$row["loan_remarks"].'</td>
+                          <td></td>
+                          <td>'.$date_paid.'</td>
+                          <td>'.$row["loan_remarks"].'</td>
                       </tr>';
               
-              }elseif ($interval2['maturity_date'] <= date("Y-m-d")){
+              }elseif (date("Y-m-d") < $interval3['date_paid'] && $interval2['date_paid'] < date("Y-m-d")){
               
               $output .=' <tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
                           <td></td>
                           <td>'.$remaining.'</td>
                           <td></td>
-                          <td></td>';
-                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
-
-                    $output.='<td>'.$row['maturity_date'].'</td>';
-
-                  }else{
-
-                    $output.='<td>'.$date_paid.'</td>';
-                  }
-                  
-                    $output.='<td>'.$row["loan_remarks"].'</td>
+                          <td></td>
+                          <td>'.$date_paid.'</td>
+                          <td>'.$row["loan_remarks"].'</td>
                       </tr>';
 
-              }elseif($interval3['maturity_date'] <= date("Y-m-d")){
+              }elseif(date("Y-m-d") < $interval4['date_paid'] && $interval3['date_paid'] < date("Y-m-d")){
               
               $output .=' <tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
                           <td></td>
                           <td></td>
                           <td>'.$remaining.'</td>
-                          <td></td>';
+                          <td></td>
+                          <td>'.$date_paid.'</td>
+                          <td>'.$row["loan_remarks"].'</td>
+                      </tr>';             
 
-                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
-
-                    $output.='<td>'.$row['maturity_date'].'</td>';
-
-                  }else{
-
-                    $output.='<td>'.$date_paid.'</td>';
-                  }
-                  
-                    $output.='<td>'.$row["loan_remarks"].'</td>
+              }elseif($interval4['date_paid'] < date("Y-m-d")){
+              
+              $output .=' <tr>
+                          <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td>'.$remaining.'</td>
+                          <td>'.$date_paid.'</td>
+                          <td>'.$row["loan_remarks"].'</td>
                       </tr>';            
-
-              }else{
-              
-              $output .=' <tr>
-                          <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>'.$remaining.'</td>';
-                          
-                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
-
-                    $output.='<td>'.$row['maturity_date'].'</td>';
-
-                  }else{
-
-                    $output.='<td>'.$date_paid.'</td>';
-                  }
-                  
-                    $output.='<td>'.$row["loan_remarks"].'</td>
-                      </tr>';           
 
               }
 
@@ -556,28 +462,28 @@ function TotalLegal(){
                             $date_paid=$datePaidRemarks['date_paid'];
                             $remarks=$row['maturity_date'];
             
-                $query2="SELECT DATE_ADD('$remarks', INTERVAL 30 DAY) as maturity_date FROM sigma.payment_info";
+                $query2="SELECT DATE_ADD('$remarks', INTERVAL 30 DAY) as date_paid FROM sigma.payment_info";
                 $interval1 = mysqli_fetch_assoc(mysqli_query($conn,$query2));
-                $query3="SELECT DATE_ADD('$remarks', INTERVAL 60 DAY) as maturity_date FROM sigma.payment_info";
+                $query3="SELECT DATE_ADD('$remarks', INTERVAL 60 DAY) as date_paid FROM sigma.payment_info";
                 $interval2 = mysqli_fetch_assoc(mysqli_query($conn,$query3));
-                $query4="SELECT DATE_ADD('$remarks', INTERVAL 90 DAY) as maturity_date FROM sigma.payment_info";
+                $query4="SELECT DATE_ADD('$remarks', INTERVAL 90 DAY) as date_paid FROM sigma.payment_info";
                 $interval3 = mysqli_fetch_assoc(mysqli_query($conn,$query4));
-                $query5="SELECT DATE_ADD('$remarks', INTERVAL 120 DAY) as maturity_date FROM sigma.payment_info";
+                $query5="SELECT DATE_ADD('$remarks', INTERVAL 120 DAY) as date_paid FROM sigma.payment_info";
                 $interval4 = mysqli_fetch_assoc(mysqli_query($conn,$query5));
 
-              if ($interval1['maturity_date'] <= date("Y-m-d")) {
+            if ($interval1['date_paid'] < date("Y-m-d") && date("Y-m-d") < $interval2['date_paid']) {
 
               $count1+=$remaining;
               
-              }elseif ($interval2['maturity_date'] <= date("Y-m-d")){
+              }elseif (date("Y-m-d") < $interval3['date_paid'] && $interval2['date_paid'] < date("Y-m-d")){
 
               $count2+=$remaining;
 
-              }elseif($interval3['maturity_date'] <= date("Y-m-d")){
+              }elseif(date("Y-m-d") < $interval4['date_paid'] && $interval3['date_paid'] < date("Y-m-d")){
               
               $count3+=$remaining;
 
-              }else{
+              }elseif($interval4['date_paid'] < date("Y-m-d")){
 
               $count4+=$remaining;
            

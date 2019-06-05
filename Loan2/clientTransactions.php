@@ -110,17 +110,15 @@ $client_id =$_POST['client_id'];
             <br>
             <p>                           
             <div class="row">
-                <div class="col-sm-6" style="font-size:30px;">
+                <div class="col-sm-3">
                     <p><strong> Name:</strong> <a href="Profile.php?loan_id=<?php echo $row1["loan_id"]?> "> 
                       <?php echo $row1['first_name'] ,' ',$row1['middle_name'], ' ', $row1['last_name']; ?></a></p>
                 </div>
-            </div>
-            <div class="row">
                 <?php if($_SESSION['user']['em_position']=='Operations Manager'){ ?>
-                <div class="col-md-4">
+                <div>
                     <form method="post" action="transactionsHistory.php">
                        <input type="hidden" name="loan_idforR" value='<?php echo $row1['loan_id']; ?>' />
-                       <input class="i-3 float-right" type="submit" value="History of Transactions" />
+                       <input class="float-right" type="submit" value="History of Transactions" />
                     </form>
                 
                 </div>

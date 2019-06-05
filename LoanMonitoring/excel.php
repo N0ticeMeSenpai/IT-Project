@@ -72,55 +72,87 @@ if(isset($_POST["AgingRecievable"]))
                 $query5="SELECT DATE_ADD('$remarks', INTERVAL 120 DAY) as date_paid FROM sigma.payment_info";
                 $interval4 = mysqli_fetch_assoc(mysqli_query($conn,$query5));
 
-              if ($interval1['date_paid'] < date("Y-m-d") && date("Y-m-d") < $interval2['date_paid']) {
+              if ($interval1['date_paid'] <= date("Y-m-d")) {
 
             $output .='<tr>
                           <td>'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</td>
                           <td>'.$remaining.'</td>
                           <td></td>
                           <td></td>
-                          <td></td>
-                          <td>'.$date_paid.'</td>
-                          <td>'.$row["loan_remarks"].'</td>
+                          <td></td>';
+                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
+
+                    $output.='<td>'.$row['maturity_date'].'</td>';
+
+                  }else{
+
+                    $output.='<td>'.$date_paid.'</td>';
+                  }
+                  
+                    $output.='<td>'.$row["loan_remarks"].'</td>
                       </tr>';
               $count1+=$remaining;
               
-              }elseif ($interval2['date_paid'] < date("Y-m-d") && date("Y-m-d") < $interval3['date_paid']){
+              }elseif ($interval2['date_paid'] <= date("Y-m-d")){
               
               $output .=' <tr>
                           <td>'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</td>
                           <td></td>
                           <td>'.$remaining.'</td>
                           <td></td>
-                          <td></td>
-                          <td>'.$date_paid.'</td>
-                          <td>'.$row["loan_remarks"].'</td>
+                          <td></td>';
+                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
+
+                    $output.='<td>'.$row['maturity_date'].'</td>';
+
+                  }else{
+
+                    $output.='<td>'.$date_paid.'</td>';
+                  }
+                  
+                    $output.='<td>'.$row["loan_remarks"].'</td>
                       </tr>';
               $count2+=$remaining;
 
-              }elseif($interval3['date_paid'] < date("Y-m-d") && date("Y-m-d") < $interval4['date_paid']){
+              }elseif($interval3['date_paid'] <= date("Y-m-d")){
               
               $output .=' <tr>
                           <td>'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</td>
                           <td></td>
                           <td></td>
                           <td>'.$remaining.'</td>
-                          <td></td>
-                          <td>'.$date_paid.'</td>
-                          <td>'.$row["loan_remarks"].'</td>
+                          <td></td>';
+                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
+
+                    $output.='<td>'.$row['maturity_date'].'</td>';
+
+                  }else{
+
+                    $output.='<td>'.$date_paid.'</td>';
+                  }
+                  
+                    $output.='<td>'.$row["loan_remarks"].'</td>
                       </tr>';             
               $count3+=$remaining;
-              }elseif($interval4['date_paid'] < date("Y-m-d")){
+              }else {
               
               $output .=' <tr>
                           <td>'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</td>
                           <td></td>
                           <td></td>
                           <td></td>
-                          <td>'.$remaining.'</td>
-                          <td>'.$date_paid.'</td>
-                          <td>'.$row["loan_remarks"].'</td>
-                      </tr>';            
+                          <td>'.$remaining.'</td>';
+                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
+
+                    $output.='<td>'.$row['maturity_date'].'</td>';
+
+                  }else{
+
+                    $output.='<td>'.$date_paid.'</td>';
+                  }
+                  
+                    $output.='<td>'.$row["loan_remarks"].'</td>
+                      </tr>';
               $count4+=$remaining;
               }
 
@@ -185,20 +217,28 @@ if(isset($_POST["AgingRecievable"]))
                 $query9="SELECT DATE_ADD('$remarks', INTERVAL 120 DAY) as date_paid FROM sigma.payment_info";
                 $interval8 = mysqli_fetch_assoc(mysqli_query($conn,$query9));
 
-              if ($interval5['date_paid'] < date("Y-m-d") && date("Y-m-d") < $interval6['date_paid']) {
+              if ($interval5['date_paid'] <= date("Y-m-d")) {
 
             $output .=' <tr>
                           <td>'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</td>
                           <td>'.$remaining.'</td>
                           <td></td>
                           <td></td>
-                          <td></td>
-                          <td>'.$date_paid.'</td>
-                          <td>'.$row["loan_remarks"].'</td>
+                          <td></td>';
+                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
+
+                    $output.='<td>'.$row['maturity_date'].'</td>';
+
+                  }else{
+
+                    $output.='<td>'.$date_paid.'</td>';
+                  }
+                  
+                    $output.='<td>'.$row["loan_remarks"].'</td>
                       </tr>';
               $count5+=$remaining;
               
-              }elseif (date("Y-m-d") < $interval7['date_paid'] && $interval6['date_paid'] < date("Y-m-d")){
+              }elseif ($interval6['date_paid'] <= date("Y-m-d")){
               
               $output .=' <tr>
                           <td>'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</td>
@@ -211,20 +251,28 @@ if(isset($_POST["AgingRecievable"]))
                       </tr>';
               $count6+=$remaining;
 
-              }elseif(date("Y-m-d") < $interval8['date_paid'] && $interval7['date_paid'] < date("Y-m-d")){
+              }elseif($interval7['date_paid'] <= date("Y-m-d")){
               
               $output .=' <tr>
                           <td>'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</td>
                           <td></td>
                           <td></td>
                           <td>'.$remaining.'</td>
-                          <td></td>
-                          <td>'.$date_paid.'</td>
-                          <td>'.$row["loan_remarks"].'</td>
-                      </tr>';             
+                          <td></td>';
+                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
+
+                    $output.='<td>'.$row['maturity_date'].'</td>';
+
+                  }else{
+
+                    $output.='<td>'.$date_paid.'</td>';
+                  }
+                  
+                    $output.='<td>'.$row["loan_remarks"].'</td>
+                      </tr>';     
               $count7+=$remaining;
 
-              }elseif($interval8['date_paid'] < date("Y-m-d")){
+              }else{
               
               $output .=' <tr>
                           <td>'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</td>
@@ -232,8 +280,17 @@ if(isset($_POST["AgingRecievable"]))
                           <td></td>
                           <td></td>
                           <td>'.$remaining.'</td>
-                          <td>'.$date_paid.'</td>
-                          <td>'.$row["loan_remarks"].'</td>
+                          ';
+                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
+
+                    $output.='<td>'.$row['maturity_date'].'</td>';
+
+                  }else{
+
+                    $output.='<td>'.$date_paid.'</td>';
+                  }
+                  
+                    $output.='<td>'.$row["loan_remarks"].'</td>
                       </tr>';            
               $count8+=$remaining;
               }
@@ -300,7 +357,7 @@ if(isset($_POST["AgingRecievable"]))
                 $query13="SELECT DATE_ADD('$remarks', INTERVAL 120 DAY) as date_paid FROM sigma.payment_info";
                 $interval12 = mysqli_fetch_assoc(mysqli_query($conn,$query13));
 
-              if ($interval9['date_paid'] < date("Y-m-d") && date("Y-m-d") < $interval10['date_paid']) {
+              if ($interval9['date_paid'] <= date("Y-m-d")) {
 
             $output .=' <tr>
                           <td>'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</td>
@@ -313,7 +370,7 @@ if(isset($_POST["AgingRecievable"]))
                       </tr>';
               $count9+=$remaining;
               
-              }elseif (date("Y-m-d") < $interval11['date_paid'] && $interval10['date_paid'] < date("Y-m-d")){
+              }elseif ($interval10['date_paid'] <= date("Y-m-d")){
               
               $output .=' <tr>
                           <td>'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</td>
@@ -326,19 +383,27 @@ if(isset($_POST["AgingRecievable"]))
                       </tr>';
               $count10+=$remaining;
 
-              }elseif(date("Y-m-d") < $interval12['date_paid'] && $interval11['date_paid'] < date("Y-m-d")){
+              }elseif($interval11['date_paid'] <= date("Y-m-d")){
               
               $output .=' <tr>
                           <td>'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</td>
                           <td></td>
                           <td></td>
                           <td>'.$remaining.'</td>
-                          <td></td>
-                          <td>'.$date_paid.'</td>
-                          <td>'.$row["loan_remarks"].'</td>
+                          <td></td>';
+                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
+
+                    $output.='<td>'.$row['maturity_date'].'</td>';
+
+                  }else{
+
+                    $output.='<td>'.$date_paid.'</td>';
+                  }
+                  
+                    $output.='<td>'.$row["loan_remarks"].'</td>
                       </tr>';             
               $count11+=$remaining;
-              }elseif($interval12['date_paid'] < date("Y-m-d")){
+              }else{
               
               $output .=' <tr>
                           <td>'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</td>
@@ -346,8 +411,17 @@ if(isset($_POST["AgingRecievable"]))
                           <td></td>
                           <td></td>
                           <td>'.$remaining.'</td>
-                          <td>'.$date_paid.'</td>
-                          <td>'.$row["loan_remarks"].'</td>
+                          ';
+                  if(empty($date_paid)||$row['maturity_date'] > $date_paid){
+
+                    $output.='<td>'.$row['maturity_date'].'</td>';
+
+                  }else{
+
+                    $output.='<td>'.$date_paid.'</td>';
+                  }
+                  
+                    $output.='<td>'.$row["loan_remarks"].'</td>
                       </tr>';            
               $count12+=$remaining;
               }

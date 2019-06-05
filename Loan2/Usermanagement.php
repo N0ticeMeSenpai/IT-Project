@@ -83,6 +83,16 @@ if(isset($_POST['id'])){
               echo navigate_it();
             ?>
               <ul class="nav navbar-nav navbar-right">
+                 <li>
+                <a href="notification.php">
+                        <?php
+                        if(count_data() > '0'){
+                          echo count_data();
+                        }
+                       ?>
+                       <img src="img/notifications-button.png" width="15px">
+                    </a>
+                 </li>
                 <?php
                 echo navigate_right();
 

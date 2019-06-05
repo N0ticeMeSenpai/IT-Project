@@ -100,25 +100,22 @@
 								<h3 class="text-center">CO BORROWER PERSONAL 1 INFORMATION</h3>
 							    	<div class="row">
 							    		<div class="col-sm-4">
-							    			<input type="text" class="i-3" name="co_first_name_one" id="co_first_name_one" pattern="{1,}" required>
+							    			<input type="text" placeholder="First Name" class="i-3" name="co_first_name_one" id="co_first_name_one" pattern="{1,}" required>
 							    		</div>
 							    		<div class="col-sm-4">
-							    			<input type="text" class="i-3" name="co_middle_name_one" id="co_middle_name_one" pattern="{1,}" required>
+							    			<input type="text" placeholder="Middle Name" class="i-3" name="co_middle_name_one" id="co_middle_name_one" pattern="{1,}" required>
 							    		</div>
 							    		<div class="col-sm-4">
-							    			<input type="text" class="i-3" name="co_last_name_one" id="co_last_name_one" pattern="{1,}" required>
+							    			<input type="text" placeholder="Last Name" class="i-3" name="co_last_name_one" id="co_last_name_one" pattern="{1,}" required>
 							    		</div>	
 							    	</div>
 									
 							    	<div class="row">
 				                       <div class="col-sm-5">
-			                                <input type="text" class="i-3" name="co_address_one" id="co_address_one" pattern="{1,}" required>
+			                                <input type="text" placeholder="Present Address" class="i-3" name="co_address_one" id="co_address_one" pattern="{1,}" required>
 			                           </div>
-									   <div class="col-sm-4">
-											<input type="text" class="i-3" name="related_client_one" id="related_client_one" pattern="{1,}" required>
-									   </div>
 										<div class="col-sm-3">
-										    <input type="text" class="i-3" name="co_contact_no_one" id="co_contact_no" required>
+										    <input type="text" placeholder="Contact Number" class="i-3" name="co_contact_no_one" id="co_contact_no" required>
 										</div>
 							    	</div>
 				                </td>
@@ -128,16 +125,16 @@
 									<h3 class="text-center"><i class="fa fa-angle-right"></i> CO BORROWER 1 WORK INFORMATION </h3>
 									<div class="row">
 							    		<div class="col-lg-6">
-							    			<input type="text" class="i-3" name="co_business_address_one" id="co_business_address_one" pattern="{1,}" required>
+							    			<input type="text" class="i-3" placeholder="Business Address" name="co_business_address_one" id="co_business_address_one" pattern="{1,}" required>
 							    		</div>
 							    		<div class="col-lg-6">
-							    			<input type="text" class="i-3" name="co_name_of_firm_one" id="co_name_of_firm_one" pattern="{1,}" required>
+							    			<input type="text" class="i-3" placeholder="Name of Firm" name="co_name_of_firm_one" id="co_name_of_firm_one" pattern="{1,}" required>
 							    		</div>	
 							    	</div>
 									
 							    	<div class="row">
 					                    <div class="col-lg-6">
-							    			<input type="text" class="i-3" name="co_position_one" id="co_position_one" pattern="{1,}" required>
+							    			<input type="text" class="i-3" placeholder="Position" name="co_position_one" id="co_position_one" pattern="{1,}" required>
 							    		</div>
 								    	<div class="col-lg-6">
 			                                <select name="co_employment_one">
@@ -158,25 +155,22 @@
 								<h3 class="text-center">CO BORROWER PERSONAL 2 INFORMATION</h3>
 							    	<div class="row">
 							    		<div class="col-sm-4">
-							    			<input type="text" class="i-3" name="co_first_name_two" id="co_first_name_two" pattern="{1,}" required>
+							    			<input type="text" class="i-3" placeholder="First Name" name="co_first_name_two" id="co_first_name_two" pattern="{1,}" required>
 							    		</div>
 							    		<div class="col-sm-4">
-							    			<input type="text" class="i-3" name="co_middle_name_two" id="co_middle_name_two" pattern="{1,}" required>
+							    			<input type="text" class="i-3" placeholder="Middle Name" name="co_middle_name_two" id="co_middle_name_two" pattern="{1,}" required>
 							    		</div>
 							    		<div class="col-sm-4">
-							    			<input type="text" class="i-3" name="co_last_name_two" id="co_last_name_two" pattern="{1,}" required>
+							    			<input type="text" class="i-3" placeholder="Last Name" name="co_last_name_two" id="co_last_name_two" pattern="{1,}" required>
 							    		</div>	
 							    	</div>
 									
 							    	<div class="row">
 				                       <div class="col-sm-5">
-			                                <input type="text" class="i-3" name="co_address_two" id="co_address_two" pattern="{1,}" required>
+			                                <input type="text" class="i-3" placeholder="Present Address" name="co_address_two" id="co_address_two" pattern="{1,}" required>
 			                           </div>
-									   <div class="col-sm-4">
-											<input type="text" class="i-3" name="related_client_two" id="related_client_two" pattern="{1,}" required>
-									   </div>
 										<div class="col-sm-3">
-										    <input type="text" class="i-3" name="co_contact_no_two" id="co_contact_no" required>
+										    <input type="text" class="i-3" placeholder="Contact Number" name="co_contact_no_two" id="co_contact_no" required>
 										</div>
 							    	</div>
 				                </td>
@@ -186,19 +180,18 @@
 									<h3 class="text-center"><i class="fa fa-angle-right"></i> CO BORROWER 2 WORK INFORMATION</h3>
 									<div class="row">
 							    		<div class="col-lg-6">
-							    			<input type="text" class="i-3" name="co_business_address_two" id="co_business_address_two" pattern="{1,}" required>
+							    			<input type="text" class="i-3" placeholder="Business Address" name="co_business_address_two" id="co_business_address_two" pattern="{1,}" required>
 							    		</div>
 							    		<div class="col-lg-6">
-							    			<input type="text" class="i-3" name="co_name_of_firm_two" id="co_name_of_firm_two" pattern="{1,}" required>
+							    			<input type="text" class="i-3" placeholder="Name of Firm" name="co_name_of_firm_two" id="co_name_of_firm_two" pattern="{1,}" required>
 							    		</div>	
 							    	</div>
-									
 							    	<div class="row">
 					                    <div class="col-lg-6">
-							    			<input type="text" class="i-3" name="co_position_two" id="co_position_two" pattern="{1,}" required>
+							    			<input type="text" class="i-3" placeholder="Position" name="co_position_two" id="co_position_two" pattern="{1,}" required>
 							    		</div>
 								    	<div class="col-lg-6">
-			                                <select name="co_employment_two">
+			                                <select placeholder="Employment" name="co_employment_two">
 			                                    <option>Employed</option>
 			                                    <option>Own Business</option>
 			                                </select>
@@ -208,7 +201,7 @@
 							</tr>
 						</table>
 
-						<input type="button" name="submit" id="submit" class="btn mybtn2" style="background-color:#2a6752; color:white;" value="Submit" />
+						<input type="button" name="submit" id="submit" class="btn mybtn2 i-3" style="background-color:#2a6752; color:white;" value="Submit" />
 					</div>
 				</form>
 			</div>

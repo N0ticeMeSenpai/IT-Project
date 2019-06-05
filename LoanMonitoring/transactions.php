@@ -98,18 +98,31 @@ $loan_id =$_POST['loan_id'];
         <table class="table">
             <br>
             <p>                           
-            <div class="row">
-                <div class="col-md-3">
+            <div class="row" style="font-size:30px">
+                <div class="col-md-6">
                     <p><strong> Name:</strong> <a href="Profile.php?loan_id=<?php echo $row1["loan_id"]?> "> 
                       <?php echo $row1['first_name'] ,' ',$row1['middle_name'], ' ', $row1['last_name']; ?></a></p>
                 </div>
-                <?php if($_SESSION['user']['em_position']=='Operations Manager'){ ?>
-
-                    <form method="post" action="transactionsHistory.php">
-                       <input type="hidden" name="loan_idforR" value='<?php echo $row1['loan_id']; ?>' />
-                       <input type="submit" class="btn mybt mybtn2 text-white" value="History of Transactions" />
-                    </form>
+            </div>
+            <div class="row">
+               <?php if($_SESSION['user']['em_position']=='Operations Manager'){ ?>
+                 <div class="col-md-4">
+                   
+                        <form method="post" action="transactionsHistory.php">
+                           <input type="hidden" name="loan_idforR" value='<?php echo $row1['loan_id']; ?>' />
+                           <input type="submit" class="i-3" value="History of Transactions" />
+                        </form>
+                    
+                  </div>
                 <?php }?>
+                <div class="col-md-4">
+                  <form action="transactionsExcel.php" method="post">
+                      <div id="custom-search-input">
+                              <input type="hidden" name="loan" value='<?php echo $loan_id?>'>
+                              <input class="pull-right i-3"  name="exportTransaction"  type="submit" value="Export Transaction">
+                      </div>
+                  </form>
+                </div>
           </div>
           <div class="row">
             <div class="col-sm-3"><strong>Date Booked: </strong><?php echo $row1['date_booked']; ?></div>
@@ -199,12 +212,6 @@ $loan_id =$_POST['loan_id'];
             ?>
 
         </table>
-                  <form action="transactionsExcel.php" method="post">
-                      <div id="custom-search-input">
-                              <input type="hidden" name="loan" value='<?php echo $loan_id?>'>
-                              <input class="pull-right btn mybt mybtn2"  name="exportTransaction"  type="submit" value="Export Transaction">
-                      </div>
-                  </form>
     </div>
   </div>
       

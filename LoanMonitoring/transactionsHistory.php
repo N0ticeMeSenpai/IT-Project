@@ -117,18 +117,6 @@ header('Cache-Control: no cache');
                 <?php } ;?>
             </table>
         </div>
-
-        <footer>
-            <div class="footer-bottom">
-                <div class="container">
-                    <div class="text-center ">
-                        <div class="copyright-text">
-                            <p>CopyRight © 2019 Sigma All Rights Reserved</p>
-                        </div>
-                    </div> <!-- End Col -->
-                </div>
-            </div>
-        </footer>
     <!-- js placed at the end of the document so the pages load faster -->
     <script src="assets/js/jquery.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
