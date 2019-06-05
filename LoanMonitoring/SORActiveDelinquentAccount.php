@@ -70,7 +70,7 @@ if(isset($_SESSION['user'])) {
         </nav>
         <div class="container pad-1">
 
-            <h2 class="p-5 text-center"> Active Delinquent</h2>
+            <h2 class="p-5 text-center"> Active Delinquent Account</h2>
             
             <form action="SearchDelinquents.php" method="post">
                 <div class="pad-2" id="custom-search-input">

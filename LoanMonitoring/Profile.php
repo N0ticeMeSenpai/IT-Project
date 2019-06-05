@@ -262,7 +262,11 @@ if(isset($_GET["loan_id"]) && !empty(trim($_GET["loan_id"]))){
       <div class="modal-body">
           <div class="form-group">
             <label>Employment</label>
-            <input type="text" id="employment" class="form-control">
+              <select id="employment" class="form-control">
+                <option selected disabled>---- Is he Employed or Owner of a Business? ----</option>
+                  <option>Employed</option>
+                  <option>Own Business</option>
+              </select>
           </div>
           <div class="form-group">
             <label>Position</label>

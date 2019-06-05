@@ -43,7 +43,7 @@ if(isset($_SESSION['user'])) {
     <script src="js/ajax.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
-    <title>Active Delinquent Account</title>
+    <title>Active Account</title>
 
 </head>
 
@@ -71,7 +71,7 @@ if(isset($_SESSION['user'])) {
         </nav>
         <div class="container pad-1">
 
-            <h2 class="p-5 text-center"> Active Delinquent</h2>            
+            <h2 class="p-5 text-center"> Active Account</h2>            
             <form action="SearchDelinquents.php" method="post">
                 <div class="pad-2" id="custom-search-input">
                     <div class="input-group col-md-12">
