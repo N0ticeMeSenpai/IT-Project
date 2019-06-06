@@ -7,7 +7,7 @@ function movingAccount(){
     $count2=0;
     $count3=0;
     $count4=0;
-    include './IncludeAging/MovingAccount.php';
+    include 'IncludeAging/MovingAccount.php';
      while($row = mysqli_fetch_array($result))
       {   
           $id = $row['loan_id'];
@@ -197,7 +197,7 @@ function TotalMovingAccount(){
 
 function moving_page(){
   $output='';
-  include './IncludeAging/MovingAccount.php';
+  include 'IncludeAging/MovingAccount.php';
     for ($page=1;$page<=$number_of_pages;$page++) {
       $output .= '<li><a href="ARMoving.php?MovingAccountPage=' . $page . '">' . $page . '</a></li>';
     }
@@ -211,7 +211,7 @@ function moving_page(){
 function NotMovingAccount(){
 
     $output='';
-    include './IncludeAging/NotMovingAccount.php';
+    include 'IncludeAging/NotMovingAccount.php';
      while($row = mysqli_fetch_array($result))
       {   
           $id = $row['loan_id'];
@@ -400,7 +400,7 @@ function TotalNotMovingAccount(){
 
 function NotMoving_page(){
   $output='';
-  include './IncludeAging/NotMovingAccount.php';
+  include 'IncludeAging/NotMovingAccount.php';
     for ($page=1;$page<=$number_of_pages;$page++) {
       $output .= '<li><a href="ARNotMovingAccount.php?NotMovingAccountPage=' . $page . '">' . $page . '</a></li>';
     }
@@ -411,7 +411,7 @@ function NotMoving_page(){
 function LegalAccount(){
 
     $output='';
-    include './IncludeAging/LegalAccount.php';
+    include 'IncludeAging/LegalAccount.php';
       while($row = mysqli_fetch_array($result))
       {   
           $id = $row['loan_id'];
@@ -601,7 +601,7 @@ function TotalLegal(){
 
 function Legal_page(){
   $output='';
-  include './IncludeAging/LegalAccount.php';
+  include 'IncludeAging/LegalAccount.php';
     for ($page=1;$page<=$number_of_pages;$page++) {
       $output .= '<li><a href="ARLegal.php?LegalPage=' . $page . '">' . $page . '</a></li>';
     }

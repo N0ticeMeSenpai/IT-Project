@@ -49,9 +49,15 @@ if($_SESSION['user']['em_position']=='Operations Manager'){
 	            </div>
 	            <!-- Collect the nav links, forms, and other content for toggling -->
 	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	            	<?php
-	            		echo navigate_it();
-	            	?>
+	                <?php
+	                    echo navigate_it()
+	                ?>
+	                <ul class="nav navbar-nav navbar-right">
+	                    <?php
+	                      echo navigate_right();
+
+	                      ?>
+	                </ul>
 	            </div>
 	        </div>
 	    </nav>

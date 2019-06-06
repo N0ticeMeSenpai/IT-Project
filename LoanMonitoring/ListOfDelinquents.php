@@ -126,7 +126,7 @@ if(isset($_SESSION['user'])) {
                           <div class="py-3 ">
                               <input class="b-2" name="SummaryOfRecievable" type="submit" value="Summary Of Receivable">
                           </div>
-                          <h2 style="padding-top: 10px;">Summary of Bookings<br>Monthy Reort</h2>
+                          <h2 style="padding-top: 10px;">Summary of Bookings<br>Monthy Report</h2>
                           <input class="i-2" type="month" name="testDate" id="myMonth">
                           <div class="py-3 ">
                               <input class="b-2" name="generate_Bookings" type="submit" value="Summary of bookings">

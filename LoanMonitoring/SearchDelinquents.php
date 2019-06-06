@@ -92,8 +92,8 @@ if(isset($_SESSION['user'])) {
                         <th class="my-bg text-white" >Remaining Balance</th>
                         <th class="my-bg text-white" >Bi Monthly</th>
                         <th class="my-bg text-white" >Date Paid</th>
-                        <th class="my-bg text-white" >Maturity Date</th>
                         <th class="my-bg text-white" >Date Booked</th>
+                        <th class="my-bg text-white" >Maturity Date</th>
                         <th class="my-bg text-white" >Remarks</th>
                         <th class="my-bg text-white">Status</th>
                         <th colspan="2" class="my-bg text-white">Action</th>

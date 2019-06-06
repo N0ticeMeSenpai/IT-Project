@@ -16,14 +16,14 @@ VALUES ('$username', '$password', '$position')";
 
 	if(mysqli_num_rows($allUser) >= 1){
 	    echo "<script>
-	          alert('Client is already registered');
+	          alert('User is already registered');
 	          window.location.href='../Usermanagement.php';
 	          </script>";
 	}else{
 	    $result = mysqli_query($conn, $sql);
 
 	    echo "<script>
-	          alert('Client Creation Success');
+	          alert('User Creation Success');
 	          window.location.href='../Usermanagement.php';
 	          </script>";
 	}
