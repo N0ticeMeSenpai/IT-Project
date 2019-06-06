@@ -61,7 +61,7 @@ if(isset($_SESSION['user'])) {
 	    <div class="col-lg-6">
 	      <div class="circle-tile ">
 	        <div class="circle-tile-content mygreen">
-	          <div class="circle-tile-description text-faded">Number of Delinquent</div>
+	          <div class="circle-tile-description text-faded">List of Delinquents</div>
 	          <div class="circle-tile-number text-faded ">
 	          	<?php
 	          	echo count_delinquent() 

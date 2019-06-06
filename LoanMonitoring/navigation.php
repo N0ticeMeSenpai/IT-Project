@@ -15,9 +15,9 @@ function navigate_it()
                                 <ul>
                                     <li class="dropdown-header">Summary Of Receivable</li>
                                     <li><a href="SORActiveAccount.php">Active Account</a></li>
-                                    <li><a href="SORActiveDelinquentAccount.php">Active Deliquent Account</a></li>
+                                    <li><a href="SORActiveDelinquentAccount.php">Active Delinquent Account</a></li>
                                     <li><a href="SORActiveLegalAccount.php">Active Legal Account</a></li>
-                                    <li><a href="SORDelinquentAccount.php">Deliquent Account</a></li>
+                                    <li><a href="SORDelinquentAccount.php">Delinquent Account</a></li>
                                     
                                 </ul>
                             </li>

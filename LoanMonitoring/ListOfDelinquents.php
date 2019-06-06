@@ -68,18 +68,7 @@ if(isset($_SESSION['user'])) {
         <div class="container pad-1">
 
             <h2 class="p-5 text-center">List of Delinquents</h2>
-            <form action="SearchDelinquents.php" method="post">
-                <div class="pad-2" id="custom-search-input">
-                    <div class="input-group col-md-12">
-                        <input type="text" name="summaryDelinquents" class=" search-query" placeholder="Search" id="myInput">
-                        <div class="input-group-btn">
-                            <button class="btn mybt mybtn2"  name="submit-summary"  type="submit" value="Search">
-                              <img src="img/search2.png" width="15px">
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+      
             <br><br>
 
             <table class="table">
