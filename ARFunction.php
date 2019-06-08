@@ -32,10 +32,9 @@ function movingAccount(){
                 $query5="SELECT DATE_ADD('$date_paid', INTERVAL 120 DAY) as date_paid FROM sigma.payment_info";
                 $interval4 = mysqli_fetch_assoc(mysqli_query($conn,$query5));
 
-          if ($interval1['date_paid'] < date("Y-m-d") && date("Y-m-d") < $interval2['date_paid']) {
+            if ($interval1['date_paid'] >= date("Y-m-d")) {
 
-            $count1+=$remaining;
-            $output .='<tr>
+            $output .='   <tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
                           <td>'.$remaining.'</td>
                           <td></td>
@@ -43,26 +42,22 @@ function movingAccount(){
                           <td></td>
                           <td>'.$date_paid.'</td>
                           <td>'.$row["loan_remarks"].'</td>
-                      </tr>
-                      ';
-
-                      
+                      </tr>';
               
-              }elseif (date("Y-m-d") < $interval3['date_paid'] && $interval2['date_paid'] < date("Y-m-d")){
-
-              $count2+=$remaining;
-              $output .='<tr>
+              }elseif (date("Y-m-d") > $interval1['date_paid'] AND $interval2['date_paid'] >= date("Y-m-d")){
+              
+              $output .=' <tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
                           <td></td>
                           <td>'.$remaining.'</td>
                           <td></td>
-                          <td></td>
+                          <td></td>                          
                           <td>'.$date_paid.'</td>
                           <td>'.$row["loan_remarks"].'</td>
-                        </tr>';
+                      </tr>';
 
-              }elseif(date("Y-m-d") < $interval4['date_paid'] && $interval3['date_paid'] < date("Y-m-d")){
-              $count3+=$remaining;
+              }elseif(date("Y-m-d") > $interval2['date_paid'] AND $interval3['date_paid'] >= date("Y-m-d")){
+              
               $output .=' <tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
                           <td></td>
@@ -73,9 +68,9 @@ function movingAccount(){
                           <td>'.$row["loan_remarks"].'</td>
                       </tr>';             
 
-              }elseif($interval4['date_paid'] < date("Y-m-d")){
-              $count4+=$remaining;
-              $output .='<tr>
+              }else{
+              
+              $output .=' <tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
                           <td></td>
                           <td></td>
@@ -83,7 +78,7 @@ function movingAccount(){
                           <td>'.$remaining.'</td>
                           <td>'.$date_paid.'</td>
                           <td>'.$row["loan_remarks"].'</td>
-                        </tr>';            
+                      </tr>';           
 
               }
             }
@@ -135,19 +130,19 @@ function TotalMovingAccount(){
                 $query5="SELECT DATE_ADD('$date_paid', INTERVAL 120 DAY) as date_paid FROM sigma.payment_info";
                 $interval4 = mysqli_fetch_assoc(mysqli_query($conn,$query5));
 
-            if ($interval1['date_paid'] < date("Y-m-d") && date("Y-m-d") < $interval2['date_paid']) {
+              if ($interval1['date_paid'] >= date("Y-m-d")) {
 
               $count1+=$remaining;
               
-              }elseif (date("Y-m-d") < $interval3['date_paid'] && $interval2['date_paid'] < date("Y-m-d")){
+              }elseif (date("Y-m-d") > $interval1['date_paid'] AND $interval2['date_paid'] >= date("Y-m-d")){
 
               $count2+=$remaining;
 
-              }elseif(date("Y-m-d") < $interval4['date_paid'] && $interval3['date_paid'] < date("Y-m-d")){
+              }elseif(date("Y-m-d") > $interval2['date_paid'] AND $interval3['date_paid'] >= date("Y-m-d")){
               
               $count3+=$remaining;
 
-              }elseif($interval4['date_paid'] < date("Y-m-d")){
+              }else{
 
               $count4+=$remaining;
            
@@ -188,7 +183,7 @@ function NotMovingAccount(){
 
     $output='';
     include './IncludeAging/NotMovingAccount.php';
-     while($row = mysqli_fetch_array($result))
+         while($row = mysqli_fetch_array($result))
       {   
           $id = $row['loan_id'];
           $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id='$id'";
@@ -212,7 +207,7 @@ function NotMovingAccount(){
                 $query5="SELECT DATE_ADD('$date_paid', INTERVAL 120 DAY) as date_paid FROM sigma.payment_info";
                 $interval4 = mysqli_fetch_assoc(mysqli_query($conn,$query5));
 
-              if ($interval1['date_paid'] < date("Y-m-d") && date("Y-m-d") < $interval2['date_paid']) {
+              if ($interval1['date_paid'] >= date("Y-m-d")) {
 
             $output .='   <tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
@@ -224,19 +219,19 @@ function NotMovingAccount(){
                           <td>'.$row["loan_remarks"].'</td>
                       </tr>';
               
-              }elseif (date("Y-m-d") < $interval3['date_paid'] && $interval2['date_paid'] < date("Y-m-d")){
+              }elseif (date("Y-m-d") > $interval1['date_paid'] AND $interval2['date_paid'] >= date("Y-m-d")){
               
               $output .=' <tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
                           <td></td>
                           <td>'.$remaining.'</td>
                           <td></td>
-                          <td></td>
+                          <td></td>                          
                           <td>'.$date_paid.'</td>
                           <td>'.$row["loan_remarks"].'</td>
                       </tr>';
 
-              }elseif(date("Y-m-d") < $interval4['date_paid'] && $interval3['date_paid'] < date("Y-m-d")){
+              }elseif(date("Y-m-d") > $interval2['date_paid'] AND $interval3['date_paid'] >= date("Y-m-d")){
               
               $output .=' <tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
@@ -248,7 +243,7 @@ function NotMovingAccount(){
                           <td>'.$row["loan_remarks"].'</td>
                       </tr>';             
 
-              }elseif($interval4['date_paid'] < date("Y-m-d")){
+              }else{
               
               $output .=' <tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
@@ -258,13 +253,14 @@ function NotMovingAccount(){
                           <td>'.$remaining.'</td>
                           <td>'.$date_paid.'</td>
                           <td>'.$row["loan_remarks"].'</td>
-                      </tr>';            
+                      </tr>';           
 
               }
             }
 
           }
         }
+
       return $output;
 
 }
@@ -309,24 +305,25 @@ function TotalNotMovingAccount(){
                 $query5="SELECT DATE_ADD('$date_paid', INTERVAL 120 DAY) as date_paid FROM sigma.payment_info";
                 $interval4 = mysqli_fetch_assoc(mysqli_query($conn,$query5));
 
-            if ($interval1['date_paid'] < date("Y-m-d") && date("Y-m-d") < $interval2['date_paid']) {
+              if ($interval1['date_paid'] >= date("Y-m-d")) {
 
               $count1+=$remaining;
               
-              }elseif (date("Y-m-d") < $interval3['date_paid'] && $interval2['date_paid'] < date("Y-m-d")){
+              }elseif (date("Y-m-d") > $interval1['date_paid'] AND $interval2['date_paid'] >= date("Y-m-d")){
 
               $count2+=$remaining;
 
-              }elseif(date("Y-m-d") < $interval4['date_paid'] && $interval3['date_paid'] < date("Y-m-d")){
+              }elseif(date("Y-m-d") > $interval2['date_paid'] AND $interval3['date_paid'] >= date("Y-m-d")){
               
               $count3+=$remaining;
 
-              }elseif($interval4['date_paid'] < date("Y-m-d")){
+              }else{
 
               $count4+=$remaining;
            
 
               }
+
             }
 
           }
@@ -359,7 +356,7 @@ function LegalAccount(){
 
     $output='';
     include './IncludeAging/LegalAccount.php';
- while($row = mysqli_fetch_array($result))
+    while($row = mysqli_fetch_array($result))
       {   
           $id = $row['loan_id'];
           $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id='$id'";
@@ -383,7 +380,7 @@ function LegalAccount(){
                 $query5="SELECT DATE_ADD('$date_paid', INTERVAL 120 DAY) as date_paid FROM sigma.payment_info";
                 $interval4 = mysqli_fetch_assoc(mysqli_query($conn,$query5));
 
-              if ($interval1['date_paid'] < date("Y-m-d") && date("Y-m-d") < $interval2['date_paid']) {
+              if ($interval1['date_paid'] >= date("Y-m-d")) {
 
             $output .='   <tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
@@ -395,19 +392,19 @@ function LegalAccount(){
                           <td>'.$row["loan_remarks"].'</td>
                       </tr>';
               
-              }elseif (date("Y-m-d") < $interval3['date_paid'] && $interval2['date_paid'] < date("Y-m-d")){
+              }elseif (date("Y-m-d") > $interval1['date_paid'] AND $interval2['date_paid'] >= date("Y-m-d")){
               
               $output .=' <tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
                           <td></td>
                           <td>'.$remaining.'</td>
                           <td></td>
-                          <td></td>
+                          <td></td>                          
                           <td>'.$date_paid.'</td>
                           <td>'.$row["loan_remarks"].'</td>
                       </tr>';
 
-              }elseif(date("Y-m-d") < $interval4['date_paid'] && $interval3['date_paid'] < date("Y-m-d")){
+              }elseif(date("Y-m-d") > $interval2['date_paid'] AND $interval3['date_paid'] >= date("Y-m-d")){
               
               $output .=' <tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
@@ -419,7 +416,7 @@ function LegalAccount(){
                           <td>'.$row["loan_remarks"].'</td>
                       </tr>';             
 
-              }elseif($interval4['date_paid'] < date("Y-m-d")){
+              }else{
               
               $output .=' <tr>
                           <td><a href="Profile.php?loan_id='.$row["loan_id"].'">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</a></td>
@@ -429,7 +426,7 @@ function LegalAccount(){
                           <td>'.$remaining.'</td>
                           <td>'.$date_paid.'</td>
                           <td>'.$row["loan_remarks"].'</td>
-                      </tr>';            
+                      </tr>';           
 
               }
             }
@@ -480,24 +477,25 @@ function TotalLegal(){
                 $query5="SELECT DATE_ADD('$date_paid', INTERVAL 120 DAY) as date_paid FROM sigma.payment_info";
                 $interval4 = mysqli_fetch_assoc(mysqli_query($conn,$query5));
 
-            if ($interval1['date_paid'] < date("Y-m-d") && date("Y-m-d") < $interval2['date_paid']) {
+              if ($interval1['date_paid'] >= date("Y-m-d")) {
 
               $count1+=$remaining;
               
-              }elseif (date("Y-m-d") < $interval3['date_paid'] && $interval2['date_paid'] < date("Y-m-d")){
+              }elseif (date("Y-m-d") > $interval1['date_paid'] AND $interval2['date_paid'] >= date("Y-m-d")){
 
               $count2+=$remaining;
 
-              }elseif(date("Y-m-d") < $interval4['date_paid'] && $interval3['date_paid'] < date("Y-m-d")){
+              }elseif(date("Y-m-d") > $interval2['date_paid'] AND $interval3['date_paid'] >= date("Y-m-d")){
               
               $count3+=$remaining;
 
-              }elseif($interval4['date_paid'] < date("Y-m-d")){
+              }else{
 
               $count4+=$remaining;
            
 
               }
+
             }
 
           }
