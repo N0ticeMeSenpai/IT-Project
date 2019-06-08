@@ -98,6 +98,42 @@ function Salary_ActiveAccount(){
 
 }
 
+function Total_ActiveAccount(){
+    
+    $count = 0;
+    $output='';
+    include './Include/connection.php';
+    
+    $query = "SELECT * from client 
+    inner join loan on client.client_id = loan.client_id 
+    inner join payment on loan.loan_id = payment.loan_id
+    WHERE (maturity_date > (select curdate())) 
+    AND loan.delinquent_status = 'Active'
+    AND registered_status='Approved' group by loan.loan_id";
+    $result = mysqli_query($conn, $query);
+    
+    while($row = mysqli_fetch_array($result))
+      {       
+        
+        $id = $row['loan_id'];
+        $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id=$id";
+            $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
+            $remaining = $rowRemain['rb'];
+            if ($remaining != '0' && $remaining > '0') {
+                
+                $count+=$remaining;
+                
+            }
+        
+        }
+    
+    $output .= '<td>Total: </td>
+            <td>'.$count.'</td>';
+    return $output;
+    
+}
+
+
 function page_Salary(){
   $output='';
   include './IncludeSalary/SalaryActiveAccount.php';
@@ -194,6 +230,41 @@ function Salary_ActiveDelinquentAccount(){
         }  
       return $output;
 
+}
+
+function Total_ActiveDelinquentAccount(){
+    
+    $count = 0;
+    $output='';
+    include './Include/connection.php';
+    
+    $query = "SELECT * from client 
+    inner join loan on client.client_id = loan.client_id 
+    inner join payment on loan.loan_id = payment.loan_id
+    WHERE (maturity_date < (select curdate())) 
+    AND loan.delinquent_status = 'Active'
+    AND registered_status='Approved' group by loan.loan_id";
+    $result = mysqli_query($conn, $query);
+    
+    while($row = mysqli_fetch_array($result))
+      {       
+        
+        $id = $row['loan_id'];
+        $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id=$id";
+            $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
+            $remaining = $rowRemain['rb'];
+            if ($remaining != '0' && $remaining > '0') {
+                
+                $count+=$remaining;
+                
+            }
+        
+        }
+    
+    $output .= '<td>Total: </td>
+            <td>'.$count.'</td>';
+    return $output;
+    
 }
 
 function page_ActiveDelinquentSalary(){
@@ -310,6 +381,41 @@ function Salary_ActiveLegalAccount(){
 
         }  
       return $output;
+}
+
+function Total_Legal(){
+    
+    $count = 0;
+    $output='';
+    include './Include/connection.php';
+    
+    $query = "SELECT * from client 
+    inner join loan on client.client_id = loan.client_id 
+    inner join payment on loan.loan_id = payment.loan_id
+    WHERE (maturity_date < (select curdate())) 
+    AND loan.delinquent_status = 'Legal'
+    AND registered_status='Approved' group by loan.loan_id";
+    $result = mysqli_query($conn, $query);
+    
+    while($row = mysqli_fetch_array($result))
+      {       
+        
+        $id = $row['loan_id'];
+        $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id=$id";
+            $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
+            $remaining = $rowRemain['rb'];
+            if ($remaining != '0' && $remaining > '0') {
+                
+                $count+=$remaining;
+                
+            }
+        
+        }
+    
+    $output .= '<td>Total: </td>
+            <td>'.$count.'</td>';
+    return $output;
+    
 }
 
 function page_SalaryLegal(){
@@ -493,6 +599,41 @@ function page_DelinquentBusiness(){
       $output .= '<li><a href="SORDelinquentAccount.php?BusinessPage=' . $page . '">' . $page . '</a></li>';
     }
     return $output;
+}
+
+function Total_DelinquentAccount(){
+    
+    $count = 0;
+    $output='';
+    include './Include/connection.php';
+    
+    $query = "SELECT * from client 
+    inner join loan on client.client_id = loan.client_id 
+    inner join payment on loan.loan_id = payment.loan_id
+    WHERE (maturity_date < (select curdate())) 
+    AND loan.delinquent_status = 'Inactive'
+    AND registered_status='Approved' group by loan.loan_id";
+    $result = mysqli_query($conn, $query);
+    
+    while($row = mysqli_fetch_array($result))
+      {       
+        
+        $id = $row['loan_id'];
+        $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id=$id";
+            $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
+            $remaining = $rowRemain['rb'];
+            if ($remaining != '0' && $remaining > '0') {
+                
+                $count+=$remaining;
+                
+            }
+        
+        }
+    
+    $output .= '<td>Total: </td>
+            <td>'.$count.'</td>';
+    return $output;
+    
 }
 
 //---------------------------------------List Of Pending-----------------------------
