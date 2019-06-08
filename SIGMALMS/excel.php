@@ -651,51 +651,6 @@ if(isset($_POST["AgingRecievable"]))
 
       }
 
-      //====================================================== List Of Delinquent
-    $sql = "SELECT loan.loan_id, co_borrower.co_borrower_id,client.client_id ,concat(first_name,' ',last_name) as `account_name`,
-        group_concat(distinct(concat(`co_first_name`, ' ', `co_last_name`)) separator '</td><td>') as group_name, 
-        remaining_balance, maturity_date, registered_date from loan
-        inner join client on client.client_id = loan.client_id
-        inner join payment on payment.loan_id = loan.loan_id
-        inner join co_borrower on client.client_id = co_borrower.client_id
-        WHERE maturity_date < (select curdate()) group by loan.loan_id ORDER BY maturity_date DESC";
-
-  $result = mysqli_query($conn, $sql);  
-
-
-      $output .= '<table class="table" bordered="1">
-                   <tr>
-                        <th colspan = "5">List of Delinquent</th>
-                    </tr> 
-                    <tr>
-                        <th>Account Name</th>
-                        <th>Co Borrower</th>
-                        <th>Co Borrower 2</th>
-                        <th>Balance</th>
-                        <th>Date</th>
-                    </tr>';
-
-      while ($row = mysqli_fetch_array($result))
-      {
-        $id = $row['loan_id'];
-        $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id='$id'";
-                $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
-                $remaining = $rowRemain['rb'];
-
-          if ($remaining > '0') {
-            $output .='<tr>
-              <td>'.$row['account_name'].'</td>
-              <td>'.$row['group_name'].'</td>
-              <td>'.$remaining.'</td>';
-              $query1="SELECT date_paid,remarks from payment_info JOIN payment ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE payment.loan_id = $id && date_paid IS NOT NULL && date_paid=(SELECT MAX(date_paid) from payment_info JOIN payment ON payment_info.payment_id=payment.payment_id WHERE loan_id=$id) && (maturity_date > (select curdate()) AND loan.loan_id=$id) AND loan.delinquent_status = 'Legal' ORDER by payment_info.payment_id ASC;";
-                $datePaid = mysqli_fetch_assoc(mysqli_query($conn,$query1));
-
-            $output .='<td>'.$datePaid ['date_paid'].'</td>
-                    </tr>';
-          }
-
-      }
-
       $output .= '</table>';
       header('Content-Type: application/vnd.ms-excel');
       header("Content-Disposition: attachment; filename=download.xls");
