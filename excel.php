@@ -28,6 +28,7 @@ if(isset($_POST["AgingRecievable"]))
     include ('./Include/connection.php');
     $query = "SELECT * from client 
     inner join loan on client.client_id = loan.client_id 
+    inner join payment on loan.loan_id = payment.loan_id
     WHERE (maturity_date < (select curdate())
     AND loan.delinquent_status = 'Active')
     AND registered_status='Approved' group by loan.loan_id";
@@ -168,6 +169,7 @@ if(isset($_POST["AgingRecievable"]))
 
     $query = "SELECT * from client 
     inner join loan on client.client_id = loan.client_id 
+    inner join payment on loan.loan_id = payment.loan_id
     WHERE (maturity_date < (select curdate())
     AND loan.delinquent_status = 'Inactive')
     AND registered_status='Approved' group by loan.loan_id";
@@ -307,6 +309,7 @@ if(isset($_POST["AgingRecievable"]))
 //==========================================================================================Legal
     $query = "SELECT * from client 
     inner join loan on client.client_id = loan.client_id 
+    inner join payment on loan.loan_id = payment.loan_id
     WHERE (maturity_date < (select curdate())
     AND loan.delinquent_status = 'Legal')
     AND registered_status='Approved' group by loan.loan_id";
@@ -468,6 +471,7 @@ if(isset($_POST["AgingRecievable"]))
 
   $query = "SELECT *  from client 
         INNER JOIN loan on client.client_id = loan.client_id
+        INNER JOIN payment on payment.loan_id = loan.loan_id
         group by loan.loan_id";
 
         $result = mysqli_query($conn, $query);
@@ -538,7 +542,7 @@ if(isset($_POST["AgingRecievable"]))
 
         $output .= '</table>';
         header("Content-Type:application/xls");
-        header("Content-Disposition: attachment; filename=SummaryOfBookings-".$myDate.".xls");
+        header("Content-Disposition: attachment; filename=SummaryOfRecievables-".$myDate.".xls");
         echo $output;
 
 
@@ -561,6 +565,7 @@ if(isset($_POST["AgingRecievable"]))
     $count4 = 0;
    $sql = "SELECT * from client 
     inner join loan on client.client_id = loan.client_id 
+    inner join payment on loan.loan_id = payment.loan_id
     WHERE (maturity_date > (select curdate())) 
     AND (loan.delinquent_status = 'Active' 
     AND registered_status='Approved') group by loan.loan_id";
@@ -612,6 +617,7 @@ if(isset($_POST["AgingRecievable"]))
 //==============================================Active Delinquent
   $sql1 = "SELECT * from client 
     inner join loan on client.client_id = loan.client_id 
+    inner join payment on loan.loan_id = payment.loan_id
     WHERE (maturity_date < (select curdate())) 
     AND (loan.delinquent_status = 'Active' 
     AND registered_status='Approved') group by loan.loan_id";
@@ -665,6 +671,7 @@ if(isset($_POST["AgingRecievable"]))
 //==============================================Delinquent
   $sql = "SELECT * from client 
     inner join loan on client.client_id = loan.client_id 
+    inner join payment on loan.loan_id = payment.loan_id
     WHERE (maturity_date < (select curdate())) 
     AND (loan.delinquent_status = 'Inactive' 
     AND registered_status='Approved') group by loan.loan_id";
@@ -717,6 +724,7 @@ if(isset($_POST["AgingRecievable"]))
   //=================================================== Legal Account
   $sql = "SELECT * from client 
     inner join loan on client.client_id = loan.client_id 
+    inner join payment on loan.loan_id = payment.loan_id
     WHERE (maturity_date < (select curdate())) 
     AND (loan.delinquent_status = 'Legal' 
     AND registered_status='Approved') group by loan.loan_id";
@@ -780,7 +788,7 @@ if(isset($_POST["AgingRecievable"]))
 
       $output .= '</table>';
       header('Content-Type: application/vnd.ms-excel');
-      header("Content-Disposition: attachment; filename=SummaryOfReceivables.xls");
+      header("Content-Disposition: attachment; filename=download.xls");
       echo $output;
 
 
@@ -791,6 +799,7 @@ if(isset($_POST["AgingRecievable"]))
 
         $sql = "SELECT * from client 
                     inner join loan on client.client_id = loan.client_id 
+                    inner join payment on loan.loan_id = payment.loan_id
                     WHERE (maturity_date < (select curdate()) 
                     AND registered_status='Approved') group by loan.loan_id";
 
