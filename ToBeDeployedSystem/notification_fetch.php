@@ -1,9 +1,9 @@
 <?php
- function notification_data()
+ function dashboard_maturity()
  {  
-      $output = '';  
-      include './Include/connection.php';  
-      $sql = "SELECT * from client 
+    $output = '';  
+    include './Include/connection.php';  
+    $sql = "SELECT * from client 
     inner join loan on client.client_id = loan.client_id 
     WHERE (maturity_date = (select curdate())) 
     AND registered_status='Approved'";
@@ -17,20 +17,25 @@
       $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) 
       as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id 
       JOIN loan ON payment.loan_id=loan.loan_id 
-      WHERE status='updated' && payment.loan_id=".$row['loan_id']."";
+      WHERE loan_status!='Remove' AND status='updated' && payment.loan_id=".$row['loan_id']."";
+
       $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
       $remaining = $rowRemain['rb'];
+      $first_name = htmlspecialchars($row["first_name"]);
+      $middle_name = htmlspecialchars($row["middle_name"]);
+      $last_name = htmlspecialchars($row["last_name"]);
 
-      if ($remaining > 0) {
+
+      if ($remaining > "0") {
               $output .= 
                      '<form class="navy-hov" role="search" action="search.php" method="post">
-                      <input type="hidden" id="myInput" type="text" name="search" value="'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'">
+                      <input type="hidden" id="myInput" type="text" name="loan_id" value="'.$row['loan_id'].'">
                       <button  type="submit" value="Search" style="width: 100%;background: transparent; border: none; outline: none;">
                          <ul class="mq-comment">
                           <li class="left clearfix"><span class="mq-comment-img pull-left">
                               <div class="mq-comment-body clearfix">
-                                  <div class="header">
-                                      <strong class="primary-font">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</strong>
+                                  <div class="header" style="font-size: 20px;">
+                                      <strong class="primary-font">'.$first_name.' '.$middle_name.' '.$last_name.' needs to pay a total amount of '.$remaining.' today.</strong>
                                       <small class="pull-right text-muted">
                                       </small>
                                   </div>
@@ -48,38 +53,16 @@
       return $output;  
  }
 
- function count_data()  
- {  
-      $output = '';
-      $count = 0;
-      include './Include/connection.php';  
-      $sql = "SELECT * from client 
-        inner join loan on client.client_id = loan.client_id 
-        WHERE (maturity_date = (select curdate())) ORDER BY maturity_date DESC";  
-      $result = mysqli_query($conn, $sql);  
-      
-      while($row = mysqli_fetch_array($result))  
-      {
-          $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id=".$row['loan_id']."";
-          $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
-          $remaining = $rowRemain['rb'];
-
-          if ($remaining > '0'){
-            $count++;
-            $output .= '<span class="number">'.$count.'</span>';
-        }
-      }  
-      return $output;  
- }
 
   function count_delinquent()  
  {  
       $count = 0;
       include './Include/connection.php';  
-      $sql = "SELECT * from client 
-      inner join loan on client.client_id = loan.client_id 
-      inner join payment on loan.loan_id = payment.loan_id 
-      WHERE (maturity_date <= (SELECT curdate())) AND registered_status = 'Approved'
+      $sql = "SELECT * FROM loan
+      inner join client on client.client_id = loan.client_id
+      inner join payment on loan.loan_id = payment.loan_id
+      WHERE (maturity_date < (SELECT curdate())
+      AND registered_status = 'Approved')
       group by loan.loan_id";  
       $result = mysqli_query($conn, $sql);  
 
@@ -90,7 +73,7 @@
         $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id=".$row['loan_id']."";
           $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
           $remaining = $rowRemain['rb'];
-          if ($remaining!=0) {
+          if ($remaining > 0) {
              $count++;
             } 
 
@@ -214,104 +197,20 @@ function count_ActiveDelinquentClient()
  }
 
 
-  function dashboard_maturity()  
+   function Total_Amount()  
  {  
-      $output = '';  
+      $count = 0;  
       include './Include/connection.php';  
-      $sql = "  SELECT * from client 
-      inner join loan on client.client_id = loan.client_id 
-      inner join payment on loan.client_id = payment.loan_id 
-      WHERE (maturity_date < (SELECT curdate())) AND registered_status = 'Approved'
-      group by loan.loan_id"; 
+      $sql = "SELECT SUM(amount_paid) as amount_paid from payment_info WHERE date_paid = curdate() && status='Updated'";
       $result = mysqli_query($conn, $sql);  
       
 
             while($row = mysqli_fetch_array($result))  
               {   
-
-
-          $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) 
-          as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id 
-          JOIN loan ON payment.loan_id=loan.loan_id 
-          WHERE status='updated' && payment.loan_id=".$row['loan_id']."";
-          $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
-          $remaining = $rowRemain['rb'];
-
-          if ($remaining > 0) {
-                  $output .= 
-                         '<form class="navy-hov" role="search" action="search.php" method="post">
-                          <input type="hidden" id="myInput" type="text" name="search" value="'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'">
-                          <button  type="submit" value="Search" style="    width: 100%;background: transparent; border: none; outline: none;">
-                             <ul class="mq-comment">
-                              <li class="left clearfix"><span class="mq-comment-img pull-left">
-                                  <div class="mq-comment-body clearfix">
-                                      <div class="header">
-                                          <strong class="primary-font">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</strong>
-                                          <small class="pull-right text-muted">
-                                          </small>
-                                      </div>
-                                      <p>
-                                      </p>
-                                  </div>
-                              </li>
-                          </ul>
-                          </button>
-                        </form> 
-                         ';
-                  }
-
-             }
-
-      return $output;  
- }
-
-   function dashboard_duedate()  
- {  
-      $output = '';  
-      include './Include/connection.php';  
-      $sql = "SELECT * from client inner join loan on client.client_id = loan.client_id 
-              inner join payment on loan.loan_id = payment.loan_id WHERE due_date=(SELECT curdate())
-              AND registered_status = 'Approved'
-             ";
-      $result = mysqli_query($conn, $sql);  
-      
-
-            while($row = mysqli_fetch_array($result))  
-              {   
-
-
-              $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) 
-              as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id 
-              JOIN loan ON payment.loan_id=loan.loan_id 
-              WHERE status='updated' && payment.loan_id=".$row['loan_id']."";
-              $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
-              $remaining = $rowRemain['rb'];
-
-              if ($remaining > 0) {
-                      $output .= 
-                             '<form class="navy-hov" role="search" action="search.php" method="post">
-                              <input type="hidden" id="myInput" type="text" name="search" value="'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'">
-                              <button  type="submit" value="Search" style="width: 100%;background: transparent; border: none; outline: none;">
-                                 <ul class="mq-comment">
-                                  <li class="left clearfix"><span class="mq-comment-img pull-left">
-                                      <div class="mq-comment-body clearfix">
-                                          <div class="header">
-                                              <strong class="primary-font">'.$row["first_name"].' '.$row["middle_name"].' '.$row["last_name"].'</strong>
-                                              <small class="pull-right text-muted">
-                                              </small>
-                                          </div>
-                                          <p>
-                                          </p>
-                                      </div>
-                                  </li>
-                              </ul>
-                              </button>
-                            </form> 
-                             ';
+                      $count = $row['amount_paid'];
                       }
-
-             }  
-      return $output;  
+ 
+      return $count;  
  }
 
  ?>
