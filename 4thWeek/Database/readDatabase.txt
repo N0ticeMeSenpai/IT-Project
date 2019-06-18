@@ -1,1 +1,0 @@
-Database folder contains all the database files that are used for the modules
