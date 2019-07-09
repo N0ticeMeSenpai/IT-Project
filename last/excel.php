@@ -52,8 +52,8 @@ if(isset($_POST["AgingRecievable"]))
                   </thead>';
     while($row = mysqli_fetch_array($result))
       {   
-          $id = $row['loan_id'];
-          $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id='$id'";
+      $id = $row['loan_id'];
+      $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(other_income),0) + COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id=$id";
                   $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
                   $remaining = $rowRemain['rb'];
 
@@ -170,8 +170,8 @@ if(isset($_POST["AgingRecievable"]))
                   </thead>';
     while($row = mysqli_fetch_array($result))
       {   
-          $id = $row['loan_id'];
-          $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id='$id'";
+      $id = $row['loan_id'];
+      $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(other_income),0) + COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id=$id";
                   $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
                   $remaining = $rowRemain['rb'];
 
@@ -285,8 +285,8 @@ if(isset($_POST["AgingRecievable"]))
                   </thead>';
     while($row = mysqli_fetch_array($result))
       {   
-          $id = $row['loan_id'];
-          $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id='$id'";
+      $id = $row['loan_id'];
+      $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(other_income),0) + COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id=$id";
                   $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
                   $remaining = $rowRemain['rb'];
 
@@ -535,8 +535,8 @@ if(isset($_POST["AgingRecievable"]))
       while ($row = mysqli_fetch_array($result))
       {
 
-        $id = $row['loan_id'];
-        $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id='$id'";
+      $id = $row['loan_id'];
+      $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(other_income),0) + COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id=$id";
                 $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
                 $remaining = $rowRemain['rb'];
                 $first_name = htmlspecialchars($row["first_name"]);
@@ -592,8 +592,8 @@ if(isset($_POST["AgingRecievable"]))
       while ($row = mysqli_fetch_array($result1))
       {
 
-        $id = $row['loan_id'];
-        $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id='$id'";
+      $id = $row['loan_id'];
+      $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(other_income),0) + COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id=$id";
                 $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
                 $remaining = $rowRemain['rb'];
 
@@ -648,8 +648,8 @@ if(isset($_POST["AgingRecievable"]))
       while ($row = mysqli_fetch_array($result))
       {
 
-        $id = $row['loan_id'];
-        $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id='$id'";
+      $id = $row['loan_id'];
+      $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(other_income),0) + COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id=$id";
                 $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
                 $remaining = $rowRemain['rb'];
 
@@ -705,8 +705,8 @@ if(isset($_POST["AgingRecievable"]))
       while ($row = mysqli_fetch_array($result))
       {
 
-        $id = $row['loan_id'];
-        $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id='$id'";
+      $id = $row['loan_id'];
+      $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(other_income),0) + COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id=$id";
                 $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
                 $remaining = $rowRemain['rb'];
 
@@ -795,7 +795,8 @@ if(isset($_POST["AgingRecievable"]))
       while($row = mysqli_fetch_assoc($result1))
       { 
 
-        $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id=".$row['loan']."";
+      $id = $row['loan'];
+      $sqlForRemain = "SELECT (loan_balance+COALESCE(SUM(other_income),0) + COALESCE(SUM(fines),0)+COALESCE(SUM(interest),0)-COALESCE((SUM(amount_paid)),0)) as rb FROM payment JOIN payment_info ON payment_info.payment_id = payment.payment_id JOIN loan ON payment.loan_id=loan.loan_id WHERE status='updated' && payment.loan_id=$id";
           $rowRemain = mysqli_fetch_assoc(mysqli_query($conn,$sqlForRemain));  
           $remaining = $rowRemain['rb'];
 
